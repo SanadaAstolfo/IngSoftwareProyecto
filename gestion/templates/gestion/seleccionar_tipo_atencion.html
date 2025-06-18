@@ -1,0 +1,18 @@
+{% extends 'gestion/base.html' %}
+
+{% block title %}Seleccionar Tipo de Atención{% endblock %}
+
+{% block content %}
+    <div class="text-center">
+        <h1>Nueva Atención para {{ paciente.nombre }}</h1>
+        <p class="lead">Por favor, selecciona el tipo de ficha que deseas crear.</p>
+        <div class="d-grid gap-3 col-6 mx-auto mt-4">
+            <a href="{% url 'crear_atencion' paciente.id 'general' %}" class="btn btn-primary btn-lg">
+                <i class="fa-solid fa-stethoscope"></i> Consulta General
+            </a>
+            <a href="{% url 'crear_atencion' paciente.id 'hospitalizacion' %}" class="btn btn-info btn-lg">
+                <i class="fa-solid fa-house-medical"></i> Hospitalización
+            </a>
+        </div>
+    </div>
+{% endblock %}

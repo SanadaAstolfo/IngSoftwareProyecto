@@ -1,0 +1,86 @@
+{% extends 'gestion/base.html' %}
+
+{% block title %}Ficha de {{ paciente.nombre }}{% endblock %}
+
+{% block content %}
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Ficha de {{ paciente.nombre }}</h1>
+        <div>
+            <a href="{% url 'editar_paciente' paciente.id %}" class="btn btn-secondary">Editar Paciente</a>
+            <a href="{% url 'seleccionar_tipo_atencion' paciente.id %}" class="btn btn-primary">Registrar Nueva Atención</a>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header">Datos del Paciente</div>
+        <div class="card-body">
+            <p><strong>Especie:</strong> {{ paciente.especie }} | <strong>Raza:</strong> {{ paciente.raza }}</p>
+            <p><strong>Fecha de Nacimiento:</strong> {{ paciente.fecha_nacimiento }}</p>
+            <p><strong>Tutor:</strong> {{ paciente.tutor.nombre_completo }} ({{ paciente.tutor.email }})</p>
+        </div>
+    </div>
+
+    <h2>Historial de Atenciones</h2>
+
+    {% for atencion in atenciones %}
+        <div class="card mb-3">
+            <div class="card-header d-flex justify-content-between align-items-center">
+            <strong>Atención del {{ atencion.fecha_atencion.date }}</strong>
+            <div>
+                <a href="{% url 'editar_atencion' paciente.id atencion.id %}" class="btn btn-secondary btn-sm">Editar</a>
+                <a href="{% url 'borrar_atencion' paciente.id atencion.id %}" class="btn btn-danger btn-sm">Borrar</a>
+                <a href="{% url 'ver_historial_atencion' atencion.id %}" class="btn btn-info btn-sm">Historial</a>
+            </div>
+        </div>
+            <div class="card-body">
+                <p><strong>Motivo:</strong> {{ atencion.motivo_consulta }}</p>
+                <p><strong>Anamnesis:</strong> {{ atencion.anamnesis }}</p>
+                {% if atencion.chequeo %}
+                    <div class="p-2 bg-light border rounded mt-2">
+                        <h6 class="border-bottom pb-1">Detalles del Chequeo Físico</h6>
+                        <ul>
+                            <li><strong>Temperatura:</strong> {{ atencion.chequeo.temperatura }} °C</li>
+                            <li><strong>Peso:</strong> {{ atencion.chequeo.peso }} kg</li>
+                            <li><strong>Condición Corporal:</strong> {{ atencion.chequeo.condicion_corporal }}</li>
+                            {% if atencion.chequeo.anotaciones %}
+                            <li><strong>Anotaciones:</strong> {{ atencion.chequeo.anotaciones }}</li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                {% endif %}
+                <p><strong>Diagnóstico:</strong> {{ atencion.diagnostico }}</p>
+                <p><strong>Tratamiento:</strong> {{ atencion.tratamiento }}</p>
+                <div class="mt-3">
+                    <h6>Procedimientos, Exámenes y Hospitalizaciones</h6>
+                    {% if atencion.procedimientos.all %}
+                        <ul class="list-group list-group-flush">
+                        {% for procedimiento in atencion.procedimientos.all %}
+                            <li class="list-group-item">
+                                <strong>{{ procedimiento.get_tipo_display }}:</strong> {{ procedimiento.descripcion }} 
+                                <small class="text-muted">
+                                    (Inicio: {{ procedimiento.fecha_inicio }}
+                                    {% if procedimiento.fecha_fin %}
+                                        - Fin: {{ procedimiento.fecha_fin }}
+                                    {% endif %})
+                                </small>
+                            </li>
+                        {% endfor %}
+                        </ul>
+                    {% else %}
+                    {% if atencion.tipo_ficha == 'Hospitalización' and atencion.notas_hospitalizacion %}
+                        <div class="alert alert-info mt-2">
+                            <strong>Notas de Hospitalización:</strong> {{ atencion.notas_hospitalizacion }}<br>
+                            <strong>Jaula:</strong> {{ atencion.jaula_numero|default:'No especificada' }}
+                        </div>
+                    {% endif %}
+                        <p><small>No hay procedimientos registrados para esta atención.</small></p>
+                    {% endif %}
+                    <a href="{% url 'crear_procedimiento' atencion.id %}" class="btn btn-outline-primary btn-sm mt-2">+ Añadir Procedimiento</a>
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <div class="alert alert-info">No hay atenciones registradas.</div>
+    {% endfor %}
+
+{% endblock %}
