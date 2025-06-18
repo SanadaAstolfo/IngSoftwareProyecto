@@ -1,5 +1,6 @@
 # IngSoftwareProyecto
 1. Visión General del Proyecto
+
 1.1. Propósito y Alcance
 El Sistema de Gestión Clínica "Club Entre Patitas" es una aplicación web desarrollada para centralizar y administrar de manera eficiente la información de pacientes, fichas clínicas y atenciones médicas de una clínica veterinaria. El proyecto, en su versión actual, cubre integralmente los 11 casos de uso definidos en la fase de análisis, proveyendo una solución robusta para la gestión de datos y auditoría.
 
