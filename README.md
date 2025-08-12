@@ -89,6 +89,7 @@ El sistema estará disponible en tu navegador en la dirección http://127.0.0.1:
 Las direcciones explicadas son:
 
 http://127.0.0.1:8000 ==> lleva directamente a la pagina del portal de club entre patitas
+
 http://127.0.0.1:8000/admin ==> lleva directamente a la pagina donde esta la base de datos (se ingresa con las credenciales de superuser)
 
 ## 3. Funcionalidades Implementadas
