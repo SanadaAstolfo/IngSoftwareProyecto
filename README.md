@@ -1,10 +1,11 @@
 # IngSoftwareProyecto
-1. Visión General del Proyecto
 
-1.1. Propósito y Alcance
+## 1. Visión General del Proyecto
+
+### 1.1. Propósito y Alcance
 El Sistema de Gestión Clínica "Club Entre Patitas" es una aplicación web desarrollada para centralizar y administrar de manera eficiente la información de pacientes, fichas clínicas y atenciones médicas de una clínica veterinaria. El proyecto, en su versión actual, cubre integralmente los 11 casos de uso definidos en la fase de análisis, proveyendo una solución robusta para la gestión de datos y auditoría.
 
-1.2. Arquitectura y Tecnologías
+### 1.2. Arquitectura y Tecnologías
 El sistema está construido sobre una arquitectura monolítica que garantiza un desarrollo ágil y un mantenimiento simplificado. Las tecnologías clave utilizadas son:
 
 Backend: Framework Django (Python), que proporciona una estructura robusta para el desarrollo web rápido y seguro.
@@ -15,30 +16,30 @@ Frontend: Plantillas HTML renderizadas por el servidor, con estilos aplicados a 
 
 Auditoría: Paquete django-simple-history para el seguimiento automático y detallado de los cambios en los datos.
 
-2. Guía de Instalación y Puesta en Marcha
+## 2. Guía de Instalación y Puesta en Marcha
 Esta guía detalla los pasos necesarios para configurar y ejecutar el proyecto en un entorno de desarrollo local.
 
-2.1. Requisitos Previos
+### 2.1. Requisitos Previos
 Python 3.8 o superior.
 
 pip (gestor de paquetes de Python).
 
 Git (opcional, para clonar el repositorio).
 
-2.2. Pasos de Instalación
+### 2.2. Pasos de Instalación
 Obtener el Código Fuente:
 Crea una carpeta para el proyecto y descarga o clona el código fuente en ella. (dentro de algún idle como Visual Studio Code abrir la carpeta donde se encuentra almacenado el software)
 
 Crear y Activar un Entorno Virtual:
 Es una práctica recomendada aislar las dependencias del proyecto. Desde la carpeta raíz del proyecto, ejecuta:
 
-# Crear el entorno virtual
+#### Crear el entorno virtual
 python -m venv venv
 
-# Activar en Windows
+#### Activar en Windows
 .\venv\Scripts\activate
 
-# Activar en macOS/Linux
+#### Activar en macOS/Linux
 source venv/bin/activate
 
 Una vez activado, verás (venv) al principio de la línea de tu terminal.
@@ -90,7 +91,7 @@ Las direcciones explicadas son:
 http://127.0.0.1:8000 ==> lleva directamente a la pagina del portal de club entre patitas
 http://127.0.0.1:8000/admin ==> lleva directamente a la pagina donde esta la base de datos (se ingresa con las credenciales de superuser)
 
-3. Funcionalidades Implementadas
+## 3. Funcionalidades Implementadas
 El sistema cuenta con las siguientes funcionalidades principales, cubriendo todos los casos de uso definidos:
 
 Portal de Bienvenida y Autenticación:
