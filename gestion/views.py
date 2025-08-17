@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Paciente, FichaClinica, AtencionMedica, ChequeoFisico
-from .forms import PacienteForm, AtencionGeneralForm, ChequeoFisicoForm, ProcedimientoForm, AtencionHospitalizacionForm
+from .models import Paciente, FichaClinica, AtencionMedica, ChequeoFisico, DocumentoAdjunto
+from .forms import PacienteForm, AtencionGeneralForm, ChequeoFisicoForm, ProcedimientoForm, AtencionHospitalizacionForm, DocumentoAdjuntoForm
 
 def portal_view(request):
     return render(request, 'portal.html')
@@ -210,3 +210,23 @@ def ver_historial_atencion(request, atencion_id):
         'historial': historial
     }
     return render(request, 'gestion/historial_atencion.html', contexto)
+
+@login_required
+def adjuntar_documento(request, atencion_id):
+    atencion = get_object_or_404(AtencionMedica, pk=atencion_id)
+    if request.method == 'POST':
+        form = DocumentoAdjuntoForm(request.POST, request.FILES)
+        if form.is_valid():
+            documento = form.save(commit=False)
+            documento.atencion_medica = atencion
+            documento.save()
+            return redirect('detalle_paciente', paciente_id=atencion.ficha_clinica.paciente.id)
+        else:
+            form = DocumentoAdjuntoForm()
+        contexto = {
+            'form': form,
+            'atencion': atencion,
+            'titulo': 'Adjuntar Documento a la Atención',
+            'boton_texto': 'Subir Documento'
+        }
+        return render(request, 'gestion/form.html', contexto)

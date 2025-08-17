@@ -81,3 +81,12 @@ class Procedimiento(models.Model):
 
     def __str__(self):
         return f"{self.tipo} para {self.atencion_medica.ficha_clinica.paciente.nombre}"
+    
+class DocumentoAdjunto(models.Model):
+    atencion_medica = models.ForeignKey(AtencionMedica, on_delete=models.CASCADE, related_name='documentos')
+    titulo = models.CharField(max_length=100)
+    archivo = models.FileField(upload_to='documentos/')
+    fecha_subida = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.titulo} - {self.atencion_medica.ficha_clinica.paciente.nombre}"

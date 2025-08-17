@@ -1,5 +1,5 @@
 from django import forms
-from .models import Paciente, AtencionMedica, ChequeoFisico, Procedimiento
+from .models import Paciente, AtencionMedica, ChequeoFisico, Procedimiento, DocumentoAdjunto
 
 class PacienteForm(forms.ModelForm):
     class Meta:
@@ -50,3 +50,8 @@ class AtencionHospitalizacionForm(AtencionGeneralForm):
             'notas_hospitalizacion': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
             'jaula_numero': forms.TextInput(attrs={'class': 'form-control'}),
         })
+
+class DocumentoAdjuntoForm(forms.ModelForm):
+    class Meta:
+        model = DocumentoAdjunto
+        fields = ['titulo', 'archivo']

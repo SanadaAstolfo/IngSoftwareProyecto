@@ -12,5 +12,6 @@ urlpatterns = [
     path('pacientes/<int:paciente_id>/atencion/<int:atencion_id>/editar/', views.editar_atencion, name='editar_atencion'),
     path('pacientes/<int:paciente_id>/atencion/<int:atencion_id>/borrar/', views.borrar_atencion, name='borrar_atencion'),
     path('atencion/<int:atencion_id>/procedimiento/nuevo/', views.crear_procedimiento, name='crear_procedimiento'),
+    path('atencion/<int:atencion_id>/adjuntar/', views.adjuntar_documento, name='adjuntar_documento'),
     path('atencion/<int:atencion_id>/historial/', views.ver_historial_atencion, name='ver_historial_atencion'),
 ]

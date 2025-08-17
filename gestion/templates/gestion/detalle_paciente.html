@@ -50,6 +50,27 @@
                 {% endif %}
                 <p><strong>Diagnóstico:</strong> {{ atencion.diagnostico }}</p>
                 <p><strong>Tratamiento:</strong> {{ atencion.tratamiento }}</p>
+                <div class="card-body">
+                    <div class="mt-3">
+                        <h6>Documentos Adjuntos</h6>
+                        {% if atencion.documentos.all %}
+                            <ul class="list-group list-group-flush">
+                            {% for doc in atencion.documentos.all %}
+                                <li class="list-group-item">
+                                    <a href="{{ doc.archivo.url }}" target="_blank">{{ doc.titulo }}</a>
+                                    <small class="text-muted"> (Subido el: {{ doc.fecha_subida }})</small>
+                                </li>
+                            {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p><small>No hay documentos para esta atención.</small></p>
+                        {% endif %}
+                        <a href="{% url 'adjuntar_documento' atencion.id %}" class="btn btn-outline-info btn-sm mt-2">+ Adjuntar Documento</a>
+                    </div>
+                    <div class="mt-3">
+                        <h6>Procedimientos, Exámenes y Hospitalizaciones</h6>
+                        </div>
+                </div>
                 <div class="mt-3">
                     <h6>Procedimientos, Exámenes y Hospitalizaciones</h6>
                     {% if atencion.procedimientos.all %}
