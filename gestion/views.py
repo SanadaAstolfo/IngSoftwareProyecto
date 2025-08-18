@@ -221,12 +221,12 @@ def adjuntar_documento(request, atencion_id):
             documento.atencion_medica = atencion
             documento.save()
             return redirect('detalle_paciente', paciente_id=atencion.ficha_clinica.paciente.id)
-        else:
-            form = DocumentoAdjuntoForm()
-        contexto = {
-            'form': form,
-            'atencion': atencion,
-            'titulo': 'Adjuntar Documento a la Atención',
-            'boton_texto': 'Subir Documento'
-        }
-        return render(request, 'gestion/form.html', contexto)
+    else:
+        form = DocumentoAdjuntoForm()
+    contexto = {
+        'form': form,
+        'atencion': atencion,
+        'titulo': 'Adjuntar Documento a la Atención',
+        'boton_texto': 'Subir Documento'
+    }
+    return render(request, 'gestion/form.html', contexto)
