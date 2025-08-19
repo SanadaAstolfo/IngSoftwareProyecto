@@ -13,11 +13,11 @@ class Tutor(models.Model):
         return self.nombre_completo
 
 class Paciente(models.Model):
-    nombre = models.CharField(max_length=50) # 
-    especie = models.CharField(max_length=50) # 
-    raza = models.CharField(max_length=50) # 
-    sexo = models.CharField(max_length=10) # 
-    fecha_nacimiento = models.DateField() # 
+    nombre = models.CharField(max_length=50)
+    especie = models.CharField(max_length=50)
+    raza = models.CharField(max_length=50)
+    sexo = models.CharField(max_length=10)
+    fecha_nacimiento = models.DateField()
     microchip_tatuaje = models.CharField(max_length=50, blank=True, null=True) # 
     tutor = models.ForeignKey(Tutor, on_delete=models.CASCADE, related_name='pacientes')
 
@@ -41,10 +41,10 @@ class AtencionMedica(models.Model):
     fecha_atencion = models.DateTimeField(auto_now_add=True)
     veterinario = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     tipo_atencion = models.CharField(max_length=10, choices=TIPO_ATENCION_CHOICES)
-    motivo_consulta = models.TextField(help_text="Debe tener un mínimo de 10 caracteres.") # 
-    anamnesis = models.TextField(verbose_name="Anamnesis (antecedentes previos y actuales)") # 
-    diagnostico = models.TextField() # 
-    tratamiento = models.TextField() # 
+    motivo_consulta = models.TextField(help_text="Debe tener un mínimo de 10 caracteres.")
+    anamnesis = models.TextField(verbose_name="Anamnesis (antecedentes previos y actuales)")
+    diagnostico = models.TextField()
+    tratamiento = models.TextField()
 
     notas_hospitalizacion = models.TextField(blank=True, null=True, help_text="Notas específicas de la hospitalización")
     jaula_numero = models.CharField(max_length=10, blank=True, null=True, verbose_name="Número de Jaula")
@@ -59,10 +59,10 @@ class AtencionMedica(models.Model):
 
 class ChequeoFisico(models.Model):
     atencion_medica = models.OneToOneField(AtencionMedica, on_delete=models.CASCADE, related_name='chequeo')
-    temperatura = models.DecimalField(max_digits=4, decimal_places=2) # 
-    peso = models.DecimalField(max_digits=5, decimal_places=2) # 
-    condicion_corporal = models.CharField(max_length=100) # 
-    anotaciones = models.TextField(blank=True, null=True) # 
+    temperatura = models.DecimalField(max_digits=4, decimal_places=2)
+    peso = models.DecimalField(max_digits=5, decimal_places=2)
+    condicion_corporal = models.CharField(max_length=100)
+    anotaciones = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return f"Chequeo Físico del {self.atencion_medica.fecha_atencion.strftime('%d-%m-%Y')}"
@@ -76,8 +76,8 @@ class Procedimiento(models.Model):
     atencion_medica = models.ForeignKey(AtencionMedica, on_delete=models.CASCADE, related_name='procedimientos')
     tipo = models.CharField(max_length=20, choices=TIPO_PROCEDIMIENTO_CHOICES) # 
     descripcion = models.TextField()
-    fecha_inicio = models.DateTimeField() # 
-    fecha_fin = models.DateTimeField(blank=True, null=True) # 
+    fecha_inicio = models.DateTimeField()
+    fecha_fin = models.DateTimeField(blank=True, null=True)
 
     def __str__(self):
         return f"{self.tipo} para {self.atencion_medica.ficha_clinica.paciente.nombre}"
