@@ -27,12 +27,18 @@
             <div class="card-header d-flex justify-content-between align-items-center">
             <strong>Atención del {{ atencion.fecha_atencion.date }}</strong>
             <div>
-                <a href="{% url 'editar_atencion' paciente.id atencion.id %}" class="btn btn-secondary btn-sm">Editar</a>
-                <a href="{% url 'borrar_atencion' paciente.id atencion.id %}" class="btn btn-danger btn-sm">Borrar</a>
+                {% if atencion.esta_cerrada %}
+                    <span class="badge bg-success">Ficha Cerrada</span>
+                {% else %}    
+                    <a href="{% url 'editar_atencion' paciente.id atencion.id %}" class="btn btn-secondary btn-sm">Editar</a>
+                    <a href="{% url 'cerrar_atencion' paciente.id atencion.id %}" class="btn btn-warning btn-sm">Cerrar Atención</a>
+                    <a href="{% url 'borrar_atencion' paciente.id atencion.id %}" class="btn btn-danger btn-sm">Borrar</a>
+                {% endif %}
                 <a href="{% url 'ver_historial_atencion' atencion.id %}" class="btn btn-info btn-sm">Historial</a>
             </div>
         </div>
             <div class="card-body">
+                <p><strong>Veterinario a cargo:</strong> {{ atencion.veterinario.username|default:"No asignado" }}</p>
                 <p><strong>Motivo:</strong> {{ atencion.motivo_consulta }}</p>
                 <p><strong>Anamnesis:</strong> {{ atencion.anamnesis }}</p>
                 {% if atencion.chequeo %}

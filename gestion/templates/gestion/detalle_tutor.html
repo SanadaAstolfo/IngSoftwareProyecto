@@ -1,0 +1,31 @@
+{% extends 'gestion/base.html' %}
+
+{% block title %}Detalle de {{ tutor.nombre_completo}}{% endblock %}
+
+{% block content %}
+    <h1>{{ tutor.nombre_completo}}</h1>
+    <hr>
+    <div class="card mb-4">
+        <div class="card-header">Información de Contacto</div>
+        <div class="card-body">
+            <p><strong>RUT:</strong> {{ tutor.rut }}</p>
+            <p><strong>Email:</strong> {{ tutor.email }}</p>
+            <p><strong>Teléfono:</strong> {{ tutor.telefono }}</p>
+            <p><strong>Dirección:</strong> {{ tutor.direccion }}</p>
+        </div>
+    </div>
+
+    <h3>Mascotas a su Cuidado</h3>
+    <div class="list-group">
+        {% for paciente in pacientes %}
+            <a href="{% url 'detalle_paciente' paciente.id %}" class="list-group-item list-group-item-action">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">{{ paciente.nombre }}</h5>
+                    <small>Especie: {{ paciente.especie }}</small>
+                </div>
+            </a>
+        {% empty %}
+            <div class="alert alert-info">Este tutor no tiene mascotas registradas.</div>
+        {% endfor %}
+    </div>
+{% endblock %}

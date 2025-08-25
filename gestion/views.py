@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Paciente, FichaClinica, AtencionMedica, ChequeoFisico, DocumentoAdjunto
+from .models import Paciente, Tutor, FichaClinica, AtencionMedica, ChequeoFisico, DocumentoAdjunto
 from .forms import PacienteForm, AtencionGeneralForm, ChequeoFisicoForm, ProcedimientoForm, AtencionHospitalizacionForm, DocumentoAdjuntoForm
 
 def portal_view(request):
@@ -135,6 +135,8 @@ def crear_atencion(request, paciente_id, tipo_ficha):
 @login_required
 def editar_atencion(request, paciente_id, atencion_id):
     atencion = get_object_or_404(AtencionMedica, pk=atencion_id)
+    if atencion.esta_cerrada:
+        return redirect('detalle_paciente', paciente_id=paciente_id)
     paciente = get_object_or_404(Paciente, pk=paciente_id)
     try:
         chequeo = atencion.chequeo
@@ -230,3 +232,28 @@ def adjuntar_documento(request, atencion_id):
         'boton_texto': 'Subir Documento'
     }
     return render(request, 'gestion/form.html', contexto)
+
+@login_required
+def cerrar_atencion(request, paciente_id, atencion_id):
+    atencion = get_object_or_404(AtencionMedica, pk=atencion_id)
+    atencion.esta_cerrada = True
+    atencion.save()
+    return redirect('detalle_paciente', paciente_id=paciente_id)
+
+@login_required
+def lista_tutores(request):
+    tutores = Tutor.objects.all().order_by('nombre_completo')
+    contexto = {
+        'tutores': tutores,
+    }
+    return render(request, 'gestion/lista_tutores.html', contexto)
+
+@login_required
+def detalle_tutor(request, tutor_id):
+    tutor = get_object_or_404(Tutor, pk=tutor_id)
+    pacientes = tutor.pacientes.all()
+    contexto = {
+        'tutor': tutor,
+        'pacientes': pacientes,
+    }
+    return render(request, 'gestion/detalle_tutor.html', contexto)

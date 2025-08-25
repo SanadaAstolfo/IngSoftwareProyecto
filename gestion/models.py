@@ -46,6 +46,8 @@ class AtencionMedica(models.Model):
     diagnostico = models.TextField()
     tratamiento = models.TextField()
 
+    esta_cerrada = models.BooleanField(default=False)
+
     notas_hospitalizacion = models.TextField(blank=True, null=True, help_text="Notas específicas de la hospitalización")
     jaula_numero = models.CharField(max_length=10, blank=True, null=True, verbose_name="Número de Jaula")
 
