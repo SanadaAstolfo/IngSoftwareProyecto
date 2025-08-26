@@ -93,7 +93,11 @@
                         <ul class="list-group list-group-flush">
                         {% for procedimiento in atencion.procedimientos.all %}
                             <li class="list-group-item">
-                                <strong>{{ procedimiento.get_tipo_display }}:</strong> {{ procedimiento.descripcion }} 
+                                <strong>{{ procedimiento.get_tipo_display }}:</strong> 
+                                {% if procedimiento.tipo == 'Cirugía' and procedimiento.tipo_cirugia %}
+                                    <span class="badge bg-secondary">{{ procedimiento.get_tipo_cirugia_display }}</span>
+                                {% endif %}
+                                {{ procedimiento.descripcion }} 
                                 <small class="text-muted">
                                     (Inicio: {{ procedimiento.fecha_inicio }}
                                     {% if procedimiento.fecha_fin %}

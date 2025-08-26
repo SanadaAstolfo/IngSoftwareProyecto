@@ -9,15 +9,58 @@
         <div class="col-md-6">
             <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
-                {{ form.as_p }}
+                {% if 'tipo_cirugia' in form.fields %}
+                    <div class="mb-3">
+                        <label for="{{ form.tipo.id_for_label }}" class="form-label">{{ form.tipo.label }}</label>
+                        {{ form.tipo }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="{{ form.descripcion.id_for_label }}" class="form-label">{{ form.descripcion.label }}</label>
+                        {{ form.descripcion }}
+                    </div>
+                    <div class="mb-3" id="div_id_tipo_cirugia" style="display: none;">
+                        <label for="{{ form.tipo_cirugia.id_for_label }}" class="form-label">{{ form.tipo_cirugia.label }}</label>
+                        {{ form.tipo_cirugia }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="{{ form.fecha_inicio.id_for_label }}" class="form-label">{{ form.fecha_inicio.label }}</label>
+                        {{ form.fecha_inicio }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="{{ form.fecha_fin.id_for_label }}" class="form-label">{{ form.fecha_fin.label }}</label>
+                        {{ form.fecha_fin }}
+                    </div>
+                {% else %}
+                    {{ form.as_p }}
+                {% endif %}
                 <button type="submit" class="btn btn-primary">{{ boton_texto }}</button>
                 <a href="{{ request.META.HTTP_REFERER|default:'/' }}" class="btn btn-secondary">Cancelar</a>
             </form>
-
+            
             {% if object %}
             <hr class="mt-4">
             <a href="{% url 'borrar_paciente' object.id %}" class="btn btn-danger">Borrar Paciente</a>
             {% endif %}
         </div>
     </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tipoProcedimientoSelect = document.getElementById('id_tipo_procedimiento');
+            const tipoCirugiaDiv = document.getElementById('div_id_tipo_cirugia');
+            if (tipoProcedimientoSelect && tipoCirugiaDiv) {
+                function toggleTipoCirugia() {
+                    if (tipoProcedimientoSelect.value === 'Cirugía') {
+                        tipoCirugiaDiv.style.display = 'block';
+                    } else {
+                        tipoCirugiaDiv.style.display = 'none';
+                    }
+                }
+                toggleTipoCirugia();
+                tipoProcedimientoSelect.addEventListener('change', toggleTipoCirugia);
+            }
+        });
+    </script>
 {% endblock %}

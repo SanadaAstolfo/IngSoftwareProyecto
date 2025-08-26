@@ -37,9 +37,11 @@ class ChequeoFisicoForm(forms.ModelForm):
 class ProcedimientoForm(forms.ModelForm):
     class Meta:
         model = Procedimiento
-        fields = ['tipo', 'descripcion', 'fecha_inicio', 'fecha_fin']
+        fields = ['tipo', 'descripcion', 'tipo_cirugia', 'fecha_inicio', 'fecha_fin']
         widgets = {
+            'tipo': forms.Select(attrs={'class': 'form-select', 'id': 'id_tipo_procedimiento'}),
             'descripcion': forms.Textarea(attrs={'class': 'form-control', 'rows': 5}),
+            'tipo_cirugia': forms.Select(attrs={'class': 'form-control'}),
             'fecha_inicio': forms.DateTimeInput(attrs={'type': 'datetime-local'}, format='%d-%m-%YT%H:%M'),
             'fecha_fin': forms.DateTimeInput(attrs={'type': 'datetime-local'}, format='%d-%m-%YT%H:%M'),
         }

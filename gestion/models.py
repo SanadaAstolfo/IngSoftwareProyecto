@@ -84,8 +84,13 @@ class Procedimiento(models.Model):
         ('Examen', 'Examen'),
         ('Hospitalización', 'Hospitalización')
     ]
+    TIPO_CIRUGIA_CHOICES = [
+        ('Urgencia', 'Urgencia'),
+        ('Programada', 'Programada'),
+    ]
     atencion_medica = models.ForeignKey(AtencionMedica, on_delete=models.CASCADE, related_name='procedimientos')
-    tipo = models.CharField(max_length=20, choices=TIPO_PROCEDIMIENTO_CHOICES) # 
+    tipo = models.CharField(max_length=20, choices=TIPO_PROCEDIMIENTO_CHOICES)
+    tipo_cirugia = models.CharField(max_length=20, choices=TIPO_CIRUGIA_CHOICES, blank=True, null=True, verbose_name="Tipo de Cirugía")
     descripcion = models.TextField()
     fecha_inicio = models.DateTimeField()
     fecha_fin = models.DateTimeField(blank=True, null=True)
