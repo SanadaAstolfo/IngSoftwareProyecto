@@ -37,10 +37,16 @@ class AtencionMedica(models.Model):
         ('Clínica', 'Clínica Veterinaria'),
         ('Club', 'Club Entre Patitas')
     ]
+    TIPO_VISITA_CHOICES = [
+        ('Consulta', 'Consulta Básica'),
+        ('Urgencia', 'Urgencia'),
+        ('Domicilio', 'Visita a Domicilio'),
+    ]
     ficha_clinica = models.ForeignKey(FichaClinica, on_delete=models.CASCADE, related_name='atenciones')
     fecha_atencion = models.DateTimeField(auto_now_add=True)
     veterinario = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     tipo_atencion = models.CharField(max_length=10, choices=TIPO_ATENCION_CHOICES)
+    tipo_visita = models.CharField(max_length=20, choices=TIPO_VISITA_CHOICES)
     motivo_consulta = models.TextField(help_text="Debe tener un mínimo de 10 caracteres.")
     anamnesis = models.TextField(verbose_name="Anamnesis (antecedentes previos y actuales)")
     diagnostico = models.TextField()
@@ -52,9 +58,6 @@ class AtencionMedica(models.Model):
     jaula_numero = models.CharField(max_length=10, blank=True, null=True, verbose_name="Número de Jaula")
 
     history = HistoricalRecords()
-
-    def __str__(self):
-        return f"Atención para {self.ficha_clinica.paciente.nombre} el {self.fecha_atencion.strftime('%d-%m-%Y')}"
 
     def __str__(self):
         return f"Atención para {self.ficha_clinica.paciente.nombre} el {self.fecha_atencion.strftime('%d-%m-%Y')}"
