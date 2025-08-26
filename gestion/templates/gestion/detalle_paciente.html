@@ -41,6 +41,17 @@
             </div>
             <div class="card-body">
                 <p><strong>Veterinario a cargo:</strong> {{ atencion.veterinario.username|default:"No asignado" }}</p>
+                {% if atencion.estado_emocional %}
+                    <p><strong>Comportamiento:</strong>
+                        {% if atencion.estado_emocional == 'Agresivo' %}
+                            <span class="badge bg-danger">{{ atencion.estado_emocional }}</span>
+                        {% elif atencion.estado_emocional == 'Nervioso' %}
+                            <span class="badge bg-warning text-dark">{{ atencion.estado_emocional }}</span>
+                        {% else %}
+                            <span class="badge bg-secondary">{{ atencion.estado_emocional }}</span>
+                        {% endif %}
+                    </p>
+                {% endif %}
                 <p><strong>Motivo:</strong> {{ atencion.motivo_consulta }}</p>
                 <p><strong>Anamnesis:</strong> {{ atencion.anamnesis }}</p>
                 {% if atencion.chequeo %}

@@ -42,6 +42,11 @@ class AtencionMedica(models.Model):
         ('Urgencia', 'Urgencia'),
         ('Domicilio', 'Visita a Domicilio'),
     ]
+    ESTADO_EMOCIONAL_CHOICES = [
+        ('Tranquilo', 'Tranquilo'),
+        ('Nervioso', 'Nervioso'),
+        ('Agresivo', 'Agresivo'),
+    ]
     ficha_clinica = models.ForeignKey(FichaClinica, on_delete=models.CASCADE, related_name='atenciones')
     fecha_atencion = models.DateTimeField(auto_now_add=True)
     veterinario = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
@@ -51,6 +56,7 @@ class AtencionMedica(models.Model):
     anamnesis = models.TextField(verbose_name="Anamnesis (antecedentes previos y actuales)")
     diagnostico = models.TextField()
     tratamiento = models.TextField()
+    estado_emocional = models.CharField(max_length=20, choices=ESTADO_EMOCIONAL_CHOICES, blank=True, null=True, verbose_name="Comportamiento del Paciente")
 
     esta_cerrada = models.BooleanField(default=False)
 

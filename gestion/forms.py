@@ -12,7 +12,7 @@ class PacienteForm(forms.ModelForm):
 class AtencionGeneralForm(forms.ModelForm):
     class Meta:
         model = AtencionMedica
-        fields = ['motivo_consulta', 'anamnesis', 'diagnostico', 'tratamiento', 'tipo_atencion', 'tipo_visita']
+        fields = ['motivo_consulta', 'anamnesis', 'diagnostico', 'tratamiento', 'tipo_atencion', 'tipo_visita', 'estado_emocional']
         widgets = {
             'motivo_consulta': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
             'anamnesis': forms.Textarea(attrs={'class': 'form-control', 'rows': 5}),
@@ -20,6 +20,7 @@ class AtencionGeneralForm(forms.ModelForm):
             'tratamiento': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
             'tipo_atencion': forms.Select(attrs={'class': 'form-select'}),
             'tipo_visita': forms.Select(attrs={'class': 'form-select'}),
+            'estado_emocional': forms.Select(attrs={'class': 'form-select'}),
         }
 
 class ChequeoFisicoForm(forms.ModelForm):
