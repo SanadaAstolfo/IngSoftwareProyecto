@@ -115,6 +115,12 @@ def crear_atencion(request, paciente_id, tipo_ficha):
         form = FormClass(request.POST)
         if form.is_valid():
             atencion = form.save(commit=False)
+            diag_personalizado = form.cleaned_data.get('diagnostico_personalizado')
+            diag_predefinido = form.cleaned_data.get('diagnostico_predefinido')
+            if diag_personalizado:
+                atencion.diagnostico = diag_personalizado
+            elif diag_predefinido:
+                atencion.diagnostico = diag_predefinido.nombre
             atencion.ficha_clinica = ficha
             atencion.tipo_ficha = 'Hospitalización' if tipo_ficha == 'hospitalizacion' else 'General'
             if request.user.is_authenticated:

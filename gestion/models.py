@@ -32,6 +32,13 @@ class FichaClinica(models.Model):
     def __str__(self):
         return f"Ficha de {self.paciente.nombre}"
 
+class Diagnostico(models.Model):
+    nombre = models.CharField(max_length=100, unique=True)
+    descripcion = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return self.nombre
+
 class AtencionMedica(models.Model):
     TIPO_ATENCION_CHOICES = [
         ('Clínica', 'Clínica Veterinaria'),

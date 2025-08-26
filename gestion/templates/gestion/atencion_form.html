@@ -13,18 +13,41 @@
                 <div class="card">
                     <div class="card-header">Datos de la Atención</div>
                     <div class="card-body">
-                        {% for field in atencion_form %}
-                            <div class="mb-3">
-                                {{ field.label_tag }}
-                                {{ field }}
-                                {% if field.help_text %}
-                                    <div class="form-text">{{ field.help_text }}</div>
-                                {% endif %}
-                                {% for error in field.errors %}
-                                    <div class="alert alert-danger p-1 mt-1">{{ error }}</div>
-                                {% endfor %}
-                            </div>
-                        {% endfor %}
+                        <div class="mb-3">
+                            <label for="{{ atencion_form.tipo_atencion.id_for_label }}" class="form-label">{{ atencion_form.tipo_atencion.label }}</label>
+                            {{ atencion_form.lugar_atencion }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="{{ atencion_form.tipo_visita.id_for_label }}" class="form-label">{{ atencion_form.tipo_visita.label }}</label>
+                            {{ atencion_form.tipo_visita }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="{{ atencion_form.motivo_consulta.id_for_label }}" class="form-label">{{ atencion_form.motivo_consulta.label }}</label>
+                            {{ atencion_form.motivo_consulta }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ atencion_form.anamnesis.id_for_label }}" class="form-label">{{ atencion_form.anamnesis.label }}</label>
+                            {{ atencion_form.anamnesis }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="{{ atencion_form.estado_emocional.id_for_label }}" class="form-label">{{ atencion_form.estado_emocional.label }}</label>
+                            {{ atencion_form.estado_emocional }}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ atencion_form.diagnostico_predefinido.label_tag }}
+                            {{ atencion_form.diagnostico_predefinido }}
+                        </div>
+                        <div class="mb-3" id="div_diagnostico_texto" style="display: none;">
+                            <label for="{{ atencion_form.diagnostico_personalizado.id_for_label }}" class="form-label">{{ atencion_form.diagnostico_personalizado.label }}</label>
+                            {{ atencion_form.diagnostico_personalizado }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ atencion_form.tratamiento.id_for_label }}" class="form-label">{{ atencion_form.tratamiento.label }}</label>
+                            {{ atencion_form.tratamiento }}
+                        </div>
                     </div>
                 </div>
             </div>

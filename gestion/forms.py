@@ -1,5 +1,5 @@
 from django import forms
-from .models import Paciente, AtencionMedica, ChequeoFisico, Procedimiento, DocumentoAdjunto
+from .models import Paciente, AtencionMedica, ChequeoFisico, Procedimiento, DocumentoAdjunto, Diagnostico
 
 class PacienteForm(forms.ModelForm):
     class Meta:
@@ -10,9 +10,21 @@ class PacienteForm(forms.ModelForm):
         }
 
 class AtencionGeneralForm(forms.ModelForm):
+    diagnostico_predefinido = forms.ModelChoiceField(
+        queryset=Diagnostico.objects.all(),
+        required=False,
+        label="Diagnóstico",
+        widget=forms.Select(attrs={'class': 'form-select', 'id': 'id_diagnostico_predefinido'})
+    )
+    diagnostico_personalizado = forms.CharField(
+        required=False,
+        label="Otro Diagnóstico (especificar)",
+        widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'id': 'id_diagnostico_personalizado'})
+    )
     class Meta:
         model = AtencionMedica
-        fields = ['motivo_consulta', 'anamnesis', 'diagnostico', 'tratamiento', 'tipo_atencion', 'tipo_visita', 'estado_emocional']
+        exclude = ['diagnostico']
+        fields = ['tipo_atencion', 'tipo_visita', 'motivo_consulta', 'anamnesis', 'estado_emocional', 'tratamiento']
         widgets = {
             'motivo_consulta': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
             'anamnesis': forms.Textarea(attrs={'class': 'form-control', 'rows': 5}),
