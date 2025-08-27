@@ -14,21 +14,19 @@ class AtencionGeneralForm(forms.ModelForm):
         queryset=Diagnostico.objects.all(),
         required=False,
         label="Diagnóstico",
-        widget=forms.Select(attrs={'class': 'form-select', 'id': 'id_diagnostico_predefinido'})
+        widget=forms.Select(attrs={'class': 'form-select', 'id': 'id_diagnostico_select'})
     )
     diagnostico_personalizado = forms.CharField(
         required=False,
         label="Otro Diagnóstico (especificar)",
-        widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'id': 'id_diagnostico_personalizado'})
+        widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 3})
     )
     class Meta:
         model = AtencionMedica
-        exclude = ['diagnostico']
         fields = ['tipo_atencion', 'tipo_visita', 'motivo_consulta', 'anamnesis', 'estado_emocional', 'tratamiento']
         widgets = {
             'motivo_consulta': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
             'anamnesis': forms.Textarea(attrs={'class': 'form-control', 'rows': 5}),
-            'diagnostico': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
             'tratamiento': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
             'tipo_atencion': forms.Select(attrs={'class': 'form-select'}),
             'tipo_visita': forms.Select(attrs={'class': 'form-select'}),
