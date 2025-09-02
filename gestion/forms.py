@@ -10,7 +10,7 @@ class PacienteForm(forms.ModelForm):
         }
 
 class AtencionGeneralForm(forms.ModelForm):
-    diagnostico_predefinido = forms.ModelChoiceField(
+    diagnostico_opciones = forms.ModelChoiceField(
         queryset=Diagnostico.objects.all(),
         required=False,
         label="Diagnóstico",
@@ -23,13 +23,14 @@ class AtencionGeneralForm(forms.ModelForm):
     )
     class Meta:
         model = AtencionMedica
+        exclude = ['diagnostico']
         fields = ['tipo_atencion', 'tipo_visita', 'motivo_consulta', 'anamnesis', 'estado_emocional', 'tratamiento']
         widgets = {
+            'tipo_atencion': forms.Select(attrs={'class': 'form-select'}),
+            'tipo_visita': forms.Select(attrs={'class': 'form-select'}),
             'motivo_consulta': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
             'anamnesis': forms.Textarea(attrs={'class': 'form-control', 'rows': 5}),
             'tratamiento': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
-            'tipo_atencion': forms.Select(attrs={'class': 'form-select'}),
-            'tipo_visita': forms.Select(attrs={'class': 'form-select'}),
             'estado_emocional': forms.Select(attrs={'class': 'form-select'}),
         }
 

@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Paciente, Tutor, FichaClinica, AtencionMedica, ChequeoFisico, DocumentoAdjunto
+from .models import Paciente, Tutor, FichaClinica, AtencionMedica, ChequeoFisico, DocumentoAdjunto, Diagnostico
 from .forms import PacienteForm, AtencionGeneralForm, ChequeoFisicoForm, ProcedimientoForm, AtencionHospitalizacionForm, DocumentoAdjuntoForm
 
 def portal_view(request):
@@ -116,11 +116,11 @@ def crear_atencion(request, paciente_id, tipo_ficha):
         if form.is_valid():
             atencion = form.save(commit=False)
             diag_personalizado = form.cleaned_data.get('diagnostico_personalizado')
-            diag_predefinido = form.cleaned_data.get('diagnostico_predefinido')
+            diag_opcion = form.cleaned_data.get('diagnostico_opciones')
             if diag_personalizado:
                 atencion.diagnostico = diag_personalizado
-            elif diag_predefinido:
-                atencion.diagnostico = diag_predefinido.nombre
+            elif diag_opcion:
+                atencion.diagnostico = diag_opcion.nombre
             atencion.ficha_clinica = ficha
             atencion.tipo_ficha = 'Hospitalización' if tipo_ficha == 'hospitalizacion' else 'General'
             if request.user.is_authenticated:
@@ -141,9 +141,11 @@ def crear_atencion(request, paciente_id, tipo_ficha):
 @login_required
 def editar_atencion(request, paciente_id, atencion_id):
     atencion = get_object_or_404(AtencionMedica, pk=atencion_id)
+    paciente = get_object_or_404(Paciente, pk=paciente_id)
+
     if atencion.esta_cerrada:
         return redirect('detalle_paciente', paciente_id=paciente_id)
-    paciente = get_object_or_404(Paciente, pk=paciente_id)
+
     try:
         chequeo = atencion.chequeo
     except ChequeoFisico.DoesNotExist:
@@ -154,15 +156,39 @@ def editar_atencion(request, paciente_id, atencion_id):
         chequeo_form = ChequeoFisicoForm(request.POST, instance=chequeo)
 
         if atencion_form.is_valid() and chequeo_form.is_valid():
-            atencion = atencion_form.save()
+            atencion_guardada = atencion_form.save(commit=False)
 
-            chequeo = chequeo_form.save(commit=False)
-            chequeo.atencion_medica = atencion
-            chequeo.save()
+            diag_opcion = atencion_form.cleaned_data.get('diagnostico_opciones')
+            diag_personalizado = atencion_form.cleaned_data.get('diagnostico_personalizado')
+
+            if diag_personalizado:
+                atencion_guardada.diagnostico = diag_personalizado
+            elif diag_opcion:
+                atencion_guardada.diagnostico = diag_opcion.nombre
+            else:
+                atencion_guardada.diagnostico = ""
+
+            atencion_guardada.save()
+
+            chequeo_guardado = chequeo_form.save(commit=False)
+            chequeo_guardado.atencion_medica = atencion_guardada
+            chequeo_guardado.save()
 
             return redirect('detalle_paciente', paciente_id=paciente.id)
     else:
-        atencion_form = AtencionGeneralForm(instance=atencion)
+        initial_data = {}
+        try:
+            diagnostico_obj = Diagnostico.objects.get(nombre=atencion.diagnostico)
+            initial_data['diagnostico_opciones'] = diagnostico_obj
+        except Diagnostico.DoesNotExist:
+            initial_data['diagnostico_personalizado'] = atencion.diagnostico
+            try:
+                otro_obj = Diagnostico.objects.get(nombre='Otro')
+                initial_data['diagnostico_opciones'] = otro_obj
+            except Diagnostico.DoesNotExist:
+                pass
+
+        atencion_form = AtencionGeneralForm(instance=atencion, initial=initial_data)
         chequeo_form = ChequeoFisicoForm(instance=chequeo)
 
     contexto = {
