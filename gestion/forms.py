@@ -19,7 +19,7 @@ class AtencionGeneralForm(forms.ModelForm):
     diagnostico_personalizado = forms.CharField(
         required=False,
         label="Otro Diagnóstico (especificar)",
-        widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 3})
+        widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'id': 'id_diagnostico_personalizado'})
     )
     class Meta:
         model = AtencionMedica

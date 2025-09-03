@@ -60,29 +60,27 @@
 
 {% block scripts %}
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        console.log("El script de atencion_form.html se ha cargado.");
+        document.addEventListener('DOMContentLoaded', function() {
+            const diagnosticoSelect = document.getElementById('id_diagnostico_opciones');
+            const diagnosticoTextoInput = document.getElementById('id_diagnostico_personalizado');
 
-        const diagnosticoSelect = document.getElementById('id_diagnostico_opciones');
-        const diagnosticoTextoDiv = document.getElementById('div_diagnostico_personalizado');
+            if (!diagnosticoSelect || !diagnosticoTextoInput) return;
 
-        if (!diagnosticoSelect || !diagnosticoTextoDiv) {
-            console.error("Error: No se encontraron los elementos del formulario (select o div).");
-            return;
-        }
-
-        function toggleOtroDiagnostico() {
-            const selectedOptionText = diagnosticoSelect.options[diagnosticoSelect.selectedIndex].text;
-            console.log("Opción seleccionada:", selectedOptionText);
-            
-            if (selectedOptionText === 'Otro') {
-                diagnosticoTextoDiv.style.display = 'block';
-            } else {
-                diagnosticoTextoDiv.style.display = 'none';
+            function toggleOtroDiagnostico() {
+                const selectedOptionText = diagnosticoSelect.options[diagnosticoSelect.selectedIndex].text;
+                
+                if (selectedOptionText === 'Otro') {
+                    diagnosticoTextoInput.disabled = false;
+                    diagnosticoTextoInput.placeholder = 'Escribe el diagnóstico aquí...';
+                } else {
+                    diagnosticoTextoInput.disabled = true;
+                    diagnosticoTextoInput.value = '';
+                    diagnosticoTextoInput.placeholder = '';
+                }
             }
-        }
-        toggleOtroDiagnostico();
-        diagnosticoSelect.addEventListener('change', toggleOtroDiagnostico);
-    });
+
+            toggleOtroDiagnostico();
+            diagnosticoSelect.addEventListener('change', toggleOtroDiagnostico);
+        });
     </script>
 {% endblock %}
