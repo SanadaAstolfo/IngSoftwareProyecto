@@ -3,6 +3,19 @@ from django.contrib.auth.models import User
 from simple_history.models import HistoricalRecords
 from datetime import date
 
+class AlertaClinica(models.Model):
+    nombre = models.CharField(max_length=100, unique=True)
+    descripcion = models.TextField(blank=True, null=True, help_text="Descripcion de la alerta y qué implica.")
+    NIVEL_SEVERIDAD_CHOICES = [
+        ('Alta', 'Alta (Roja)'),
+        ('Media', 'Media (Naranja)'),
+        ('Baja', 'Baja (Azul)'),
+    ]
+    severidad = models.CharField(max_length=10, choices=NIVEL_SEVERIDAD_CHOICES, default='Baja')
+
+    def __str__(self):
+        return self.nombre
+
 class Tutor(models.Model):
     nombre_completo = models.CharField(max_length=100)
     rut = models.CharField(max_length=12, unique=True)
@@ -20,6 +33,7 @@ class Paciente(models.Model):
     sexo = models.CharField(max_length=10)
     fecha_nacimiento = models.DateField()
     microchip_tatuaje = models.CharField(max_length=50, blank=True, null=True)
+    alertas = models.ManyToManyField(AlertaClinica, blank=True, verbose_name="Alertas Clinicas")
     tutor = models.ForeignKey(Tutor, on_delete=models.CASCADE, related_name='pacientes')
 
     @property

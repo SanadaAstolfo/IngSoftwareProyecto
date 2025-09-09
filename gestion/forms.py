@@ -4,9 +4,10 @@ from .models import Paciente, AtencionMedica, ChequeoFisico, Procedimiento, Docu
 class PacienteForm(forms.ModelForm):
     class Meta:
         model = Paciente
-        fields = ['nombre', 'especie', 'raza', 'sexo', 'fecha_nacimiento', 'tutor']
+        fields = ['nombre', 'especie', 'raza', 'sexo', 'fecha_nacimiento', 'tutor', 'alertas']
         widgets = {
             'fecha_nacimiento': forms.DateInput(attrs={'type': 'date'}),
+            'alertas': forms.CheckboxSelectMultiple,
         }
 
 class AtencionGeneralForm(forms.ModelForm):
