@@ -15,7 +15,7 @@ class AtencionGeneralForm(forms.ModelForm):
     class Meta:
         model = AtencionMedica
         exclude = ['diagnostico']
-        fields = ['tipo_atencion', 'tipo_visita', 'motivo_consulta', 'anamnesis', 'estado_emocional', 'diagnosticos', 'prediagnosticos', 'tratamiento']
+        fields = ['tipo_atencion', 'tipo_visita', 'motivo_consulta', 'anamnesis', 'estado_emocional', 'diagnosticos', 'prediagnosticos', 'tratamiento', 'estado']
         widgets = {
             'tipo_atencion': forms.Select(attrs={'class': 'form-select'}),
             'tipo_visita': forms.Select(attrs={'class': 'form-select'}),
@@ -25,6 +25,7 @@ class AtencionGeneralForm(forms.ModelForm):
             'estado_emocional': forms.Select(attrs={'class': 'form-select'}),
             'diagnosticos': forms.SelectMultiple(attrs={'class': 'form-select', 'size': '5'}),
             'prediagnosticos': forms.SelectMultiple(attrs={'class': 'form-select', 'size': '5'}),
+            'estado': forms.Select(attrs={'class': 'form-select'}),
         }
 
 class ChequeoFisicoForm(forms.ModelForm):

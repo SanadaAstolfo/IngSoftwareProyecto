@@ -26,6 +26,11 @@
         <div class="card mb-3">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <strong>Atención del {{ atencion.fecha_atencion.date }}</strong>
+                {% if atencion.estado == 'Completa' %}
+                    <span class="badge bg-success">{{ atencion.estado }}</span>
+                {% else %}
+                    <span class="badge bg-warning text-dark">{{ atencion.estado }}</span>
+                {% endif %}
                 <span class="badge bg-primary ms-2">{{ atencion.get_lugar_atencion_display }}</span>
                 <span class="badge bg-info ms-1">{{ atencion.get_tipo_visita_display }}</span>
                 <div>
@@ -33,7 +38,9 @@
                         <span class="badge bg-success">Ficha Cerrada</span>
                     {% else %}    
                         <a href="{% url 'editar_atencion' paciente.id atencion.id %}" class="btn btn-secondary btn-sm">Editar</a>
-                        <a href="{% url 'cerrar_atencion' paciente.id atencion.id %}" class="btn btn-warning btn-sm">Cerrar Atención</a>
+                        {% if atencion.estado == 'Completa' %}
+                            <a href="{% url 'cerrar_atencion' paciente.id atencion.id %}" class="btn btn-warning btn-sm">Cerrar Atención</a>
+                        {% endif %}
                         <a href="{% url 'borrar_atencion' paciente.id atencion.id %}" class="btn btn-danger btn-sm">Borrar</a>
                     {% endif %}
                     <a href="{% url 'ver_historial_atencion' atencion.id %}" class="btn btn-info btn-sm">Historial</a>

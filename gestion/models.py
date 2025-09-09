@@ -51,6 +51,10 @@ class Diagnostico(models.Model):
         return self.nombre
 
 class AtencionMedica(models.Model):
+    ESTADO_CHOICES = [
+        ('Pendiente', 'Pendiente'),
+        ('Completa', 'Completa'),
+    ]
     TIPO_ATENCION_CHOICES = [
         ('Clínica', 'Clínica Veterinaria'),
         ('Club', 'Club Entre Patitas')
@@ -78,6 +82,7 @@ class AtencionMedica(models.Model):
     tratamiento = models.TextField()
     estado_emocional = models.CharField(max_length=20, choices=ESTADO_EMOCIONAL_CHOICES, blank=True, null=True, verbose_name="Comportamiento del Paciente")
 
+    estado = models.CharField(max_length=20, choices=ESTADO_CHOICES, default='Pendiente', verbose_name="Estado de la Ficha")
     esta_cerrada = models.BooleanField(default=False)
 
     notas_hospitalizacion = models.TextField(blank=True, null=True, help_text="Notas específicas de la hospitalización")
