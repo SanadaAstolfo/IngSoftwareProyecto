@@ -15,6 +15,7 @@ urlpatterns = [
     path('tutores/', views.lista_tutores, name='lista_tutores'),
     path('tutores/<int:tutor_id>/', views.detalle_tutor, name='detalle_tutor'),
     path('atencion/<int:atencion_id>/procedimiento/nuevo/', views.crear_procedimiento, name='crear_procedimiento'),
+    path('atencion/<int:atencion_id>/insumo/nuevo/', views.agregar_insumo, name='agregar_insumo'),
     path('atencion/<int:atencion_id>/adjuntar/', views.adjuntar_documento, name='adjuntar_documento'),
     path('atencion/<int:atencion_id>/historial/', views.ver_historial_atencion, name='ver_historial_atencion'),
 ]

@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from simple_history.models import HistoricalRecords
+from datetime import date
 
 class Tutor(models.Model):
     nombre_completo = models.CharField(max_length=100)
@@ -18,8 +19,18 @@ class Paciente(models.Model):
     raza = models.CharField(max_length=50)
     sexo = models.CharField(max_length=10)
     fecha_nacimiento = models.DateField()
-    microchip_tatuaje = models.CharField(max_length=50, blank=True, null=True) # 
+    microchip_tatuaje = models.CharField(max_length=50, blank=True, null=True)
     tutor = models.ForeignKey(Tutor, on_delete=models.CASCADE, related_name='pacientes')
+
+    @property
+    def edad(self):
+        hoy = date.today()
+        if self.fecha_nacimiento:
+            edad_calculada = hoy.year - self.fecha_nacimiento.year
+            if (hoy.month, hoy.day) < (self.fecha_nacimiento.month, self.fecha_nacimiento.day):
+                edad_calculada -= 1
+            return edad_calculada
+        return None
 
     def __str__(self):
         return f"{self.nombre} ({self.especie})"
@@ -61,7 +72,9 @@ class AtencionMedica(models.Model):
     tipo_visita = models.CharField(max_length=20, choices=TIPO_VISITA_CHOICES)
     motivo_consulta = models.TextField(help_text="Debe tener un mínimo de 10 caracteres.")
     anamnesis = models.TextField(verbose_name="Anamnesis (antecedentes previos y actuales)")
-    diagnostico = models.TextField()
+    #diagnostico = models.TextField()
+    diagnosticos = models.ManyToManyField(Diagnostico, related_name='atenciones', blank=True, verbose_name="Diagnósticos")
+    prediagnosticos = models.ManyToManyField(Diagnostico, related_name='atenciones_prediagnostico', blank=True, verbose_name="Prediagnósticos (Opcional)")
     tratamiento = models.TextField()
     estado_emocional = models.CharField(max_length=20, choices=ESTADO_EMOCIONAL_CHOICES, blank=True, null=True, verbose_name="Comportamiento del Paciente")
 
@@ -113,3 +126,24 @@ class DocumentoAdjunto(models.Model):
 
     def __str__(self):
         return f"{self.titulo} - {self.atencion_medica.ficha_clinica.paciente.nombre}"
+    
+class Insumo(models.Model):
+    nombre = models.CharField(max_length=100, unique=True)
+    descripcion = models.TextField(blank=True, null=True)
+    costo = models.DecimalField(max_digits=10, decimal_places=2, help_text="Costo por unidad del insumo")
+    
+    def __str__(self):
+        return f"{self.nombre} (${self.costo})"
+    
+class InsumoUtilizado(models.Model):
+    atencion_medica = models.ForeignKey(AtencionMedica, on_delete=models.CASCADE, related_name='insumos_utilizados')
+    insumo = models.ForeignKey(Insumo, on_delete=models.CASCADE)
+    cantidad = models.PositiveIntegerField(default=1)
+    costo_total = models.DecimalField(max_digits=10, decimal_places=2, editable=False)
+
+    def save(self, *args, **kwargs):
+        self.costo_total = self.insumo.costo * self.cantidad
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.cantidad} x {self.insumo.nombre} en atencion {self.atencion_medica.id}"

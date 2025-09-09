@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Paciente, Tutor, FichaClinica, AtencionMedica, ChequeoFisico, DocumentoAdjunto, Diagnostico
-from .forms import PacienteForm, AtencionGeneralForm, ChequeoFisicoForm, ProcedimientoForm, AtencionHospitalizacionForm, DocumentoAdjuntoForm
+from .models import Paciente, Tutor, FichaClinica, AtencionMedica, ChequeoFisico, DocumentoAdjunto, Diagnostico, InsumoUtilizado
+from .forms import PacienteForm, AtencionGeneralForm, ChequeoFisicoForm, ProcedimientoForm, AtencionHospitalizacionForm, DocumentoAdjuntoForm, InsumoUtilizadoForm
 
 def portal_view(request):
     return render(request, 'portal.html')
@@ -115,17 +115,14 @@ def crear_atencion(request, paciente_id, tipo_ficha):
         form = FormClass(request.POST)
         if form.is_valid():
             atencion = form.save(commit=False)
-            diag_personalizado = form.cleaned_data.get('diagnostico_personalizado')
-            diag_opcion = form.cleaned_data.get('diagnostico_opciones')
-            if diag_personalizado:
-                atencion.diagnostico = diag_personalizado
-            elif diag_opcion:
-                atencion.diagnostico = diag_opcion.nombre
+
             atencion.ficha_clinica = ficha
-            atencion.tipo_ficha = 'Hospitalización' if tipo_ficha == 'hospitalizacion' else 'General'
             if request.user.is_authenticated:
                 atencion.veterinario = request.user
+
             atencion.save()
+            form.save_m2m() 
+            
             return redirect('detalle_paciente', paciente_id=paciente.id)
     else:
         form = FormClass()
@@ -156,39 +153,15 @@ def editar_atencion(request, paciente_id, atencion_id):
         chequeo_form = ChequeoFisicoForm(request.POST, instance=chequeo)
 
         if atencion_form.is_valid() and chequeo_form.is_valid():
-            atencion_guardada = atencion_form.save(commit=False)
-
-            diag_opcion = atencion_form.cleaned_data.get('diagnostico_opciones')
-            diag_personalizado = atencion_form.cleaned_data.get('diagnostico_personalizado')
-
-            if diag_personalizado:
-                atencion_guardada.diagnostico = diag_personalizado
-            elif diag_opcion:
-                atencion_guardada.diagnostico = diag_opcion.nombre
-            else:
-                atencion_guardada.diagnostico = ""
-
-            atencion_guardada.save()
+            atencion_form.save()
 
             chequeo_guardado = chequeo_form.save(commit=False)
-            chequeo_guardado.atencion_medica = atencion_guardada
+            chequeo_guardado.atencion_medica = atencion
             chequeo_guardado.save()
 
             return redirect('detalle_paciente', paciente_id=paciente.id)
     else:
-        initial_data = {}
-        try:
-            diagnostico_obj = Diagnostico.objects.get(nombre=atencion.diagnostico)
-            initial_data['diagnostico_opciones'] = diagnostico_obj
-        except Diagnostico.DoesNotExist:
-            initial_data['diagnostico_personalizado'] = atencion.diagnostico
-            try:
-                otro_obj = Diagnostico.objects.get(nombre='Otro')
-                initial_data['diagnostico_opciones'] = otro_obj
-            except Diagnostico.DoesNotExist:
-                pass
-
-        atencion_form = AtencionGeneralForm(instance=atencion, initial=initial_data)
+        atencion_form = AtencionGeneralForm(instance=atencion)
         chequeo_form = ChequeoFisicoForm(instance=chequeo)
 
     contexto = {
@@ -289,3 +262,24 @@ def detalle_tutor(request, tutor_id):
         'pacientes': pacientes,
     }
     return render(request, 'gestion/detalle_tutor.html', contexto)
+
+@login_required
+def agregar_insumo(request, atencion_id):
+    atencion = get_object_or_404(AtencionMedica, pk=atencion_id)
+    if request.method == 'POST':
+        form = InsumoUtilizadoForm(request.POST)
+        if form.is_valid():
+            insumo_utilizado = form.save(commit=False)
+            insumo_utilizado.atencion_medica = atencion
+            insumo_utilizado.save()
+            return redirect('detalle_paciente', paciente_id=atencion.ficha_clinica.paciente.id)
+    else:
+        form = InsumoUtilizadoForm()
+    
+    contexto = {
+        'form': form,
+        'atencion': atencion,
+        'titulo': 'Agregar Insumo Utilizado',
+        'boton_texto': 'Agregar Insumo'
+    }
+    return render(request, 'gestion/form.html', contexto)

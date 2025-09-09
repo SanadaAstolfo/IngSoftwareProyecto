@@ -15,7 +15,7 @@
         <div class="card-header">Datos del Paciente</div>
         <div class="card-body">
             <p><strong>Especie:</strong> {{ paciente.especie }} | <strong>Raza:</strong> {{ paciente.raza }}</p>
-            <p><strong>Fecha de Nacimiento:</strong> {{ paciente.fecha_nacimiento }}</p>
+            <p><strong>Fecha de Nacimiento:</strong> {{ paciente.fecha_nacimiento }} | <strong>Edad:</strong> {{ paciente.edad }} años</p>
             <p><strong>Tutor:</strong> {{ paciente.tutor.nombre_completo }} ({{ paciente.tutor.email }})</p>
         </div>
     </div>
@@ -67,7 +67,20 @@
                         </ul>
                     </div>
                 {% endif %}
-                <p><strong>Diagnóstico:</strong> {{ atencion.diagnostico }}</p>
+                <p><strong>Diagnóstico:</strong>
+                    {% for diag in atencion.diagnosticos.all %}
+                        <span class="badge bg-danger">{{ diag.nombre }}</span>
+                    {% empty %}
+                        Ninguno
+                    {% endfor %}
+                </p>
+                <p><strong>Prediagnósticos:</strong>
+                    {% for prediag in atencion.prediagnosticos.all %}
+                        <span class="badge bg-warning text-dark">{{ prediag.nombre }}</span>
+                    {% empty %}
+                        Ninguno
+                    {% endfor %}
+                </p>
                 <p><strong>Tratamiento:</strong> {{ atencion.tratamiento }}</p>
                 <div class="card-body">
                     <div class="mt-3">
@@ -87,36 +100,68 @@
                         <a href="{% url 'adjuntar_documento' atencion.id %}" class="btn btn-outline-info btn-sm mt-2">+ Adjuntar Documento</a>
                     </div>
                 </div>
-                <div class="mt-3">
-                    <h6>Procedimientos, Exámenes y Hospitalizaciones</h6>
-                    {% if atencion.procedimientos.all %}
-                        <ul class="list-group list-group-flush">
-                        {% for procedimiento in atencion.procedimientos.all %}
-                            <li class="list-group-item">
-                                <strong>{{ procedimiento.get_tipo_display }}:</strong> 
-                                {% if procedimiento.tipo == 'Cirugía' and procedimiento.tipo_cirugia %}
-                                    <span class="badge bg-secondary">{{ procedimiento.get_tipo_cirugia_display }}</span>
-                                {% endif %}
-                                {{ procedimiento.descripcion }} 
-                                <small class="text-muted">
-                                    (Inicio: {{ procedimiento.fecha_inicio }}
-                                    {% if procedimiento.fecha_fin %}
-                                        - Fin: {{ procedimiento.fecha_fin }}
-                                    {% endif %})
-                                </small>
-                            </li>
-                        {% endfor %}
-                        </ul>
-                    {% else %}
-                    {% if atencion.tipo_ficha == 'Hospitalización' and atencion.notas_hospitalizacion %}
-                        <div class="alert alert-info mt-2">
-                            <strong>Notas de Hospitalización:</strong> {{ atencion.notas_hospitalizacion }}<br>
-                            <strong>Jaula:</strong> {{ atencion.jaula_numero|default:'No especificada' }}
-                        </div>
-                    {% endif %}
-                        <p><small>No hay procedimientos registrados para esta atención.</small></p>
-                    {% endif %}
-                    <a href="{% url 'crear_procedimiento' atencion.id %}" class="btn btn-outline-primary btn-sm mt-2">+ Añadir Procedimiento</a>
+                <div class="card-body">
+                    <div class="mt-3">
+                        <h6>Procedimientos, Exámenes y Hospitalizaciones</h6>
+                        {% if atencion.procedimientos.all %}
+                            <ul class="list-group list-group-flush">
+                            {% for procedimiento in atencion.procedimientos.all %}
+                                <li class="list-group-item">
+                                    <strong>{{ procedimiento.get_tipo_display }}:</strong> 
+                                    {% if procedimiento.tipo == 'Cirugía' and procedimiento.tipo_cirugia %}
+                                        <span class="badge bg-secondary">{{ procedimiento.get_tipo_cirugia_display }}</span>
+                                    {% endif %}
+                                    {{ procedimiento.descripcion }} 
+                                    <small class="text-muted">
+                                        (Inicio: {{ procedimiento.fecha_inicio }}
+                                        {% if procedimiento.fecha_fin %}
+                                            - Fin: {{ procedimiento.fecha_fin }}
+                                        {% endif %})
+                                    </small>
+                                </li>
+                            {% endfor %}
+                            </ul>
+                        {% else %}
+                        {% if atencion.notas_hospitalizacion %}
+                            <div class="alert alert-info mt-2">
+                                <strong>Notas de Hospitalización:</strong> {{ atencion.notas_hospitalizacion }}<br>
+                                <strong>Jaula:</strong> {{ atencion.jaula_numero|default:'No especificada' }}
+                            </div>
+                        {% endif %}
+                            <p><small>No hay procedimientos registrados para esta atención.</small></p>
+                        {% endif %}
+                        <a href="{% url 'crear_procedimiento' atencion.id %}" class="btn btn-outline-primary btn-sm mt-2">+ Añadir Procedimiento</a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="mt-3">
+                        <h6>Insumos Utilizados</h6>
+                        {% if atencion.insumos_utilizados.all %}
+                            <table class="table table-sm table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Insumo</th>
+                                        <th>Cantidad</th>
+                                        <th>Costo Unitario</th>
+                                        <th>Costo Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {% for item in atencion.insumos_utilizados.all %}
+                                    <tr>
+                                        <td>{{ item.insumo.nombre }}</td>
+                                        <td>{{ item.cantidad }}</td>
+                                        <td>${{ item.insumo.costo }}</td>
+                                        <td>${{ item.costo_total }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        {% else %}
+                            <p><small>No se registraron insumos para esta atención.</small></p>
+                        {% endif %}
+                        <a href="{% url 'agregar_insumo' atencion.id %}" class="btn btn-outline-success btn-sm mt-2">+ Agregar Insumo</a>
+                    </div>
                 </div>
             </div>
         </div>

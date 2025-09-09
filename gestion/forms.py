@@ -1,5 +1,5 @@
 from django import forms
-from .models import Paciente, AtencionMedica, ChequeoFisico, Procedimiento, DocumentoAdjunto, Diagnostico
+from .models import Paciente, AtencionMedica, ChequeoFisico, Procedimiento, DocumentoAdjunto, Diagnostico, InsumoUtilizado
 
 class PacienteForm(forms.ModelForm):
     class Meta:
@@ -10,21 +10,12 @@ class PacienteForm(forms.ModelForm):
         }
 
 class AtencionGeneralForm(forms.ModelForm):
-    diagnostico_opciones = forms.ModelChoiceField(
-        queryset=Diagnostico.objects.all(),
-        required=False,
-        label="Diagnóstico",
-        widget=forms.Select(attrs={'class': 'form-select', 'id': 'id_diagnostico_select'})
-    )
-    diagnostico_personalizado = forms.CharField(
-        required=False,
-        label="Otro Diagnóstico (especificar)",
-        widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'id': 'id_diagnostico_personalizado'})
-    )
+    #diagnostico_opciones = forms.ModelChoiceField(queryset=Diagnostico.objects.all(), required=False, label="Diagnóstico", widget=forms.Select(attrs={'class': 'form-select', 'id': 'id_diagnostico_select'}))
+    #diagnostico_personalizado = forms.CharField(required=False, label="Otro Diagnóstico (especificar)", widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'id': 'id_diagnostico_personalizado'}))
     class Meta:
         model = AtencionMedica
         exclude = ['diagnostico']
-        fields = ['tipo_atencion', 'tipo_visita', 'motivo_consulta', 'anamnesis', 'estado_emocional', 'tratamiento']
+        fields = ['tipo_atencion', 'tipo_visita', 'motivo_consulta', 'anamnesis', 'estado_emocional', 'diagnosticos', 'prediagnosticos', 'tratamiento']
         widgets = {
             'tipo_atencion': forms.Select(attrs={'class': 'form-select'}),
             'tipo_visita': forms.Select(attrs={'class': 'form-select'}),
@@ -32,6 +23,8 @@ class AtencionGeneralForm(forms.ModelForm):
             'anamnesis': forms.Textarea(attrs={'class': 'form-control', 'rows': 5}),
             'tratamiento': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
             'estado_emocional': forms.Select(attrs={'class': 'form-select'}),
+            'diagnosticos': forms.SelectMultiple(attrs={'class': 'form-select', 'size': '5'}),
+            'prediagnosticos': forms.SelectMultiple(attrs={'class': 'form-select', 'size': '5'}),
         }
 
 class ChequeoFisicoForm(forms.ModelForm):
@@ -70,3 +63,12 @@ class DocumentoAdjuntoForm(forms.ModelForm):
     class Meta:
         model = DocumentoAdjunto
         fields = ['titulo', 'archivo']
+
+class InsumoUtilizadoForm(forms.ModelForm):
+    class Meta:
+        model = InsumoUtilizado
+        fields = ['insumo', 'cantidad']
+        widgets = {
+            'insumo': forms.Select(attrs={'class': 'form-select'}),
+            'cantidad': forms.NumberInput(attrs={'class': 'form-control', 'min': '1'}),
+        }
