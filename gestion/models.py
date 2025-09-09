@@ -82,6 +82,7 @@ class AtencionMedica(models.Model):
 
     notas_hospitalizacion = models.TextField(blank=True, null=True, help_text="Notas específicas de la hospitalización")
     jaula_numero = models.CharField(max_length=10, blank=True, null=True, verbose_name="Número de Jaula")
+    fecha_egreso = models.DateTimeField(blank=True, null=True, verbose_name="Fecha de Egreso")
 
     history = HistoricalRecords()
 

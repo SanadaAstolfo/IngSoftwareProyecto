@@ -52,11 +52,12 @@ class ProcedimientoForm(forms.ModelForm):
 
 class AtencionHospitalizacionForm(AtencionGeneralForm):
     class Meta(AtencionGeneralForm.Meta):
-        fields = AtencionGeneralForm.Meta.fields + ['notas_hospitalizacion', 'jaula_numero']
+        fields = AtencionGeneralForm.Meta.fields + ['notas_hospitalizacion', 'jaula_numero', 'fecha_egreso']
         widgets = AtencionGeneralForm.Meta.widgets.copy()
         widgets.update({
             'notas_hospitalizacion': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
             'jaula_numero': forms.TextInput(attrs={'class': 'form-control'}),
+            'fecha_egreso': forms.DateTimeInput(attrs={'type': 'datetime-local'}, format='%d-%m-%YT%H:%M'),
         })
 
 class DocumentoAdjuntoForm(forms.ModelForm):
