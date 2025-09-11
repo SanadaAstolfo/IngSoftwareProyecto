@@ -182,6 +182,14 @@
                         <a href="{% url 'agregar_insumo' atencion.id %}" class="btn btn-outline-success btn-sm mt-2">+ Agregar Insumo</a>
                     </div>
                 </div>
+                <div class="card-body">
+                    {% if user.is_staff and atencion.observaciones_sensibles %}
+                        <div class="alert alert-secondary mt-3">
+                            <h6 class="alert-heading">Observaciones Sensibles (Solo Personal)</h6>
+                            <p class="mb-0">{{ atencion.observaciones_sensibles }}</p>
+                        </div>
+                    {% endif %}
+                </div>
             </div>
         </div>
     {% empty %}

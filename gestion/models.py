@@ -110,6 +110,8 @@ class AtencionMedica(models.Model):
     jaula_numero = models.CharField(max_length=10, blank=True, null=True, verbose_name="Número de Jaula")
     fecha_egreso = models.DateTimeField(blank=True, null=True, verbose_name="Fecha de Egreso")
 
+    observaciones_sensibles = models.TextField(blank=True, null=True, verbose_name="Observaciones Médicas Sensibles (Solo personal)", help_text="Estas notas no serán visibles para el tutor.")
+
     history = HistoricalRecords()
 
     def __str__(self):
