@@ -4,8 +4,15 @@ from simple_history.models import HistoricalRecords
 from datetime import date
 
 class AlertaClinica(models.Model):
+    CATEGORIA_CHOICES = [
+        ('Alergia', 'Alergia'),
+        ('Condición Crónica', 'Condición Crónica'),
+        ('Comportamiento', 'Comportamiento'),
+        ('Manejo Específico', 'Manejo Específico'),
+    ]
     nombre = models.CharField(max_length=100, unique=True)
     descripcion = models.TextField(blank=True, null=True, help_text="Descripcion de la alerta y qué implica.")
+    categoria = models.CharField(max_length=50, choices=CATEGORIA_CHOICES, default='Manejo Específico')
     NIVEL_SEVERIDAD_CHOICES = [
         ('Alta', 'Alta (Roja)'),
         ('Media', 'Media (Naranja)'),
