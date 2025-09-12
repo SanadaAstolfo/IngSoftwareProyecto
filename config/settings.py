@@ -136,3 +136,18 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+if DEBUG:
+    # Escribir correos en la consola
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+else:
+    # Usar un servidor SMTP real
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = 'smtp.gmail.com'  # O el de tu proveedor de correo
+    EMAIL_PORT = 587
+    EMAIL_USE_TLS = True
+    # Estas credenciales se deben gestionar como variables de entorno en un servidor real (cuando este listo para hacer el deploy)
+    EMAIL_HOST_USER = 'tu-correo@ejemplo.com'
+    EMAIL_HOST_PASSWORD = 'tu-contraseña-de-aplicacion'
+
+DEFAULT_FROM_EMAIL = 'Clinica Entre Patitas <no-responder@entrepatitas.cl>'

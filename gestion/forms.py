@@ -1,5 +1,6 @@
 from django import forms
-from .models import Paciente, AtencionMedica, ChequeoFisico, Procedimiento, DocumentoAdjunto, Diagnostico, InsumoUtilizado, AntecedenteExterno
+from django.contrib.auth.models import User
+from .models import Paciente, AtencionMedica, ChequeoFisico, Procedimiento, DocumentoAdjunto, Diagnostico, InsumoUtilizado, AntecedenteExterno, Cita
 
 class PacienteForm(forms.ModelForm):
     class Meta:
@@ -81,3 +82,20 @@ class AntecedenteExternoForm(forms.ModelForm):
     class Meta:
         model = AntecedenteExterno
         fields = ['titulo', 'archivo']
+
+class CitaForm(forms.ModelForm):
+    class Meta:
+        model = Cita
+        fields = ['paciente', 'veterinario', 'fecha_hora', 'motivo', 'estado', 'notas']
+        widgets = {
+            'paciente': forms.Select(attrs={'class': 'form-select'}),
+            'veterinario': forms.Select(attrs={'class': 'form-select'}),
+            'fecha_hora': forms.DateTimeInput(attrs={'type': 'datetime-local'}, format='%Y-%m-%dT%H:%M'),
+            'motivo': forms.TextInput(attrs={'class': 'form-control'}),
+            'estado': forms.Select(attrs={'class': 'form-select'}),
+            'notas': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['veterinario'].queryset = User.objects.filter(is_staff=True)

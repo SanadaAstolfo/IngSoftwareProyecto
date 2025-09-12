@@ -2,8 +2,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.models import LogEntry, CHANGE
 from django.contrib.contenttypes.models import ContentType
-from .models import Paciente, Tutor, FichaClinica, AtencionMedica, ChequeoFisico, DocumentoAdjunto, Diagnostico, InsumoUtilizado
-from .forms import PacienteForm, AtencionGeneralForm, ChequeoFisicoForm, ProcedimientoForm, AtencionHospitalizacionForm, DocumentoAdjuntoForm, InsumoUtilizadoForm, AntecedenteExternoForm
+from .models import Paciente, Tutor, FichaClinica, AtencionMedica, ChequeoFisico, DocumentoAdjunto, Diagnostico, InsumoUtilizado, Cita
+from .forms import PacienteForm, AtencionGeneralForm, ChequeoFisicoForm, ProcedimientoForm, AtencionHospitalizacionForm, DocumentoAdjuntoForm, InsumoUtilizadoForm, AntecedenteExternoForm, CitaForm
 
 def portal_view(request):
     return render(request, 'portal.html')
@@ -328,3 +328,56 @@ def cargar_antecedente(request, paciente_id):
         'boton_texto': 'Cargar Antecedente'
     }
     return render(request, 'gestion/form.html', contexto)
+
+@login_required
+def calendario_citas(request):
+    citas = Cita.objects.all().order_by('fecha_hora')
+    contexto = {
+        'citas': citas
+    }
+    return render(request, 'gestion/calendario.html', contexto)
+
+@login_required
+def crear_cita(request):
+    if request.method == 'POST':
+        form = CitaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('calendario_citas')
+    else:
+        form = CitaForm()
+    
+    contexto = {
+        'form': form,
+        'titulo': 'Agendar Nueva Cita',
+        'boton_texto': 'Agendar Cita'
+    }
+    return render(request, 'gestion/form.html', contexto)
+
+@login_required
+def editar_cita(request, cita_id):
+    cita = get_object_or_404(Cita, pk=cita_id)
+    if request.method == 'POST':
+        form = CitaForm(request.POST, instance=cita)
+        if form.is_valid():
+            form.save()
+            return redirect('calendario_citas')
+    else:
+        form = CitaForm(instance=cita)
+
+    contexto = {
+        'form': form,
+        'titulo': f'Editar Cita para {cita.paciente.nombre}',
+        'boton_texto': 'Actualizar Cita'
+    }
+    return render(request, 'gestion/form.html', contexto)
+
+@login_required
+def cancelar_cita(request, cita_id):
+    cita = get_object_or_404(Cita, pk=cita_id)
+    if request.method == 'POST':
+        cita.estado = 'Cancelada'
+        cita.save()
+        return redirect('calendario_citas')
+    
+    return render(request, 'gestion/confirmar_cancelacion.html', {'cita': cita})

@@ -19,6 +19,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'lista_tutores' %}">Tutores</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'calendario_citas' %}">Citas</a>
+                    </li>
                 </ul>
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     {% if user.is_authenticated %}

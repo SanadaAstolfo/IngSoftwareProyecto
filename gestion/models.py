@@ -212,3 +212,20 @@ class AntecedenteExterno(models.Model):
 
     def __str__(self):
         return f"Antecedente '{self.titulo}' para {self.paciente.nombre}"
+    
+class Cita(models.Model):
+    ESTADO_CHOICES = [
+        ('Agendada', 'Agendada'),
+        ('Confirmada', 'Confirmada'),
+        ('Cancelada', 'Cancelada'),
+        ('Completada', 'Completada'),
+    ]
+    paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE, related_name='citas')
+    veterinario = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='citas_asignadas')
+    fecha_hora = models.DateTimeField(help_text="Día y hora de la cita")
+    motivo = models.CharField(max_length=200)
+    estado = models.CharField(max_length=20, choices=ESTADO_CHOICES, default='Agendada')
+    notas = models.TextField(blank=True, null=True, help_text="Notas adicionales para la cita")
+
+    def __str__(self):
+        return f"Cita para {self.paciente.nombre} el {self.fecha_hora.strftime('%d/%m/%Y a las %H:%M')}"
