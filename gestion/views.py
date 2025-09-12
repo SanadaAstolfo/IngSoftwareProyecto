@@ -2,8 +2,9 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.models import LogEntry, CHANGE
 from django.contrib.contenttypes.models import ContentType
-from .models import Paciente, Tutor, FichaClinica, AtencionMedica, ChequeoFisico, DocumentoAdjunto, Diagnostico, InsumoUtilizado, Cita
-from .forms import PacienteForm, AtencionGeneralForm, ChequeoFisicoForm, ProcedimientoForm, AtencionHospitalizacionForm, DocumentoAdjuntoForm, InsumoUtilizadoForm, AntecedenteExternoForm, CitaForm
+from datetime import date
+from .models import Paciente, Tutor, FichaClinica, AtencionMedica, ChequeoFisico, DocumentoAdjunto, Diagnostico, InsumoUtilizado, Cita, Pago
+from .forms import PacienteForm, AtencionGeneralForm, ChequeoFisicoForm, ProcedimientoForm, AtencionHospitalizacionForm, DocumentoAdjuntoForm, InsumoUtilizadoForm, AntecedenteExternoForm, CitaForm, PagoForm
 
 def portal_view(request):
     return render(request, 'portal.html')
@@ -331,9 +332,22 @@ def cargar_antecedente(request, paciente_id):
 
 @login_required
 def calendario_citas(request):
-    citas = Cita.objects.all().order_by('fecha_hora')
+    queryset = Cita.objects.filter(estado__in=['Agendada', 'Confirmada']).order_by('fecha_hora')
+    titulo = "Calendario de Citas"
+    fecha_filtro = request.GET.get('fecha')
+    filtro_hoy = request.GET.get('hoy')
+
+    if filtro_hoy:
+        hoy = date.today()
+        queryset = queryset.filter(fecha_hora__date=hoy)
+        titulo = f"Citas para Hoy ({hoy.strftime('%d-%m-%Y')})"
+    elif fecha_filtro:
+        queryset = queryset.filter(fecha_hora__date=fecha_filtro)
+        titulo = f"Citas para el {fecha_filtro}"
+
     contexto = {
-        'citas': citas
+        'citas': queryset,
+        'titulo': titulo,
     }
     return render(request, 'gestion/calendario.html', contexto)
 
@@ -381,3 +395,24 @@ def cancelar_cita(request, cita_id):
         return redirect('calendario_citas')
     
     return render(request, 'gestion/confirmar_cancelacion.html', {'cita': cita})
+
+@login_required
+def registrar_abono(request, cita_id):
+    cita = get_object_or_404(Cita, pk=cita_id)
+    if request.method == 'POST':
+        form = PagoForm(request.POST)
+        if form.is_valid():
+            pago = form.save(commit=False)
+            pago.cita = cita
+            pago.save()
+            return redirect('calendario_citas')
+    else:
+        form = PagoForm()
+
+    contexto = {
+        'form': form,
+        'cita': cita,
+        'titulo': f'Registrar Abono para Cita de {cita.paciente.nombre}',
+        'boton_texto': 'Registrar Abono'
+    }
+    return render(request, 'gestion/form.html', contexto)

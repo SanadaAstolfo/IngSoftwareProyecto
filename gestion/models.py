@@ -221,11 +221,23 @@ class Cita(models.Model):
         ('Completada', 'Completada'),
     ]
     paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE, related_name='citas')
+    es_especialista = models.BooleanField(default=False, verbose_name="¿Es cita con especialista?")
     veterinario = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='citas_asignadas')
     fecha_hora = models.DateTimeField(help_text="Día y hora de la cita")
+    es_domicilio = models.BooleanField(default=False, verbose_name="¿Es visita a domicilio?")
     motivo = models.CharField(max_length=200)
     estado = models.CharField(max_length=20, choices=ESTADO_CHOICES, default='Agendada')
     notas = models.TextField(blank=True, null=True, help_text="Notas adicionales para la cita")
 
     def __str__(self):
         return f"Cita para {self.paciente.nombre} el {self.fecha_hora.strftime('%d/%m/%Y a las %H:%M')}"
+    
+class Pago(models.Model):
+    cita = models.ForeignKey(Cita, on_delete=models.CASCADE, related_name='pagos')
+    monto = models.DecimalField(max_digits=10, decimal_places=2)
+    fecha_pago = models.DateTimeField(auto_now_add=True)
+    metodo_pago = models.CharField(max_length=50, default="No especificado")
+    notas = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return f"Pago de ${self.monto} para la cita {self.cita.id}"

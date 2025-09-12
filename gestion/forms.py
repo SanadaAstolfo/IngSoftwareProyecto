@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import Paciente, AtencionMedica, ChequeoFisico, Procedimiento, DocumentoAdjunto, Diagnostico, InsumoUtilizado, AntecedenteExterno, Cita
+from .models import Paciente, AtencionMedica, ChequeoFisico, Procedimiento, DocumentoAdjunto, Diagnostico, InsumoUtilizado, AntecedenteExterno, Cita, Pago
 
 class PacienteForm(forms.ModelForm):
     class Meta:
@@ -86,7 +86,7 @@ class AntecedenteExternoForm(forms.ModelForm):
 class CitaForm(forms.ModelForm):
     class Meta:
         model = Cita
-        fields = ['paciente', 'veterinario', 'fecha_hora', 'motivo', 'estado', 'notas']
+        fields = ['paciente', 'veterinario', 'fecha_hora', 'motivo', 'estado', 'es_especialista', 'es_domicilio', 'notas']
         widgets = {
             'paciente': forms.Select(attrs={'class': 'form-select'}),
             'veterinario': forms.Select(attrs={'class': 'form-select'}),
@@ -95,7 +95,20 @@ class CitaForm(forms.ModelForm):
             'estado': forms.Select(attrs={'class': 'form-select'}),
             'notas': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
         }
+        help_texts = {
+            'es_domicilio': 'Marcar solo si es una visita a domicilio (horario hasta las 19:00 hrs).',
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['veterinario'].queryset = User.objects.filter(is_staff=True)
+
+class PagoForm(forms.ModelForm):
+    class Meta:
+        model = Pago
+        fields = ['monto', 'metodo_pago', 'notas']
+        widgets = {
+            'monto': forms.NumberInput(attrs={'class': 'form-control'}),
+            'metodo_pago': forms.TextInput(attrs={'class': 'form-control'}),
+            'notas': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+        }
