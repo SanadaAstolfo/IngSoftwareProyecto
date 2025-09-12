@@ -6,6 +6,7 @@ urlpatterns = [
     path('pacientes/<int:paciente_id>/', views.detalle_paciente, name='detalle_paciente'),
     path('pacientes/nuevo/', views.crear_paciente, name='crear_paciente'),
     path('pacientes/<int:paciente_id>/editar/', views.editar_paciente, name='editar_paciente'),
+    path('pacientes/<int:paciente_id>/cargar-antecedente/', views.cargar_antecedente, name='cargar_antecedente'),
     path('pacientes/<int:paciente_id>/borrar/', views.borrar_paciente, name='borrar_paciente'),
     path('pacientes/<int:paciente_id>/atencion/seleccionar-tipo/', views.seleccionar_tipo_atencion, name='seleccionar_tipo_atencion'),
     path('pacientes/<int:paciente_id>/atencion/nueva/<str:tipo_ficha>/', views.crear_atencion, name='crear_atencion'),

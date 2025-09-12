@@ -1,5 +1,5 @@
 from django import forms
-from .models import Paciente, AtencionMedica, ChequeoFisico, Procedimiento, DocumentoAdjunto, Diagnostico, InsumoUtilizado
+from .models import Paciente, AtencionMedica, ChequeoFisico, Procedimiento, DocumentoAdjunto, Diagnostico, InsumoUtilizado, AntecedenteExterno
 
 class PacienteForm(forms.ModelForm):
     class Meta:
@@ -76,3 +76,8 @@ class InsumoUtilizadoForm(forms.ModelForm):
             'insumo': forms.Select(attrs={'class': 'form-select'}),
             'cantidad': forms.NumberInput(attrs={'class': 'form-control', 'min': '1'}),
         }
+
+class AntecedenteExternoForm(forms.ModelForm):
+    class Meta:
+        model = AntecedenteExterno
+        fields = ['titulo', 'archivo']

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Tutor, Paciente, FichaClinica, AtencionMedica, ChequeoFisico, Procedimiento, Diagnostico, Insumo, InsumoUtilizado, AlertaClinica, SolicitudDatosPersonales
+from .models import Tutor, Paciente, FichaClinica, AtencionMedica, ChequeoFisico, Procedimiento, Diagnostico, Insumo, InsumoUtilizado, AlertaClinica, SolicitudDatosPersonales, AntecedenteExterno
 
 admin.site.register(Tutor)
 admin.site.register(Paciente)
@@ -12,3 +12,4 @@ admin.site.register(Insumo)
 admin.site.register(InsumoUtilizado)
 admin.site.register(AlertaClinica)
 admin.site.register(SolicitudDatosPersonales)
+admin.site.register(AntecedenteExterno)

@@ -203,3 +203,12 @@ class SolicitudDatosPersonales(models.Model):
 
     def __str__(self):
         return f"Solicitud de {self.tipo_solicitud} para {self.tutor.nombre_completo}"
+
+class AntecedenteExterno(models.Model):
+    paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE, related_name='antecedentes_externos')
+    titulo = models.CharField(max_length=100)
+    archivo = models.FileField(upload_to='antecedentes_externos/')
+    fecha_subida = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Antecedente '{self.titulo}' para {self.paciente.nombre}"

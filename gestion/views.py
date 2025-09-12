@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.admin.models import LogEntry, CHANGE
 from django.contrib.contenttypes.models import ContentType
 from .models import Paciente, Tutor, FichaClinica, AtencionMedica, ChequeoFisico, DocumentoAdjunto, Diagnostico, InsumoUtilizado
-from .forms import PacienteForm, AtencionGeneralForm, ChequeoFisicoForm, ProcedimientoForm, AtencionHospitalizacionForm, DocumentoAdjuntoForm, InsumoUtilizadoForm
+from .forms import PacienteForm, AtencionGeneralForm, ChequeoFisicoForm, ProcedimientoForm, AtencionHospitalizacionForm, DocumentoAdjuntoForm, InsumoUtilizadoForm, AntecedenteExternoForm
 
 def portal_view(request):
     return render(request, 'portal.html')
@@ -307,3 +307,24 @@ def bloquear_datos_tutor(request, tutor_id):
     tutor.datos_bloqueados = True
     tutor.save()
     return redirect('detalle_tutor', tutor_id=tutor.id)
+
+@login_required
+def cargar_antecedente(request, paciente_id):
+    paciente = get_object_or_404(Paciente, pk=paciente_id)
+    if request.method == 'POST':
+        form = AntecedenteExternoForm(request.POST, request.FILES)
+        if form.is_valid():
+            antecedente = form.save(commit=False)
+            antecedente.paciente = paciente
+            antecedente.save()
+            return redirect('detalle_paciente', paciente_id=paciente.id)
+    else:
+        form = AntecedenteExternoForm()
+
+    contexto = {
+        'form': form,
+        'paciente': paciente,
+        'titulo': f'Cargar Antecedente Externo para {paciente.nombre}',
+        'boton_texto': 'Cargar Antecedente'
+    }
+    return render(request, 'gestion/form.html', contexto)

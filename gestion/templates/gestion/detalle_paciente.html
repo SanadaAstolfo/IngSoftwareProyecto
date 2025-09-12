@@ -43,7 +43,26 @@
             <p><strong>Tutor:</strong> {{ paciente.tutor.nombre_completo }} ({{ paciente.tutor.email }})</p>
         </div>
     </div>
-
+    <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            Antecedentes Médicos Externos
+            <a href="{% url 'cargar_antecedente' paciente.id %}" class="btn btn-outline-primary btn-sm">+ Cargar Antecedente</a>
+        </div>
+        <div class="card-body">
+            {% if paciente.antecedentes_externos.all %}
+                <ul class="list-group list-group-flush">
+                {% for antecedente in paciente.antecedentes_externos.all %}
+                    <li class="list-group-item">
+                        <a href="{{ antecedente.archivo.url }}" target="_blank">{{ antecedente.titulo }}</a>
+                        <small class="text-muted"> (Subido el: {{ antecedente.fecha_subida }})</small>
+                    </li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                <p class="mb-0">No se han cargado antecedentes externos para este paciente.</p>
+            {% endif %}
+        </div>
+    </div>
     <h2>Historial de Atenciones</h2>
 
     {% for atencion in atenciones %}
