@@ -1,5 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib.admin.models import LogEntry, CHANGE
+from django.contrib.contenttypes.models import ContentType
 from .models import Paciente, Tutor, FichaClinica, AtencionMedica, ChequeoFisico, DocumentoAdjunto, Diagnostico, InsumoUtilizado
 from .forms import PacienteForm, AtencionGeneralForm, ChequeoFisicoForm, ProcedimientoForm, AtencionHospitalizacionForm, DocumentoAdjuntoForm, InsumoUtilizadoForm
 
@@ -33,7 +35,14 @@ def lista_pacientes(request):
 @login_required
 def detalle_paciente(request, paciente_id):
     paciente = get_object_or_404(Paciente, pk=paciente_id)
-
+    LogEntry.objects.log_action(
+        user_id=request.user.id,
+        content_type_id=ContentType.objects.get_for_model(paciente).id,
+        object_id=paciente.id,
+        object_repr=str(paciente),
+        action_flag=CHANGE,
+        change_message="Acceso a la ficha del paciente."
+    )
     try:
         ficha = FichaClinica.objects.get(paciente=paciente)
         atenciones = AtencionMedica.objects.filter(ficha_clinica=ficha).order_by('-fecha_atencion')
@@ -51,7 +60,7 @@ def detalle_paciente(request, paciente_id):
 @login_required
 def crear_paciente(request):
     if request.method == 'POST':
-        form = PacienteForm(request.POST)
+        form = PacienteForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             return redirect('lista_pacientes')
@@ -69,7 +78,7 @@ def crear_paciente(request):
 def editar_paciente(request, paciente_id):
     paciente = get_object_or_404(Paciente, pk=paciente_id)
     if request.method == 'POST':
-        form = PacienteForm(request.POST, instance=paciente)
+        form = PacienteForm(request.POST, request.FILES, instance=paciente)
         if form.is_valid():
             form.save()
             return redirect('lista_pacientes')
@@ -256,6 +265,14 @@ def lista_tutores(request):
 @login_required
 def detalle_tutor(request, tutor_id):
     tutor = get_object_or_404(Tutor, pk=tutor_id)
+    LogEntry.objects.log_action(
+        user_id=request.user.id,
+        content_type_id=ContentType.objects.get_for_model(tutor).id,
+        object_id=tutor.id,
+        object_repr=str(tutor),
+        action_flag=CHANGE,
+        change_message="Acceso a los datos del tutor."
+    )
     pacientes = tutor.pacientes.all()
     contexto = {
         'tutor': tutor,
@@ -283,3 +300,10 @@ def agregar_insumo(request, atencion_id):
         'boton_texto': 'Agregar Insumo'
     }
     return render(request, 'gestion/form.html', contexto)
+
+@login_required
+def bloquear_datos_tutor(request, tutor_id):
+    tutor = get_object_or_404(Tutor, pk=tutor_id)
+    tutor.datos_bloqueados = True
+    tutor.save()
+    return redirect('detalle_tutor', tutor_id=tutor.id)

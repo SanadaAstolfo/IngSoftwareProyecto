@@ -29,11 +29,15 @@ class Tutor(models.Model):
     direccion = models.CharField(max_length=200)
     telefono = models.CharField(max_length=15)
     email = models.EmailField(unique=True)
+    datos_bloqueados = models.BooleanField(default=False, verbose_name="Datos Bloqueados (No editar)")
+
+    history = HistoricalRecords()
 
     def __str__(self):
         return self.nombre_completo
 
 class Paciente(models.Model):
+    foto = models.ImageField(upload_to='fotos_pacientes/', blank=True, null=True, verbose_name="Fotografía del Paciente")
     nombre = models.CharField(max_length=50)
     especie = models.CharField(max_length=50)
     raza = models.CharField(max_length=50)
@@ -176,3 +180,26 @@ class InsumoUtilizado(models.Model):
 
     def __str__(self):
         return f"{self.cantidad} x {self.insumo.nombre} en atencion {self.atencion_medica.id}"
+    
+class SolicitudDatosPersonales(models.Model):
+    TIPO_SOLICITUD_CHOICES = [
+        ('Acceso', 'Solicitud de Acceso'),
+        ('Modificación', 'Solicitud de Modificación'),
+        ('Cancelación', 'Solicitud de Cancelación'),
+        ('Bloqueo', 'Solicitud de Bloqueo'),
+    ]
+    ESTADO_SOLICITUD_CHOICES = [
+        ('Pendiente', 'Pendiente'),
+        ('Aprobada', 'Aprobada'),
+        ('Rechazada', 'Rechazada'),
+    ]
+
+    tutor = models.ForeignKey(Tutor, on_delete=models.CASCADE, related_name='solicitudes')
+    tipo_solicitud = models.CharField(max_length=20, choices=TIPO_SOLICITUD_CHOICES)
+    fecha_solicitud = models.DateTimeField(auto_now_add=True)
+    estado = models.CharField(max_length=20, choices=ESTADO_SOLICITUD_CHOICES, default='Pendiente')
+    resolucion = models.TextField(blank=True, null=True, help_text="Detalles de la resolución de la solicitud (ej: 'Se enviaron los datos por correo el DD/MM/AAAA').")
+    usuario_responsable = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, help_text="Usuario que gestionó la solicitud.")
+
+    def __str__(self):
+        return f"Solicitud de {self.tipo_solicitud} para {self.tutor.nombre_completo}"

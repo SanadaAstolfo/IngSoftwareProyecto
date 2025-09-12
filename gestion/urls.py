@@ -14,6 +14,7 @@ urlpatterns = [
     path('pacientes/<int:paciente_id>/atencion/<int:atencion_id>/borrar/', views.borrar_atencion, name='borrar_atencion'),
     path('tutores/', views.lista_tutores, name='lista_tutores'),
     path('tutores/<int:tutor_id>/', views.detalle_tutor, name='detalle_tutor'),
+    path('tutores/<int:tutor_id>/bloquear/', views.bloquear_datos_tutor, name='bloquear_datos_tutor'),
     path('atencion/<int:atencion_id>/procedimiento/nuevo/', views.crear_procedimiento, name='crear_procedimiento'),
     path('atencion/<int:atencion_id>/insumo/nuevo/', views.agregar_insumo, name='agregar_insumo'),
     path('atencion/<int:atencion_id>/adjuntar/', views.adjuntar_documento, name='adjuntar_documento'),

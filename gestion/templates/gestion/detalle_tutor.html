@@ -14,6 +14,13 @@
             <p><strong>Dirección:</strong> {{ tutor.direccion }}</p>
         </div>
     </div>
+    {% if tutor.datos_bloqueados %}
+        <div class="alert alert-danger">
+            <strong>Atención:</strong> Los datos de este tutor están bloqueados y no pueden ser modificados.
+        </div>
+    {% else %}
+        <a href="{% url 'bloquear_datos_tutor' tutor.id %}" class="btn btn-warning">Bloquear Datos de Tutor</a>
+    {% endif %}
 
     <h3>Mascotas a su Cuidado</h3>
     <div class="list-group">
