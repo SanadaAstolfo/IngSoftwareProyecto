@@ -21,7 +21,38 @@
     {% else %}
         <a href="{% url 'bloquear_datos_tutor' tutor.id %}" class="btn btn-warning">Bloquear Datos de Tutor</a>
     {% endif %}
-
+    <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            Estado de Cuenta
+            <a href="{% url 'registrar_pago_tutor' tutor.id %}" class="btn btn-outline-success btn-sm">+ Registrar Pago</a>
+        </div>
+        <div class="card-body">
+            {% if tutor.pagos.all %}
+                <table class="table table-sm table-hover">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Monto</th>
+                            <th>Método</th>
+                            <th>Notas / Cita Asociada</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for pago in tutor.pagos.all %}
+                        <tr>
+                            <td>{{ pago.fecha_pago }}</td>
+                            <td>${{ pago.monto }}</td>
+                            <td>{{ pago.metodo_pago }}</td>
+                            <td>{% if pago.cita %}Abono para cita de {{pago.cita.paciente.nombre}}{% else %}{{ pago.notas|default:"--" }}{% endif %}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p class="mb-0">No hay pagos registrados para este tutor.</p>
+            {% endif %}
+        </div>
+    </div>
     <h3>Mascotas a su Cuidado</h3>
     <div class="list-group">
         {% for paciente in pacientes %}

@@ -63,6 +63,44 @@
             {% endif %}
         </div>
     </div>
+    <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            Historial de Vacunación
+            <a href="{% url 'registrar_vacuna' paciente.id %}" class="btn btn-outline-success btn-sm">+ Registrar Vacuna</a>
+        </div>
+        <div class="card-body">
+            {% if paciente.historial_vacunas.all %}
+                <table class="table table-sm table-hover">
+                    <thead>
+                        <tr>
+                            <th>Vacuna</th>
+                            <th>Fecha Aplicación</th>
+                            <th>Próxima Dosis</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for registro in paciente.historial_vacunas.all %}
+                        <tr>
+                            <td>{{ registro.vacuna.nombre }}</td>
+                            <td>{{ registro.fecha_aplicacion }}</td>
+                            <td>{{ registro.proxima_dosis_fecha }}</td>
+                            <td>
+                                {% if registro.proxima_dosis_fecha > today %}
+                                    <span class="badge bg-success">Vigente</span>
+                                {% else %}
+                                    <span class="badge bg-danger">Vencida</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p class="mb-0">No hay vacunas registradas para este paciente.</p>
+            {% endif %}
+        </div>
+    </div>
     <h2>Historial de Atenciones</h2>
 
     {% for atencion in atenciones %}

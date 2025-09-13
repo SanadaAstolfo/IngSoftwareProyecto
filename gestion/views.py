@@ -3,8 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.admin.models import LogEntry, CHANGE
 from django.contrib.contenttypes.models import ContentType
 from datetime import date
-from .models import Paciente, Tutor, FichaClinica, AtencionMedica, ChequeoFisico, DocumentoAdjunto, Diagnostico, InsumoUtilizado, Cita, Pago
-from .forms import PacienteForm, AtencionGeneralForm, ChequeoFisicoForm, ProcedimientoForm, AtencionHospitalizacionForm, DocumentoAdjuntoForm, InsumoUtilizadoForm, AntecedenteExternoForm, CitaForm, PagoForm
+from .models import Paciente, Tutor, FichaClinica, AtencionMedica, ChequeoFisico, DocumentoAdjunto, Diagnostico, InsumoUtilizado, Cita, Pago, RegistroVacuna
+from .forms import PacienteForm, AtencionGeneralForm, ChequeoFisicoForm, ProcedimientoForm, AtencionHospitalizacionForm, DocumentoAdjuntoForm, InsumoUtilizadoForm, AntecedenteExternoForm, CitaForm, PagoForm, RegistroVacunaForm
 
 def portal_view(request):
     return render(request, 'portal.html')
@@ -55,6 +55,7 @@ def detalle_paciente(request, paciente_id):
         'paciente': paciente,
         'ficha': ficha,
         'atenciones': atenciones,
+        'today': date.today(),
     }
     return render(request, 'gestion/detalle_paciente.html', contexto)
 
@@ -403,6 +404,7 @@ def registrar_abono(request, cita_id):
         form = PagoForm(request.POST)
         if form.is_valid():
             pago = form.save(commit=False)
+            pago.tutor = cita.paciente.tutor
             pago.cita = cita
             pago.save()
             return redirect('calendario_citas')
@@ -414,5 +416,47 @@ def registrar_abono(request, cita_id):
         'cita': cita,
         'titulo': f'Registrar Abono para Cita de {cita.paciente.nombre}',
         'boton_texto': 'Registrar Abono'
+    }
+    return render(request, 'gestion/form.html', contexto)
+
+@login_required
+def registrar_vacuna(request, paciente_id):
+    paciente = get_object_or_404(Paciente, pk=paciente_id)
+    if request.method == 'POST':
+        form = RegistroVacunaForm(request.POST)
+        if form.is_valid():
+            registro = form.save(commit=False)
+            registro.paciente = paciente
+            registro.save()
+            return redirect('detalle_paciente', paciente_id=paciente.id)
+    else:
+        form = RegistroVacunaForm()
+
+    contexto = {
+        'form': form,
+        'paciente': paciente,
+        'titulo': f'Registrar Vacuna para {paciente.nombre}',
+        'boton_texto': 'Registrar Vacuna'
+    }
+    return render(request, 'gestion/form.html', contexto)
+
+@login_required
+def registrar_pago_tutor(request, tutor_id):
+    tutor = get_object_or_404(Tutor, pk=tutor_id)
+    if request.method == 'POST':
+        form = PagoForm(request.POST)
+        if form.is_valid():
+            pago = form.save(commit=False)
+            pago.tutor = tutor
+            pago.save()
+            return redirect('detalle_tutor', tutor_id=tutor.id)
+    else:
+        form = PagoForm()
+
+    contexto = {
+        'form': form,
+        'tutor': tutor,
+        'titulo': f'Registrar Pago para {tutor.nombre_completo}',
+        'boton_texto': 'Registrar Pago'
     }
     return render(request, 'gestion/form.html', contexto)

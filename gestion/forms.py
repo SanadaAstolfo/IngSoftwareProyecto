@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import Paciente, AtencionMedica, ChequeoFisico, Procedimiento, DocumentoAdjunto, Diagnostico, InsumoUtilizado, AntecedenteExterno, Cita, Pago
+from .models import Paciente, AtencionMedica, ChequeoFisico, Procedimiento, DocumentoAdjunto, Diagnostico, InsumoUtilizado, AntecedenteExterno, Cita, Pago, RegistroVacuna
 
 class PacienteForm(forms.ModelForm):
     class Meta:
@@ -111,4 +111,13 @@ class PagoForm(forms.ModelForm):
             'monto': forms.NumberInput(attrs={'class': 'form-control'}),
             'metodo_pago': forms.TextInput(attrs={'class': 'form-control'}),
             'notas': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+        }
+
+class RegistroVacunaForm(forms.ModelForm):
+    class Meta:
+        model = RegistroVacuna
+        fields = ['vacuna', 'fecha_aplicacion']
+        widgets = {
+            'vacuna': forms.Select(attrs={'class': 'form-select'}),
+            'fecha_aplicacion': forms.DateInput(attrs={'type': 'date'}),
         }

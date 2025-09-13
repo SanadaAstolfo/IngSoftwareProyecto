@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from simple_history.models import HistoricalRecords
-from datetime import date
+from datetime import date, timedelta
 
 class AlertaClinica(models.Model):
     CATEGORIA_CHOICES = [
@@ -233,7 +233,8 @@ class Cita(models.Model):
         return f"Cita para {self.paciente.nombre} el {self.fecha_hora.strftime('%d/%m/%Y a las %H:%M')}"
     
 class Pago(models.Model):
-    cita = models.ForeignKey(Cita, on_delete=models.CASCADE, related_name='pagos')
+    cita = models.ForeignKey(Cita, on_delete=models.CASCADE, related_name='pagos', null=True, blank=True)
+    tutor = models.ForeignKey(Tutor, on_delete=models.CASCADE, related_name='pagos')
     monto = models.DecimalField(max_digits=10, decimal_places=2)
     fecha_pago = models.DateTimeField(auto_now_add=True)
     metodo_pago = models.CharField(max_length=50, default="No especificado")
@@ -241,3 +242,25 @@ class Pago(models.Model):
 
     def __str__(self):
         return f"Pago de ${self.monto} para la cita {self.cita.id}"
+    
+class Vacuna(models.Model):
+    nombre = models.CharField(max_length=100, unique=True)
+    especie_objetivo = models.CharField(max_length=50, help_text="Ej: Canino, Felino")
+    dosis_necesarias = models.PositiveIntegerField(default=1)
+    frecuencia_refuerzo_dias = models.PositiveIntegerField(help_text="Días hasta el próximo refuerzo (ej: 365 para anual)")
+
+    def __str__(self):
+        return f"{self.nombre} ({self.especie_objetivo})"
+
+class RegistroVacuna(models.Model):
+    paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE, related_name='historial_vacunas')
+    vacuna = models.ForeignKey(Vacuna, on_delete=models.CASCADE)
+    fecha_aplicacion = models.DateField()
+    proxima_dosis_fecha = models.DateField(blank=True, null=True, editable=False)
+
+    def save(self, *args, **kwargs):
+        self.proxima_dosis_fecha = self.fecha_aplicacion + timedelta(days=self.vacuna.frecuencia_refuerzo_dias)
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.vacuna.nombre} aplicada a {self.paciente.nombre} el {self.fecha_aplicacion}"
