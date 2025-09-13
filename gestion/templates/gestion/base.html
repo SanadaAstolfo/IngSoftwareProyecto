@@ -33,7 +33,7 @@
                         <li class="nav-item ms-3">
                             <form action="{% url 'logout' %}" method="post" class="d-inline">
                                 {% csrf_token %}
-                                    <button type="submit" class="btn btn-outline-light btn-sm">Cerrar Sesión</button>
+                                <button type="submit" class="btn btn-outline-light btn-sm">Cerrar Sesión</button>
                             </form>
                         </li>
                     {% else %}

@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import AuthenticationForm
 from .models import Paciente, AtencionMedica, ChequeoFisico, Procedimiento, DocumentoAdjunto, Diagnostico, InsumoUtilizado, AntecedenteExterno, Cita, Pago, RegistroVacuna, Tutor
 
 class PacienteForm(forms.ModelForm):
@@ -133,3 +134,14 @@ class RegistroVacunaForm(forms.ModelForm):
             'vacuna': forms.Select(attrs={'class': 'form-select'}),
             'fecha_aplicacion': forms.DateInput(attrs={'type': 'date'}),
         }
+
+class CustomAuthenticationForm(AuthenticationForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['username'].label = "RUT"
+        self.fields['username'].widget.attrs.update(
+            {'class': 'form-control', 'placeholder': 'Ingrese su RUT'}
+        )
+        self.fields['password'].widget.attrs.update(
+            {'class': 'form-control', 'placeholder': 'Ingrese su contraseña'}
+        )

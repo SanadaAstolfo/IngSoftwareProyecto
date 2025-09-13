@@ -1,13 +1,18 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.models import LogEntry, CHANGE
 from django.contrib.contenttypes.models import ContentType
 from datetime import date
 from .models import Paciente, Tutor, FichaClinica, AtencionMedica, ChequeoFisico, DocumentoAdjunto, Diagnostico, InsumoUtilizado, Cita, Pago, RegistroVacuna
-from .forms import PacienteForm, TutorForm, AtencionGeneralForm, ChequeoFisicoForm, ProcedimientoForm, AtencionHospitalizacionForm, DocumentoAdjuntoForm, InsumoUtilizadoForm, AntecedenteExternoForm, CitaForm, PagoForm, RegistroVacunaForm
+from .forms import PacienteForm, TutorForm, AtencionGeneralForm, ChequeoFisicoForm, ProcedimientoForm, AtencionHospitalizacionForm, DocumentoAdjuntoForm, InsumoUtilizadoForm, AntecedenteExternoForm, CitaForm, PagoForm, RegistroVacunaForm, CustomAuthenticationForm
 
 def portal_view(request):
     return render(request, 'portal.html')
+
+class CustomLoginView(auth_views.LoginView):
+    authentication_form = CustomAuthenticationForm
+    template_name = 'registration/login.html'
 
 @login_required
 def lista_pacientes(request):

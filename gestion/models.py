@@ -3,6 +3,21 @@ from django.contrib.auth.models import User
 from simple_history.models import HistoricalRecords
 from datetime import date, timedelta
 
+class Perfil(models.Model):
+    ROL_CHOICES = [
+        ('ADMIN', 'Administrador'),
+        ('VET', 'Veterinario'),
+        ('ESP', 'Veterinario Especialista'),
+        ('SECRETARIA', 'Secretaría'),
+        ('TUTOR', 'Tutor'),
+    ]
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    rut = models.CharField(max_length=12, unique=True)
+    rol = models.CharField(max_length=20, choices=ROL_CHOICES)
+
+    def __str__(self):
+        return f"Perfil de {self.user.username} (RUT: {self.rut})"
+
 class AlertaClinica(models.Model):
     CATEGORIA_CHOICES = [
         ('Alergia', 'Alergia'),
