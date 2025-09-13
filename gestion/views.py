@@ -4,7 +4,7 @@ from django.contrib.admin.models import LogEntry, CHANGE
 from django.contrib.contenttypes.models import ContentType
 from datetime import date
 from .models import Paciente, Tutor, FichaClinica, AtencionMedica, ChequeoFisico, DocumentoAdjunto, Diagnostico, InsumoUtilizado, Cita, Pago, RegistroVacuna
-from .forms import PacienteForm, AtencionGeneralForm, ChequeoFisicoForm, ProcedimientoForm, AtencionHospitalizacionForm, DocumentoAdjuntoForm, InsumoUtilizadoForm, AntecedenteExternoForm, CitaForm, PagoForm, RegistroVacunaForm
+from .forms import PacienteForm, TutorForm, AtencionGeneralForm, ChequeoFisicoForm, ProcedimientoForm, AtencionHospitalizacionForm, DocumentoAdjuntoForm, InsumoUtilizadoForm, AntecedenteExternoForm, CitaForm, PagoForm, RegistroVacunaForm
 
 def portal_view(request):
     return render(request, 'portal.html')
@@ -281,6 +281,23 @@ def detalle_tutor(request, tutor_id):
         'pacientes': pacientes,
     }
     return render(request, 'gestion/detalle_tutor.html', contexto)
+
+login_required
+def crear_tutor(request):
+    if request.method == 'POST':
+        form = TutorForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('lista_tutores')
+    else:
+        form = TutorForm()
+
+    contexto = {
+        'form': form,
+        'titulo': 'Registrar Nuevo Tutor',
+        'boton_texto': 'Guardar Tutor'
+    }
+    return render(request, 'gestion/form.html', contexto)
 
 @login_required
 def agregar_insumo(request, atencion_id):
