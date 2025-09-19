@@ -131,7 +131,8 @@ LOGIN_URL = '/accounts/login/'
 
 STATIC_URL = '/app/static/'
 
-MEDIA_URL = '/app/media/'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'app/media')
 
 AUTHENTICATION_BACKENDS = ['app.backends.RUTBackend']
 
