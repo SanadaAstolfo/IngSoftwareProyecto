@@ -103,8 +103,9 @@ Un sistema de inicio de sesión seguro (/accounts/login/) para proteger el acces
 
 Actualmente el usuario:contraseña que hay es:
  
-admin:adminadmin (porque es el superuser creado)
-Veterinario:TAqi4d6ygQi5vxG (único usuario creado de acceso)
+admin = 1-9:adminadmin (porque es el superuser creado)
+
+Veterinario = 1122334455-7:TAqi4d6ygQi5vxG (único usuario creado de acceso)
 
 Gestión Integral de Pacientes (CRUD):
 
