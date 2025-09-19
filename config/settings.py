@@ -10,20 +10,20 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 import os
+from decouple import config
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-p(mngze$h1jstf#7n)d4ieb+&rf-xel2g#5mjtq-w-jh8x37*&'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = []
 
@@ -136,17 +136,16 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'app/media')
 
 AUTHENTICATION_BACKENDS = ['app.backends.RUTBackend']
 
-if DEBUG:
-    # Escribir correos en la consola
+if config('DEBUG', default=False, cast=bool):
+    # Escribir correos en la consola durante el desarrollo
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 else:
-    # Usar un servidor SMTP real
-    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-    EMAIL_HOST = 'smtp.gmail.com'  # O el de tu proveedor de correo
-    EMAIL_PORT = 587
-    EMAIL_USE_TLS = True
-    # Estas credenciales se deben gestionar como variables de entorno en un servidor real (cuando este listo para hacer el deploy)
-    EMAIL_HOST_USER = 'tu-correo@ejemplo.com'
-    EMAIL_HOST_PASSWORD = 'tu-contraseña-de-aplicacion'
+    # Usar un servidor SMTP real en producción
+    EMAIL_BACKEND = config('EMAIL_BACKEND')
+    EMAIL_HOST = config('EMAIL_HOST')
+    EMAIL_PORT = config('EMAIL_PORT', cast=int)
+    EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
+    EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+    EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 
-DEFAULT_FROM_EMAIL = 'Clinica Entre Patitas <no-responder@entrepatitas.cl>'   
+DEFAULT_FROM_EMAIL = 'Clinica Entre Patitas <no-responder@entrepatitas.cl>'
