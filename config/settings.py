@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'gestion',
+    'app',
     'simple_history',
 ]
 
@@ -118,7 +118,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = 'app/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -129,12 +129,23 @@ LOGIN_REDIRECT_URL = '/gestion/pacientes/'
 LOGOUT_REDIRECT_URL = ''
 LOGIN_URL = '/accounts/login/'
 
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
+STATIC_URL = '/app/static/'
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/app/media/'
 
-AUTHENTICATION_BACKENDS = ['gestion.backends.RUTBackend']
+AUTHENTICATION_BACKENDS = ['app.backends.RUTBackend']
+
+if DEBUG:
+    # Escribir correos en la consola
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+else:
+    # Usar un servidor SMTP real
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = 'smtp.gmail.com'  # O el de tu proveedor de correo
+    EMAIL_PORT = 587
+    EMAIL_USE_TLS = True
+    # Estas credenciales se deben gestionar como variables de entorno en un servidor real (cuando este listo para hacer el deploy)
+    EMAIL_HOST_USER = 'tu-correo@ejemplo.com'
+    EMAIL_HOST_PASSWORD = 'tu-contraseña-de-aplicacion'
+
+DEFAULT_FROM_EMAIL = 'Clinica Entre Patitas <no-responder@entrepatitas.cl>'   

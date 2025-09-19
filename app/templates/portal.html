@@ -1,0 +1,99 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Club Entre Patitas - Seleccionar Tipo de Usuario</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body>
+    <header class="header">
+        <div class="clinic-logo">
+            <img src="{% static 'logo.jpg' %}" alt="Club entre Patitas" class="clinic-logo-img">
+        </div>
+        <p class="header-subtitle">Sistema Integral de Salud Animal</p>
+    </header>
+
+    <main class="main-container">
+        <div class="selection-container">
+            <section class="welcome-section">
+                <h1 class="welcome-title">¡Bienvenido a Club Entre Patitas!</h1>
+                <p class="welcome-subtitle">Tu plataforma de confianza para el cuidado veterinario</p>
+                <p class="welcome-description">
+                    Selecciona tu tipo de usuario para acceder a las funcionalidades específicas del sistema. 
+                    Nuestro sistema está diseñado para brindar la mejor experiencia tanto a veterinarios como a dueños de mascotas.
+                </p>
+            </section>
+
+            <section class="user-selection">
+                <a href="{% url 'login' %}" class="user-card funcionario-card">
+                    <div class="user-icon">
+                        <i class="fa-solid fa-user-doctor"></i>
+                    </div>
+                    <h2 class="user-title">Funcionario de Club Entre Patitas</h2>
+                    <p class="user-description">
+                        Acceso completo al sistema de gestión de fichas médicas, pacientes y herramientas profesionales.
+                    </p>
+                    <ul class="user-features">
+                        <li><i class="fa-solid fa-clipboard-check"></i> Crear y gestionar fichas médicas</li>
+                        <li><i class="fa-solid fa-calendar-plus"></i> Programar citas y controles</li>
+                        <li><i class="fa-solid fa-chart-line"></i> Generar reportes médicos</li>
+                        <li><i class="fa-solid fa-database"></i> Acceso completo a la base de datos</li>
+                    </ul>
+                    <div class="select-btn">Soy Funcionario de Club Entre Patitas</div>
+                </a>
+
+                <div class="user-card cliente-card" onclick="alert('Portal de clientes en desarrollo')">
+                    <div class="user-icon">
+                        <i class="fa-solid fa-heart"></i>
+                    </div>
+                    <h2 class="user-title">Dueño de Mascota</h2>
+                    <p class="user-description">
+                        Accede al historial médico de tu mascota y mantente informado sobre su salud y tratamientos.
+                    </p>
+                    <ul class="user-features">
+                        <li><i class="fa-solid fa-eye"></i> Ver historial médico de tu mascota</li>
+                        <li><i class="fa-solid fa-calendar-check"></i> Consultar próximas citas</li>
+                        <li><i class="fa-solid fa-pills"></i> Seguimiento de tratamientos</li>
+                        <li><i class="fa-solid fa-phone"></i> Contacto directo con veterinarios</li>
+                    </ul>
+                    <div class="select-btn">Soy Dueño de Mascota</div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-info">
+                <div class="footer-item">
+                    <i class="fa-solid fa-phone"></i>
+                    <span>+56 9 6123 8866</span>
+                </div>
+                <div class="footer-item">
+                    <i class="fa-solid fa-envelope"></i>
+                    <span>info@clubentrepatitas.cl</span>
+                </div>
+                <div class="footer-item">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <span>Francisco Bilbao 2419, 7510950 Providencia, Región Metropolitana.</span>
+                </div>
+                <div class="footer-item">
+                    <i class="fa-solid fa-clock"></i>
+                    <span>Emergencias 24/7</span>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 Club entre Patitas. Todos los derechos reservados.</p>
+                <p>Desarrollado con ❤️ para el cuidado animal</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{% static 'script.js' %}"></script>
+</body>
+</html>

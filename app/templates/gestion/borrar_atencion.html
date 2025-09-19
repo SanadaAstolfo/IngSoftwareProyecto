@@ -1,0 +1,22 @@
+{% extends 'gestion/base.html' %}
+
+{% block title %}Confirmar Borrado de Atención{% endblock %}
+
+{% block content %}
+    <div class="text-center mt-5">
+        <div class="card border-danger mx-auto" style="max-width: 500px;">
+            <div class="card-header bg-danger text-white">
+                <h2>¿Estás seguro?</h2>
+            </div>
+            <div class="card-body">
+                <p class="lead">Estás a punto de borrar permanentemente la atención médica del <strong>{{ atencion.fecha_atencion }}</strong>.</p>
+                <p>Esta acción no se puede deshacer.</p>
+                <form method="post" class="mt-4">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger btn-lg">Sí, Confirmar Borrado</button>
+                    <a href="{% url 'detalle_paciente' paciente_id %}" class="btn btn-secondary btn-lg">Cancelar</a>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

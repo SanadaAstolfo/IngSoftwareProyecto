@@ -1,0 +1,86 @@
+{% extends 'gestion/base.html' %}
+
+{% block title %}{{ titulo }}{% endblock %}
+
+{% block content %}
+    <h1>{{ titulo }}</h1>
+    <p class="text-muted">Paciente: {{ paciente.nombre }}</p>
+    <hr>
+    <form method="post">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">Datos de la Atención</div>
+                    
+                    <div class="card-body">
+                        {% if atencion_form.non_field_errors %}
+                            <div class="alert alert-danger">
+                                {{ atencion_form.non_field_errors }}
+                            </div>
+                        {% endif %}
+
+                        {% for field in atencion_form.visible_fields %}
+                            <div class="mb-3">
+                                {{ field.label_tag }}
+                                {{ field }}
+                                {% if field.errors %}
+                                    <div class="alert alert-danger p-1 mt-1">
+                                        {{ field.errors|striptags }}
+                                    </div>
+                                {% endif %}
+                                {% if field.help_text %}
+                                    <div class="form-text">{{ field.help_text }}</div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                    </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">Chequeo Físico</div>
+                    <div class="card-body">
+                        {% for field in chequeo_form %}
+                            <div class="mb-3">
+                                {{ field.label_tag }}
+                                {{ field }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mt-4">
+            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+            <a href="{% url 'detalle_paciente' paciente.id %}" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </form>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const diagnosticoSelect = document.getElementById('id_diagnostico_opciones');
+            const diagnosticoTextoInput = document.getElementById('id_diagnostico_personalizado');
+
+            if (!diagnosticoSelect || !diagnosticoTextoInput) return;
+
+            function toggleOtroDiagnostico() {
+                const selectedOptionText = diagnosticoSelect.options[diagnosticoSelect.selectedIndex].text;
+                
+                if (selectedOptionText === 'Otro') {
+                    diagnosticoTextoInput.disabled = false;
+                    diagnosticoTextoInput.placeholder = 'Escribe el diagnóstico aquí...';
+                } else {
+                    diagnosticoTextoInput.disabled = true;
+                    diagnosticoTextoInput.value = '';
+                    diagnosticoTextoInput.placeholder = '';
+                }
+            }
+
+            toggleOtroDiagnostico();
+            diagnosticoSelect.addEventListener('change', toggleOtroDiagnostico);
+        });
+    </script>
+{% endblock %}

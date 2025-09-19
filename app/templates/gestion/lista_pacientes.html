@@ -1,0 +1,47 @@
+{% extends 'gestion/base.html' %}
+
+{% block title %}Lista de Pacientes{% endblock %}
+
+{% block content %}
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Pacientes Registrados</h1>
+        <a href="{% url 'crear_paciente' %}" class="btn btn-success">+ Registrar Nuevo Paciente</a>
+    </div>
+
+    <form method="get" class="card card-body mb-4">
+        <h5 class="card-title">Filtros de Búsqueda</h5>
+        <div class="row">
+            <div class="col-md-4 mb-2">
+                <label for="nombre" class="form-label">Nombre del Paciente</label>
+                <input type="text" name="nombre" id="nombre" class="form-control" value="{{ request.GET.nombre }}">
+            </div>
+            <div class="col-md-4 mb-2">
+                <label for="diagnostico" class="form-label">Diagnóstico</label>
+                <input type="text" name="diagnostico" id="diagnostico" class="form-control" value="{{ request.GET.diagnostico }}">
+            </div>
+            <div class="col-md-3 mb-2">
+                <label for="fecha" class="form-label">Fecha de Atención</label>
+                <input type="date" name="fecha" id="fecha" class="form-control" value="{{ request.GET.fecha }}">
+            </div>
+            <div class="col-md-1 d-flex align-items-end">
+                <button class="btn btn-primary w-100" type="submit">Buscar</button>
+            </div>
+        </div>
+    </form>
+
+    <div class="list-group">
+        {% for paciente in pacientes %}
+            <a href="{% url 'detalle_paciente' paciente.id %}" class="list-group-item list-group-item-action">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">{{ paciente.nombre }}</h5>
+                    <small>Especie: {{ paciente.especie }}</small>
+                </div>
+                <p class="mb-1">Tutor: {{ paciente.tutor.nombre_completo }}</p>
+            </a>
+        {% empty %}
+            <div class="alert alert-info" role="alert">
+                No hay pacientes registrados que coincidan con la búsqueda.
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
