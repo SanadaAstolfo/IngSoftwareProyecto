@@ -1,5 +1,6 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
+from django.conf import settings
 
 urlpatterns = [
     path('pacientes/', views.lista_pacientes, name='lista_pacientes'),
@@ -29,3 +30,8 @@ urlpatterns = [
     path('citas/<int:cita_id>/cancelar/', views.cancelar_cita, name='cancelar_cita'),
     path('citas/<int:cita_id>/registrar-abono/', views.registrar_abono, name='registrar_abono'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += [
+        path("__reload__/", include("django_browser_reload.urls"))
+        ]

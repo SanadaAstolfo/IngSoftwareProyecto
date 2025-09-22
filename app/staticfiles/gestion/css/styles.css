@@ -1,0 +1,464 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --primary-color: #6BB6B8;
+    --secondary-color: #4A9B9D;
+    --accent-color: #F4A261;
+    --warm-orange: #E76F51;
+    --background-color: #FEF7E6;
+    --light-accent: #FFE5B4;
+    --dark-color: #2C3E50;
+    --card-bg: #FFFFFF;
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%;
+    font-family: 'Poppins', sans-serif;
+    scroll-behavior: smooth;
+}
+
+body {
+    background: linear-gradient(135deg, var(--background-color), var(--light-accent));
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    font-size: 1.6rem;
+}
+
+/* ==========================================================================
+   3. ESTRUCTURA PRINCIPAL (LAYOUT)
+   ========================================================================== */
+
+/* Header */
+.header {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    padding: 2rem 0;
+    text-align: center;
+    position: sticky;
+    overflow: hidden;
+    top: 0;
+    z-index: 1000;
+}
+
+.header::before, .header::after {
+    content: '🐾';
+    position: absolute;
+    opacity: 0.1;
+    animation: float 6s ease-in-out infinite;
+}
+
+.header::before {
+    font-size: 15rem;
+    top: -3rem;
+    left: -2rem;
+}
+
+.header::after {
+    font-size: 10rem;
+    opacity: 0.08;
+    top: -1rem;
+    right: -1rem;
+    animation-duration: 8s;
+    animation-direction: reverse;
+}
+
+/* Contenido Principal */
+.main-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.main-container::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: 
+        radial-gradient(circle at 20% 20%, rgba(244, 162, 97, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 60%, rgba(107, 182, 184, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(255, 229, 180, 0.2) 0%, transparent 50%);
+}
+
+.selection-container {
+    max-width: 120rem;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+}
+
+/* Footer */
+.footer {
+    background: linear-gradient(135deg, var(--dark-color), var(--secondary-color));
+    color: #fff;
+    padding: 3rem 0;
+    text-align: center;
+}
+
+.footer-content {
+    padding: 0 2rem;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.footer-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+    width: 100%;
+    max-width: 120rem;
+    margin: 0 auto 2rem auto;
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 2rem;
+}
+
+.footer-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 1.4rem;
+}
+
+.footer-item i {
+    color: var(--accent-color);
+    font-size: 1.8rem;
+}
+
+.copyright {
+    margin: 0 auto;
+    max-width: 120rem;
+    font-size: 1.3rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.footer a {
+    text-decoration: none;
+    color: #fff;
+}
+.footer a:hover {
+    color: var(--accent-color);
+    -webkit-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    text-decoration: underline;
+}
+
+/* ==========================================================================
+   4. COMPONENTES
+   ========================================================================== */
+
+/* --- Logo de la Clínica --- */
+.clinic-logo {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+}
+
+.clinic-logo-img,
+.clinic-logo::after {
+    border-radius: 1.5rem;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.clinic-logo-img:hover,
+.clinic-logo:hover::after {
+    transform: scale(1.05);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+.clinic-logo-img {
+    height: 100%;
+    width: clamp(8rem, 60vw, 25rem);
+    object-fit: fill;
+    padding: 1rem;
+}
+
+.clinic-logo-img[src=""], 
+.clinic-logo-img:not([src]),
+.clinic-logo-img[src="logo-club-entre-patitas.png"] {
+    display: none;
+}
+
+.clinic-logo::after {
+    content: "Club entre Patitas";
+    display: block;
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: var(--card-bg);
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    padding: 1.5rem 3rem;
+}
+
+.clinic-logo:has(.clinic-logo-img:not([src=""]):not(:not([src]))):not(:has(.clinic-logo-img[src="logo-club-entre-patitas.png"]))::after {
+    display: none;
+}
+
+/* --- Título Principal del Header --- */
+.logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 1rem;
+    position: relative;
+    z-index: 1;
+}
+
+.logo-container i {
+    font-size: 5rem;
+    color: var(--card-bg);
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.logo-container h1 {
+    font-size: 4.5rem;
+    font-weight: 700;
+    color: var(--card-bg);
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    text-transform: uppercase;
+    letter-spacing: -1px;
+}
+
+.header-subtitle {
+    color: var(--background-color);
+    font-size: 1.8rem;
+    font-weight: 500;
+    opacity: 0.95;
+    position: relative;
+    z-index: 1;
+}
+
+/* --- Sección de Bienvenida --- */
+.welcome-section {
+    text-align: center;
+    margin: 5% 0;
+}
+
+.welcome-title {
+    font-size: clamp(3rem, 9vw, 5rem);
+    font-weight: 700;
+    color: var(--dark-color);
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+}
+
+.welcome-subtitle {
+    font-size: clamp(1.5rem, 6vw, 2.3rem);
+    color: var(--secondary-color);
+    font-weight: 500;
+    margin-bottom: 2rem;
+    padding: 0 2em;
+}
+
+.welcome-description {
+    font-size: clamp(1.4rem, 4vw, 1.8rem);
+    color: var(--dark-color);
+    font-weight: 400;
+    max-width: 60rem;
+    margin: 0 auto;
+    line-height: 1.6;
+    opacity: 0.8;
+    padding: 0 3em;
+}
+
+/* --- Tarjetas de Selección de Usuario --- */
+.user-selection {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr;
+    gap: clamp(2rem, 1vw, 3rem);
+    width: fit-content;
+    margin: 0 auto 5rem auto;
+}
+
+.user-card {
+    background: linear-gradient(135deg, var(--card-bg), var(--light-accent));
+    border-radius: 3rem;
+    padding: 4em 3em;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    border: 0.3em solid var(--primary-color);
+    box-shadow: 0 15px 35px rgba(107, 182, 184, 0.2);
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+    margin: 0 3%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.user-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(244, 162, 97, 0.1) 0%, transparent 50%);
+    transform: scale(0);
+    transition: transform 0.4s ease;
+}
+
+.user-card:hover {
+    transform: translateY(-15px) scale(1.05);
+    box-shadow: 0 25px 50px rgba(107, 182, 184, 0.3);
+    border-color: var(--accent-color);
+}
+
+.user-card:hover::before {
+    transform: scale(1);
+}
+
+.user-icon {
+    font-size: 8rem;
+    margin-bottom: 2rem;
+    position: relative;
+    z-index: 1;
+}
+
+.user-title {
+    font-size: 2.8rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: var(--dark-color);
+    position: relative;
+    z-index: 1;
+}
+
+.user-description {
+    font-size: 1.6rem;
+    color: var(--secondary-color);
+    line-height: 1.6;
+    margin-bottom: 2.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+.user-features {
+    list-style: none;
+    margin-bottom: 3rem;
+    position: relative;
+    z-index: 1;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.user-features li {
+    font-size: 1.4rem;
+    color: var(--dark-color);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.user-features i {
+    color: var(--primary-color);
+    font-size: 1.6rem;
+}
+
+/* Modificadores de color para la tarjeta de Funcionario */
+.funcionario-card .user-icon,
+.funcionario-card .user-features i {
+    color: var(--accent-color);
+}
+
+.cliente-card .user-icon {
+    color: var(--primary-color);
+}
+
+/* --- Botón de Selección --- */
+.select-btn {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5em;
+    flex-direction: row;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    border: none;
+    padding: 1.5rem 3rem;
+    border-radius: 3rem;
+    font-size: clamp(1.5rem, 2vw, 1rem);
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    position: relative;
+    z-index: 1;
+    width: 100%;
+}
+
+.select-btn span {
+    white-space: nowrap;
+}
+
+
+.select-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(107, 182, 184, 0.4);
+}
+
+/* Modificadores para el botón de Funcionario */
+.funcionario-card .select-btn {
+    background: linear-gradient(135deg, var(--accent-color), var(--warm-orange));
+}
+
+.funcionario-card .select-btn:hover {
+    box-shadow: 0 8px 25px rgba(244, 162, 97, 0.4);
+}
+
+
+/* ==========================================================================
+   5. ANIMACIONES
+   ========================================================================== */
+@keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-15px) rotate(10deg); }
+}
+
+@media (max-width: 1074px) {
+    .footer-info {
+        align-items: center;
+        justify-content: center;
+    }
+    .footer-item {
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+}
+/* ==========================================================================
+   6. DISEÑO RESPONSIVE (MEDIA QUERIES)
+   ========================================================================== */
+@media (max-width: 768px) {
+    html {
+        font-size: 55%;
+    }
+    .user-selection {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {    
+
+}
