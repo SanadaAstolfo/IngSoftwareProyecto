@@ -28,7 +28,7 @@ Git (opcional, para clonar el repositorio).
 
 ### 2.2. Pasos de Instalación
 Obtener el Código Fuente:
-Crea una carpeta para el proyecto y descarga o clona el código fuente en ella. (dentro de algún idle como Visual Studio Code abrir la carpeta donde se encuentra almacenado el software)
+Crea una carpeta para el proyecto y descarga o clona el código fuente en ella. (dentro de algún IDE como Visual Studio Code abrir la carpeta donde se encuentra almacenado el software)
 
 Crear y Activar un Entorno Virtual:
 Es una práctica recomendada aislar las dependencias del proyecto. Desde la carpeta raíz del proyecto, ejecuta:
@@ -36,36 +36,25 @@ Es una práctica recomendada aislar las dependencias del proyecto. Desde la carp
 #### Crear el entorno virtual
 python -m venv venv
 
+o
+
+python3 -m venv venv
+
 #### Activar en Windows
 .\venv\Scripts\activate
+
+En caso de tener algún problema sobre los permisos de ejecución, utilice el siguiente comando:
+
+Set-ExecutionPolicy RemoteSigned -Scope Process
 
 #### Activar en macOS/Linux
 source venv/bin/activate
 
 Una vez activado, verás (venv) al principio de la línea de tu terminal.
 
-En caso de tener algún problema sobre los permisos de ejecución, utilice esto:
-
-Set-ExecutionPolicy RemoteSigned -Scope Process
-
-Instalar las Dependencias:
-Crea un archivo llamado requirements.txt en la raíz del proyecto con el siguiente contenido:
-
-Django>=4.0
-django-simple-history
-
 Luego, instala estas dependencias ejecutando:
 
 pip install -r requirements.txt
-
-o seguir estas instrucciones mas basicas:
-
-pip install django (para instalar las dependencias de django)
-pip install django-simple-history
-
-para saber si esta instalado correctamente Django usar:
-
-pip freeze
 
 Aplicar las Migraciones de la Base de Datos:
 Este comando creará el archivo de base de datos (db.sqlite3) y todas las tablas necesarias según los modelos definidos.

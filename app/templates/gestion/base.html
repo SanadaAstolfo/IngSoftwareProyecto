@@ -11,7 +11,203 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <link rel="stylesheet" href="{% static 'gestion/css/styles.css' %}">
     
-    {% block head %}{% endblock head %}
+    {% block head %}
+    <style>
+        .main-menu {
+            z-index: 99999;
+        }
+        .main-menu ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 2.5rem;
+        }
+        .main-menu ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.6rem;
+            padding: 0.5rem 0;
+            position: relative;
+        }
+        .main-menu ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+        .main-menu ul li a:hover::after {
+            width: 100%;
+        }
+        .user-name {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.6rem;
+            padding: 0.5rem 0;
+            position: relative;
+        }
+        .logout {
+            font-size: 1.6rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            display: inline-block;
+            text-align: center;
+            font-weight: 600;
+            padding: 0.5rem 0;
+            border: 1px solid #F4A261;
+            border-radius: 2px;
+            position: relative;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.1);
+            color: #F4A261;
+            text-decoration: none;
+            transition: 0.3s ease all;
+            z-index: 1;
+        }
+        .logout:before {
+            transition: 0.5s all ease;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            right: 50%;
+            bottom: 0;
+            opacity: 0;
+            content: '';
+            background-color: #F4A261;
+            z-index: -1;
+        }
+        .logout:hover, .logout:focus {
+            color: white;
+        }
+        .logout:hover:before, .logout:focus:before {
+            transition: 0.5s all ease;
+            left: 0;
+            right: 0;
+            opacity: 1;
+        }
+        .logout:active {
+            transform: scale(0.9);
+        }
+
+        .header {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .clinic-logo img{
+            width: 15rem;
+            margin: 0 0 2rem 0;
+        }
+        .login-form-container {
+            width: 100%;
+            max-width: 420px;
+            border-radius: 1.5rem;
+            background-color: var(--card-bg);
+            padding: 3rem 2.5rem;
+            color: var(--dark-color);
+            box-shadow: 0 15px 35px rgba(107, 182, 184, 0.2);
+            margin: 2rem;
+        }
+
+        .login-form-container .title {
+            text-align: center;
+            font-size: 2.8rem;
+            line-height: 2.2rem;
+            font-weight: 700;
+            color: var(--dark-color);
+            margin-bottom: 2.5rem;
+        }
+
+        .login-form-container .form {
+            margin-top: 1.5rem;
+        }
+
+        .login-form-container .input-group {
+            margin-top: 1rem;
+            font-size: 1.4rem;
+            line-height: 1.25rem;
+        }
+
+        .login-form-container .input-group label {
+            display: block;
+            color: var(--secondary-color);
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .login-form-container .input-group input {
+            width: 100%;
+            border-radius: 0.75rem;
+            border: 2px solid #E0E0E0;
+            outline: 0;
+            background-color: #F7F7F7;
+            padding: 1.2rem 1.5rem;
+            color: var(--dark-color);
+            transition: border-color 0.3s ease;
+        }
+
+        .login-form-container .input-group input:focus {
+            border-color: var(--primary-color);
+            background-color: #fff;
+        }
+
+        .login-form-container .forgot {
+            display: flex;
+            justify-content: flex-end;
+            font-size: 1.3rem;
+            line-height: 1rem;
+            color: var(--secondary-color);
+            margin: 12px 0 20px 0;
+        }
+
+        .login-form-container .forgot a {
+            color: var(--secondary-color);
+            text-decoration: none;
+        }
+
+        .login-form-container .forgot a:hover {
+            text-decoration: underline;
+            color: var(--primary-color);
+        }
+
+        .login-form-container .sign {
+            display: block;
+            width: 100%;
+            background: var(--primary-color);
+            padding: 1.5rem;
+            text-align: center;
+            color: white;
+            border: none;
+            border-radius: 0.75rem;
+            font-weight: 700;
+            font-size: 1.6rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .login-form-container .sign:hover {
+            background: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(107, 182, 184, 0.4);
+        }
+        .login-error-message {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 1rem;
+            border: 1px solid #f5c6cb;
+            border-radius: 0.75rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.4rem;
+        }
+    </style>
+    {% endblock head %}
 </head>
 <body id="top">
     
@@ -21,9 +217,21 @@
                 <img src="{% static 'svg/logo.svg' %}" alt="Club entre Patitas" class="clinic-logo-img">
            </a>
         </div>
-        
-        {% block navbar_extra_content %}
-        {% endblock navbar_extra_content %}
+
+        {% if user.is_authenticated %}
+            <nav class="main-menu">
+                <ul>
+                    <li><a href="{% url 'lista_pacientes' %}">Pacientes</a></li>
+                    <li><a href="{% url 'lista_tutores' %}">Tutores</a></li>
+                    <li><a href="{% url 'calendario_citas' %}">Citas</a></li>
+                </ul>
+                <span class="user-name">Bienvenido, {{ user.username }}</span>     
+                <form action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="logout">Cerrar Sesión</button>
+                </form>
+            </nav>
+        {% endif %}
 
     </header>
 

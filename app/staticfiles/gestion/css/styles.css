@@ -34,7 +34,9 @@ body {
 /* ==========================================================================
    3. ESTRUCTURA PRINCIPAL (LAYOUT)
    ========================================================================== */
-
+.visible {
+    display: contents;
+}
 /* Header */
 .header {
     background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
