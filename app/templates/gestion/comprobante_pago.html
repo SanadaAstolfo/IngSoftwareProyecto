@@ -1,0 +1,65 @@
+{% load static %}
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Comprobante de Pago #{{ pago.id }}</title>
+    <style>
+        body { font-family: sans-serif; margin: 20px; }
+        .comprobante-container { border: 1px solid #ccc; padding: 20px; max-width: 600px; margin: auto; }
+        .header { text-align: center; border-bottom: 1px solid #ccc; padding-bottom: 10px; margin-bottom: 20px; }
+        .header h1 { margin: 0; }
+        .detalle-item { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px dotted #eee; }
+        .detalle-item strong { font-weight: bold; }
+        .footer { text-align: center; margin-top: 30px; font-size: 0.8em; color: #777; }
+    </style>
+</head>
+<body>
+    <div class="comprobante-container">
+        <div class="header">
+            <img src="{% static '/svg/logo.svg' %}" alt="Logo Clínica" style="max-height: 80px;">
+            <h1>Comprobante de Pago</h1>
+        </div>
+
+        <div class="detalle">
+            <div class="detalle-item">
+                <span>Nº de Comprobante:</span>
+                <strong>{{ pago.id }}</strong>
+            </div>
+            <div class="detalle-item">
+                <span>Fecha de Emisión:</span>
+                <strong>{{ pago.fecha_pago|date:"d/m/Y H:i" }}</strong>
+            </div>
+            <div class="detalle-item">
+                <span>Tutor:</span>
+                <strong>{{ pago.tutor.nombre_completo }}</strong>
+            </div>
+            <div class="detalle-item">
+                <span>Monto Pagado:</span>
+                <strong>${{ pago.monto|floatformat:2 }}</strong>
+            </div>
+            <div class="detalle-item">
+                <span>Método de Pago:</span>
+                <strong>{{ pago.metodo_pago }}</strong>
+            </div>
+            {% if pago.cita %}
+            <div class="detalle-item">
+                <span>Asociado a Cita:</span>
+                <strong>Cita para {{ pago.cita.paciente.nombre }} el {{ pago.cita.fecha_hora|date:"d/m/Y" }}</strong>
+            </div>
+            {% endif %}
+            {% if pago.notas %}
+            <div class="detalle-item">
+                <span>Notas:</span>
+                <strong>{{ pago.notas }}</strong>
+            </div>
+            {% endif %}
+        </div>
+        
+        <div class="footer">
+            Gracias por su pago.
+        </div>
+    </div>
+</body>
+</html>

@@ -35,15 +35,19 @@
                             <th>Monto</th>
                             <th>Método</th>
                             <th>Notas / Cita Asociada</th>
+                            <th>Acciones</th> </tr>
                         </tr>
                     </thead>
                     <tbody>
                     {% for pago in tutor.pagos.all %}
                         <tr>
-                            <td>{{ pago.fecha_pago }}</td>
+                            <td>{{ pago.fecha_pago|date:"d/m/Y H:i" }}</td>
                             <td>${{ pago.monto }}</td>
                             <td>{{ pago.metodo_pago }}</td>
                             <td>{% if pago.cita %}Abono para cita de {{pago.cita.paciente.nombre}}{% else %}{{ pago.notas|default:"--" }}{% endif %}</td>
+                            <td>
+                                <a href="{% url 'ver_comprobante' pago.id %}" class="btn btn-sm btn-info" target="_blank">Ver Comprobante</a>
+                            </td>
                         </tr>
                     {% endfor %}
                     </tbody>

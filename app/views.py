@@ -482,3 +482,11 @@ def registrar_pago_tutor(request, tutor_id):
         'boton_texto': 'Registrar Pago'
     }
     return render(request, 'gestion/form.html', contexto)
+
+@login_required
+def ver_comprobante(request, pago_id):
+    pago = get_object_or_404(Pago, pk=pago_id)
+    contexto = {
+        'pago': pago,
+    }
+    return render(request, 'gestion/comprobante_pago.html', contexto)

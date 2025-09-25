@@ -5,13 +5,15 @@
 {% block content %}
     <div class="row">
         <div class="col-md-3">
-            {% if paciente.foto %}
-                <img src="{{ paciente.foto.url }}" class="img-fluid rounded" alt="Foto de {{ paciente.nombre }}">
-            {% else %}
-                <div class="border bg-light rounded d-flex align-items-center justify-content-center" style="height: 200px;">
-                    <span class="text-muted">Sin foto</span>
-                </div>
-            {% endif %}
+            <div class="paciente-foto-container">
+                {% if paciente.foto %}
+                    <img src="{{ paciente.foto.url }}" class="paciente-foto" alt="Foto de {{ paciente.nombre }}">
+                {% else %}
+                    <div class="paciente-foto-placeholder">
+                        <i class="fas fa-paw"></i>
+                    </div>
+                {% endif %}
+            </div>
         </div>
         <div class="col-md-9">
             <div class="d-flex justify-content-between align-items-center mb-4">

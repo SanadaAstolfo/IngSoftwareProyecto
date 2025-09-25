@@ -29,6 +29,7 @@ urlpatterns = [
     path('citas/<int:cita_id>/editar/', views.editar_cita, name='editar_cita'),
     path('citas/<int:cita_id>/cancelar/', views.cancelar_cita, name='cancelar_cita'),
     path('citas/<int:cita_id>/registrar-abono/', views.registrar_abono, name='registrar_abono'),
+    path('pagos/<int:pago_id>/comprobante/', views.ver_comprobante, name='ver_comprobante'),
 ]
 
 if settings.DEBUG:

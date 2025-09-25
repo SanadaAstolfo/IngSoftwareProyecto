@@ -72,9 +72,12 @@ body {
 .main-container {
     flex: 1;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
+    align-content: center;
     justify-content: center;
     position: relative;
+    flex-wrap: wrap;
 }
 
 .main-container::before {
@@ -203,6 +206,30 @@ body {
 
 .clinic-logo:has(.clinic-logo-img:not([src=""]):not(:not([src]))):not(:has(.clinic-logo-img[src="logo-club-entre-patitas.png"]))::after {
     display: none;
+}
+
+.paciente-foto-container {
+    width: 200px;
+    height: 200px;
+    border-radius: 1.5rem;
+    overflow: hidden;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    border: 3px solid var(--card-bg);
+    background-color: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.paciente-foto {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.paciente-foto-placeholder {
+    font-size: 5rem;
+    color: #ccc;
 }
 
 /* --- Título Principal del Header --- */
