@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib import messages
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.models import LogEntry, CHANGE
@@ -128,28 +129,33 @@ def crear_atencion(request, paciente_id, tipo_ficha):
         titulo = f'Nueva Consulta General para {paciente.nombre}'
 
     if request.method == 'POST':
-        form = FormClass(request.POST)
-        if form.is_valid():
-            atencion = form.save(commit=False)
+        atencion_form = FormClass(request.POST)
+        chequeo_form = ChequeoFisicoForm(request.POST)
 
+        if atencion_form.is_valid() and chequeo_form.is_valid():
+            atencion = atencion_form.save(commit=False)
             atencion.ficha_clinica = ficha
             if request.user.is_authenticated:
                 atencion.veterinario = request.user
-
             atencion.save()
-            form.save_m2m() 
+            atencion_form.save_m2m()
+
+            chequeo = chequeo_form.save(commit=False)
+            chequeo.atencion_medica = atencion
+            chequeo.save()
             
             return redirect('detalle_paciente', paciente_id=paciente.id)
     else:
-        form = FormClass()
+        atencion_form = FormClass()
+        chequeo_form = ChequeoFisicoForm()
 
     contexto = {
-        'form': form,
+        'atencion_form': atencion_form,
+        'chequeo_form': chequeo_form,
         'paciente': paciente,
         'titulo': titulo,
-        'boton_texto': 'Guardar'
     }
-    return render(request, 'gestion/form.html', contexto)
+    return render(request, 'gestion/atencion_form.html', contexto)
 
 @login_required
 def editar_atencion(request, paciente_id, atencion_id):
