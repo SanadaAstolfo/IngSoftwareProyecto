@@ -34,7 +34,7 @@
                     {{ form.as_p }}
                 {% endif %}
                 <button type="submit" class="btn btn-primary">{{ boton_texto }}</button>
-                <a href="{{ request.META.HTTP_REFERER|default:'pacientes/<int:paciente_id>/' }}" class="btn btn-secondary">Cancelar</a>
+                <a href="{{ request.META.HTTP_REFERER|default:'/pacientes/<int:paciente_id>/' }}" class="btn btn-secondary">Cancelar</a>
             </form>
             
             {% if object %}
