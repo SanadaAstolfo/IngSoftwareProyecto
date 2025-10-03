@@ -3,8 +3,8 @@
 {% block title %}Confirmar Cancelación{% endblock %}
 
 {% block content %}
-    <div class="confirmation-card">
-        <h2 class="text-center">¿Estás seguro?</h2>
+    <div class="text-center">
+        <h2>¿Estás seguro?</h2>
         <p>Estás a punto de cancelar la cita para <strong>{{ cita.paciente.nombre }}</strong> del {{ cita.fecha_hora }}.</p>
         <form class="confirmation-form" method="post">
             {% csrf_token %}
