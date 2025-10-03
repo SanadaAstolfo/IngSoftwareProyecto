@@ -1,0 +1,45 @@
+name: Desplegar en EC2
+
+# El workflow se ejecuta cada vez que haces un push a la rama 'main'
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Paso 1: Revisa el código del repositorio para tener acceso a él
+      - name: Checkout de Código
+        uses: actions/checkout@v2
+
+      # Paso 2: Se conecta al servidor EC2 y ejecuta los comandos de despliegue
+      - name: Desplegar en EC2
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            # Navega a la carpeta del proyecto en el servidor
+            cd ~/IngSoftwareProyecto
+
+            # Descarga los últimos cambios desde la rama main
+            git pull origin main
+
+            # Activa el entorno virtual
+            source .venv/bin/activate
+
+            # Instala cualquier nueva dependencia
+            pip install -r requirements.txt
+
+            # Ejecuta las migraciones de la base de datos
+            python manage.py migrate
+
+            # Recolecta los archivos estáticos
+            python manage.py collectstatic --no-input
+
+            # Reinicia Gunicorn para aplicar todos los cambios
+            sudo systemctl restart gunicorn
