@@ -38,8 +38,8 @@ class AtencionGeneralForm(forms.ModelForm):
             'anamnesis': forms.Textarea(attrs={'class': 'form-control', 'rows': 5}),
             'tratamiento': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
             'estado_emocional': forms.Select(attrs={'class': 'form-select'}),
-            'diagnosticos': forms.SelectMultiple(attrs={'class': 'form-select', 'size': '5'}),
-            'prediagnosticos': forms.SelectMultiple(attrs={'class': 'form-select', 'size': '5'}),
+            'diagnosticos': forms.CheckboxSelectMultiple(attrs={'class': 'form-select', 'size': '5'}),
+            'prediagnosticos': forms.CheckboxSelectMultiple(attrs={'class': 'form-select', 'size': '5'}),
             'estado': forms.Select(attrs={'class': 'form-select'}),
             'observaciones_sensibles': forms.Textarea(attrs={'class': 'form-control', 'rows': 4})
         }

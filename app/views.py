@@ -4,7 +4,9 @@ from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.models import LogEntry, CHANGE
 from django.contrib.contenttypes.models import ContentType
-from datetime import date
+from datetime import date, datetime
+from django.utils import timezone
+import pytz
 from .models import Paciente, Tutor, FichaClinica, AtencionMedica, ChequeoFisico, DocumentoAdjunto, Diagnostico, InsumoUtilizado, Cita, Pago, RegistroVacuna
 from .forms import PacienteForm, TutorForm, AtencionGeneralForm, ChequeoFisicoForm, ProcedimientoForm, AtencionHospitalizacionForm, DocumentoAdjuntoForm, InsumoUtilizadoForm, AntecedenteExternoForm, CitaForm, PagoForm, RegistroVacunaForm, CustomAuthenticationForm
 
@@ -367,12 +369,19 @@ def calendario_citas(request):
     filtro_hoy = request.GET.get('hoy')
 
     if filtro_hoy:
-        hoy = date.today()
-        queryset = queryset.filter(fecha_hora__date=hoy)
-        titulo = f"Citas para Hoy ({hoy.strftime('%d-%m-%Y')})"
+        santiago_tz = pytz.timezone('America/Santiago')
+        hoy_santiago = timezone.now().astimezone(santiago_tz).date()
+
+        queryset = queryset.filter(fecha_hora__date=hoy_santiago)
+        titulo = f"Citas para Hoy ({hoy_santiago.strftime('%d-%m-%Y')})"
+
     elif fecha_filtro:
-        queryset = queryset.filter(fecha_hora__date=fecha_filtro)
-        titulo = f"Citas para el {fecha_filtro}"
+        try:
+            fecha_obj = datetime.strptime(fecha_filtro, '%Y-%m-%d').date()
+            queryset = queryset.filter(fecha_hora__date=fecha_obj)
+            titulo = f"Citas para el {fecha_obj.strftime('%d-%m-%Y')}"
+        except ValueError:
+            pass
 
     contexto = {
         'citas': queryset,
