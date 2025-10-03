@@ -363,7 +363,6 @@ def cargar_antecedente(request, paciente_id):
 
 @login_required
 def calendario_citas(request):
-    queryset = Cita.objects.filter(estado__in=['Agendada', 'Confirmada']).order_by('fecha_hora')
     titulo = "Calendario de Citas"
     fecha_filtro = request.GET.get('fecha')
     filtro_hoy = request.GET.get('hoy')
@@ -372,16 +371,18 @@ def calendario_citas(request):
         santiago_tz = pytz.timezone('America/Santiago')
         hoy_santiago = timezone.now().astimezone(santiago_tz).date()
 
-        queryset = queryset.filter(fecha_hora__date=hoy_santiago)
+        queryset = Cita.objects.filter(fecha_hora__date=hoy_santiago).order_by('fecha_hora')
         titulo = f"Citas para Hoy ({hoy_santiago.strftime('%d-%m-%Y')})"
-
+    
     elif fecha_filtro:
         try:
             fecha_obj = datetime.strptime(fecha_filtro, '%Y-%m-%d').date()
-            queryset = queryset.filter(fecha_hora__date=fecha_obj)
+            queryset = Cita.objects.filter(fecha_hora__date=fecha_obj, estado__in=['Agendada', 'Confirmada']).order_by('fecha_hora')
             titulo = f"Citas para el {fecha_obj.strftime('%d-%m-%Y')}"
         except ValueError:
-            pass
+            queryset = Cita.objects.none()
+    else:
+        queryset = Cita.objects.filter(estado__in=['Agendada', 'Confirmada']).order_by('fecha_hora')
 
     contexto = {
         'citas': queryset,
