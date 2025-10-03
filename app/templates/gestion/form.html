@@ -3,44 +3,141 @@
 {% block title %}{{ titulo }}{% endblock %}
 
 {% block content %}
-    <h1>{{ titulo }}</h1>
-    <hr>
-    <div class="row">
-        <div class="col-md-6">
-            <form method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                {% if 'tipo_cirugia' in form.fields %}
-                    <div class="mb-3">
-                        <label for="{{ form.tipo.id_for_label }}" class="form-label">{{ form.tipo.label }}</label>
-                        {{ form.tipo }}
-                    </div>
-                    <div class="mb-3" id="div_id_tipo_cirugia" style="display: none;">
-                        <label for="{{ form.tipo_cirugia.id_for_label }}" class="form-label">{{ form.tipo_cirugia.label }}</label>
-                        {{ form.tipo_cirugia }}
-                    </div>
-                    <div class="mb-3">
-                        <label for="{{ form.descripcion.id_for_label }}" class="form-label">{{ form.descripcion.label }}</label>
-                        {{ form.descripcion }}
-                    </div>
-                    <div class="mb-3">
-                        <label for="{{ form.fecha_inicio.id_for_label }}" class="form-label">{{ form.fecha_inicio.label }}</label>
-                        {{ form.fecha_inicio }}
-                    </div>
-                    <div class="mb-3">
-                        <label for="{{ form.fecha_fin.id_for_label }}" class="form-label">{{ form.fecha_fin.label }}</label>
-                        {{ form.fecha_fin }}
-                    </div>
-                {% else %}
-                    {{ form.as_p }}
-                {% endif %}
-                <button type="submit" class="btn btn-primary">{{ boton_texto }}</button>
-                <a href="{{ request.META.HTTP_REFERER|default:'/pacientes/<int:paciente_id>/' }}" class="btn btn-secondary">Cancelar</a>
-            </form>
+    <div class="main-container">
+        <div class="selection-container">
+            <h1>{{ titulo }}</h1>
             
-            {% if object %}
-            <hr class="mt-4">
-            <a href="{% url 'borrar_paciente' object.id %}" class="btn btn-danger">Borrar Paciente</a>
-            {% endif %}
+            <!-- Formulario dentro de un card -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data" id="formulario-paciente">
+                        {% csrf_token %}
+                        
+                        <div class="row">
+                            <!-- Columna del formulario -->
+                            <div class="col-md-12">
+                                {% if 'tipo_cirugia' in form.fields %}
+                                    <!-- Campo Tipo -->
+                                    <div class="mb-3">
+                                        <label for="{{ form.tipo.id_for_label }}" class="form-label">
+                                            {{ form.tipo.label }}
+                                        </label>
+                                        {{ form.tipo }}
+                                        {% if form.tipo.errors %}
+                                            <div class="error-message">
+                                                {{ form.tipo.errors }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    
+                                    <!-- Campo Tipo de Cirugía (oculto inicialmente) -->
+                                    <div class="mb-3" id="div_id_tipo_cirugia" style="display: none;">
+                                        <label for="{{ form.tipo_cirugia.id_for_label }}" class="form-label">
+                                            {{ form.tipo_cirugia.label }}
+                                        </label>
+                                        {{ form.tipo_cirugia }}
+                                        {% if form.tipo_cirugia.errors %}
+                                            <div class="error-message">
+                                                {{ form.tipo_cirugia.errors }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    
+                                    <!-- Campo Descripción -->
+                                    <div class="mb-3">
+                                        <label for="{{ form.descripcion.id_for_label }}" class="form-label">
+                                            {{ form.descripcion.label }}
+                                        </label>
+                                        {{ form.descripcion }}
+                                        {% if form.descripcion.errors %}
+                                            <div class="error-message">
+                                                {{ form.descripcion.errors }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    
+                                    <!-- Campo Fecha Inicio -->
+                                    <div class="mb-3">
+                                        <label for="{{ form.fecha_inicio.id_for_label }}" class="form-label">
+                                            {{ form.fecha_inicio.label }}
+                                        </label>
+                                        {{ form.fecha_inicio }}
+                                        {% if form.fecha_inicio.errors %}
+                                            <div class="error-message">
+                                                {{ form.fecha_inicio.errors }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    
+                                    <!-- Campo Fecha Fin -->
+                                    <div class="mb-3">
+                                        <label for="{{ form.fecha_fin.id_for_label }}" class="form-label">
+                                            {{ form.fecha_fin.label }}
+                                        </label>
+                                        {{ form.fecha_fin }}
+                                        {% if form.fecha_fin.errors %}
+                                            <div class="error-message">
+                                                {{ form.fecha_fin.errors }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                {% else %}
+                                    <!-- Renderizado automático de campos -->
+                                    {% for field in form %}
+                                        <div class="mb-3">
+                                            <label for="{{ field.id_for_label }}" class="form-label">
+                                                {{ field.label }}
+                                                {% if field.field.required %}
+                                                    <span class="required-mark">*</span>
+                                                {% endif %}
+                                            </label>
+                                            {{ field }}
+                                            {% if field.help_text %}
+                                                <small class="form-text">{{ field.help_text }}</small>
+                                            {% endif %}
+                                            {% if field.errors %}
+                                                <div class="error-message">
+                                                    {{ field.errors }}
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+                                
+                                <!-- Errores generales del formulario -->
+                                {% if form.non_field_errors %}
+                                    <div class="alert alert-danger mb-3">
+                                        {{ form.non_field_errors }}
+                                    </div>
+                                {% endif %}
+                                
+                                <!-- Botones de acción -->
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-primary">
+                                         {{ boton_texto|default:"Guardar" }}
+                                    </button>
+                                    <a href="{{ request.META.HTTP_REFERER|default:'/pacientes/' }}" class="btn btn-secondary">
+                                         Cancelar
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    
+                    <!-- Botón de borrar (solo si existe el objeto) -->
+                    {% if object %}
+                        <div class="danger-zone mt-3">
+                            <h3 class="danger-zone-title">⚠️ Zona Peligrosa</h3>
+                            <p class="danger-zone-text">Esta acción es irreversible. Se eliminará el paciente y todos sus registros asociados.</p>
+                            <a href="{% url 'borrar_paciente' object.id %}" 
+                               class="btn btn-danger"
+                               onclick="return confirm('¿Estás seguro de que deseas borrar este paciente? Esta acción no se puede deshacer.');">
+                                🗑️ Borrar Paciente
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}
