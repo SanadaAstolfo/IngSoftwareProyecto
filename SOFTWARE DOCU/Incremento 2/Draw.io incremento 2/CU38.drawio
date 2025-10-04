@@ -1,0 +1,106 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" version="28.2.5">
+  <diagram name="Página-1" id="D7JxW8EBRkxiVRjazw6J">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="tsFQjKB6OjRg-tbypQbQ-3" value="" style="endArrow=none;dashed=1;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="166" y="204" as="sourcePoint" />
+            <mxPoint x="164.5" y="204" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="tsFQjKB6OjRg-tbypQbQ-4" value="V_Paciente" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};size=30;shadow=0;" vertex="1" parent="1">
+          <mxGeometry x="370" y="164" width="100" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="tsFQjKB6OjRg-tbypQbQ-5" value="" style="html=1;points=[[0,0,0,0,5],[0,1,0,0,-5],[1,0,0,0,5],[1,1,0,0,-5]];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};" vertex="1" parent="tsFQjKB6OjRg-tbypQbQ-4">
+          <mxGeometry x="44" y="80" width="10" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="tsFQjKB6OjRg-tbypQbQ-28" value="" style="html=1;points=[[0,0,0,0,5],[0,1,0,0,-5],[1,0,0,0,5],[1,1,0,0,-5]];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};" vertex="1" parent="tsFQjKB6OjRg-tbypQbQ-4">
+          <mxGeometry x="45" y="166" width="10" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="tsFQjKB6OjRg-tbypQbQ-7" value="C_Paciente" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};size=30;shadow=0;" vertex="1" parent="1">
+          <mxGeometry x="560" y="167" width="90" height="233" as="geometry" />
+        </mxCell>
+        <mxCell id="tsFQjKB6OjRg-tbypQbQ-8" value="" style="html=1;points=[[0,0,0,0,5],[0,1,0,0,-5],[1,0,0,0,5],[1,1,0,0,-5]];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};" vertex="1" parent="tsFQjKB6OjRg-tbypQbQ-7">
+          <mxGeometry x="40.15" y="90" width="10" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="tsFQjKB6OjRg-tbypQbQ-10" value="BD_Gestion" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};size=30;shadow=0;" vertex="1" parent="1">
+          <mxGeometry x="1010" y="167" width="100" height="233" as="geometry" />
+        </mxCell>
+        <mxCell id="tsFQjKB6OjRg-tbypQbQ-11" value="" style="html=1;points=[[0,0,0,0,5],[0,1,0,0,-5],[1,0,0,0,5],[1,1,0,0,-5]];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};" vertex="1" parent="tsFQjKB6OjRg-tbypQbQ-10">
+          <mxGeometry x="45" y="100" width="10" height="59" as="geometry" />
+        </mxCell>
+        <mxCell id="tsFQjKB6OjRg-tbypQbQ-13" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="174" y="250" as="sourcePoint" />
+            <mxPoint x="415" y="250" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="tsFQjKB6OjRg-tbypQbQ-14" value="" style="endArrow=classic;html=1;rounded=0;dashed=1;startSize=6;" edge="1" parent="1" source="tsFQjKB6OjRg-tbypQbQ-28">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="417.5" y="373" as="sourcePoint" />
+            <mxPoint x="176" y="373" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="tsFQjKB6OjRg-tbypQbQ-15" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.752;entryY=0.992;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="tsFQjKB6OjRg-tbypQbQ-5" target="tsFQjKB6OjRg-tbypQbQ-21">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="420" y="278" as="sourcePoint" />
+            <mxPoint x="699.5" y="278" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="tsFQjKB6OjRg-tbypQbQ-16" value="" style="endArrow=classic;html=1;rounded=0;dashed=1;startSize=6;" edge="1" parent="1" target="tsFQjKB6OjRg-tbypQbQ-28">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="600" y="340" as="sourcePoint" />
+            <mxPoint x="419.5" y="340" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="tsFQjKB6OjRg-tbypQbQ-17" value="" style="endArrow=classic;html=1;rounded=0;dashed=1;startSize=6;exitX=0.985;exitY=1.064;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="tsFQjKB6OjRg-tbypQbQ-24">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="843.5" y="326" as="sourcePoint" />
+            <mxPoint x="609" y="326" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="tsFQjKB6OjRg-tbypQbQ-18" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" target="tsFQjKB6OjRg-tbypQbQ-11">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="610.1500000000001" y="288.3" as="sourcePoint" />
+            <mxPoint x="1040" y="288" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="tsFQjKB6OjRg-tbypQbQ-19" value="1. Seleccionar paciente" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="186" y="225" width="184" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="tsFQjKB6OjRg-tbypQbQ-20" value="6. Se muestra el calendario de vacunas" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=1;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;movable=1;resizable=1;deletable=1;editable=1;locked=0;connectable=1;container=0;" vertex="1" parent="1">
+          <mxGeometry x="186" y="350" width="224" height="23" as="geometry" />
+        </mxCell>
+        <mxCell id="tsFQjKB6OjRg-tbypQbQ-21" value="2. Solicitar lista de citas" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="440" y="240" width="210" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="tsFQjKB6OjRg-tbypQbQ-22" value="5. Retorna la vista con datos" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="430" y="317" width="170" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="tsFQjKB6OjRg-tbypQbQ-23" value="3. Consulta datos del paciente y el historial de vacunas" style="text;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="660" y="266" width="300" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="tsFQjKB6OjRg-tbypQbQ-24" value="4.Retorna información del paciente y historial (registradas, vencidas, próximas)" style="text;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="632" y="303" width="428" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="tsFQjKB6OjRg-tbypQbQ-26" value="" style="endArrow=none;dashed=1;html=1;rounded=0;" edge="1" parent="1" target="tsFQjKB6OjRg-tbypQbQ-27">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="171" y="390" as="sourcePoint" />
+            <mxPoint x="172" y="390" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="tsFQjKB6OjRg-tbypQbQ-29" value="" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};participant=umlActor;" vertex="1" parent="1">
+          <mxGeometry x="161" y="152" width="20" height="248" as="geometry" />
+        </mxCell>
+        <mxCell id="tsFQjKB6OjRg-tbypQbQ-27" value="" style="html=1;points=[[0,0,0,0,5],[0,1,0,0,-5],[1,0,0,0,5],[1,1,0,0,-5]];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};" vertex="1" parent="tsFQjKB6OjRg-tbypQbQ-29">
+          <mxGeometry x="5" y="64" width="10" height="184" as="geometry" />
+        </mxCell>
+        <mxCell id="tsFQjKB6OjRg-tbypQbQ-30" value="Veterinario" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="141" y="122" width="60" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
