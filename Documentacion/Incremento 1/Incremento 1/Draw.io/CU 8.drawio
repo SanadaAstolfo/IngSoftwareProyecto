@@ -1,0 +1,152 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36 Edg/141.0.0.0" version="28.2.5">
+  <diagram name="Page-1" id="2YBvvXClWsGukQMizWep">
+    <mxGraphModel dx="1226" dy="678" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="aM9ryv3xv72pqoxQDRHE-5" value="V_Paciente" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};" parent="1" vertex="1">
+          <mxGeometry x="390" y="20" width="100" height="540" as="geometry" />
+        </mxCell>
+        <mxCell id="aM9ryv3xv72pqoxQDRHE-6" value="" style="html=1;points=[];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};" parent="aM9ryv3xv72pqoxQDRHE-5" vertex="1">
+          <mxGeometry x="45" y="60" width="10" height="480" as="geometry" />
+        </mxCell>
+        <mxCell id="9pPjlTTeWQ5HEnXw2hn_-1" value="" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};participant=umlActor;" parent="1" vertex="1">
+          <mxGeometry x="41" y="49" width="20" height="511" as="geometry" />
+        </mxCell>
+        <mxCell id="qDYk6nwleKQgL_wAlCJO-24" value="" style="html=1;points=[];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};" vertex="1" parent="9pPjlTTeWQ5HEnXw2hn_-1">
+          <mxGeometry x="5" y="51" width="10" height="59" as="geometry" />
+        </mxCell>
+        <mxCell id="qDYk6nwleKQgL_wAlCJO-25" value="" style="html=1;points=[];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};" vertex="1" parent="9pPjlTTeWQ5HEnXw2hn_-1">
+          <mxGeometry x="5" y="291" width="10" height="59" as="geometry" />
+        </mxCell>
+        <mxCell id="qDYk6nwleKQgL_wAlCJO-26" value="" style="html=1;points=[];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};" vertex="1" parent="9pPjlTTeWQ5HEnXw2hn_-1">
+          <mxGeometry x="5" y="381" width="10" height="59" as="geometry" />
+        </mxCell>
+        <mxCell id="9pPjlTTeWQ5HEnXw2hn_-2" value="Veterinario" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="21" y="19" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="9pPjlTTeWQ5HEnXw2hn_-6" value="C_Principal" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};" parent="1" vertex="1">
+          <mxGeometry x="780" y="20" width="100" height="540" as="geometry" />
+        </mxCell>
+        <mxCell id="9pPjlTTeWQ5HEnXw2hn_-7" value="" style="html=1;points=[];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};" parent="9pPjlTTeWQ5HEnXw2hn_-6" vertex="1">
+          <mxGeometry x="45" y="60" width="10" height="480" as="geometry" />
+        </mxCell>
+        <mxCell id="9pPjlTTeWQ5HEnXw2hn_-12" value="2. Solicita lista y ficha de paciente" style="html=1;verticalAlign=bottom;endArrow=block;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;" parent="1" edge="1">
+          <mxGeometry x="0.0008" relative="1" as="geometry">
+            <mxPoint x="445" y="150" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="545" y="150" />
+            </Array>
+            <mxPoint x="824" y="150" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="9pPjlTTeWQ5HEnXw2hn_-13" value="5. Confirmación de guardado" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;" parent="1" edge="1">
+          <mxGeometry x="0.0289" relative="1" as="geometry">
+            <mxPoint x="446" y="320" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="541" y="320" />
+            </Array>
+            <mxPoint x="826" y="320.0000000000001" as="sourcePoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="9pPjlTTeWQ5HEnXw2hn_-16" value="gestion_atencionmedica" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};" parent="1" vertex="1">
+          <mxGeometry x="1275" y="21" width="150" height="539" as="geometry" />
+        </mxCell>
+        <mxCell id="9pPjlTTeWQ5HEnXw2hn_-18" value="" style="html=1;points=[];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};" parent="9pPjlTTeWQ5HEnXw2hn_-16" vertex="1">
+          <mxGeometry x="70" y="149" width="10" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="9pPjlTTeWQ5HEnXw2hn_-26" value="4. Confirmación de guardado" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="836" y="260" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="931" y="260" />
+            </Array>
+            <mxPoint x="1343" y="260" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qDYk6nwleKQgL_wAlCJO-11" value="3. Valida y guarda/actualiza atención y datos asociados (ficha clínica, chequeo físico, procedimiento)" style="html=1;verticalAlign=bottom;endArrow=block;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;" edge="1" parent="1">
+          <mxGeometry x="0.0008" relative="1" as="geometry">
+            <mxPoint x="836" y="200" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="936" y="200" />
+            </Array>
+            <mxPoint x="1345" y="200" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qDYk6nwleKQgL_wAlCJO-13" value="1. Accede a la gestión de pacientes" style="html=1;verticalAlign=bottom;endArrow=block;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;" edge="1" parent="1" target="aM9ryv3xv72pqoxQDRHE-6">
+          <mxGeometry x="0.0008" relative="1" as="geometry">
+            <mxPoint x="56" y="130" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="150" y="130" />
+            </Array>
+            <mxPoint x="433" y="130" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qDYk6nwleKQgL_wAlCJO-14" value="6. Selecciona &quot;registrar atención&quot;" style="html=1;verticalAlign=bottom;endArrow=block;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;" edge="1" parent="1" source="qDYk6nwleKQgL_wAlCJO-25">
+          <mxGeometry x="0.0008" relative="1" as="geometry">
+            <mxPoint x="52" y="368" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="156" y="369" />
+            </Array>
+            <mxPoint x="435" y="369" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qDYk6nwleKQgL_wAlCJO-15" value="9. Selecciona tipo de atención" style="html=1;verticalAlign=bottom;endArrow=block;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;" edge="1" parent="1" source="qDYk6nwleKQgL_wAlCJO-26">
+          <mxGeometry x="0.0008" relative="1" as="geometry">
+            <mxPoint x="51" y="460" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="156" y="460" />
+            </Array>
+            <mxPoint x="435" y="460" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qDYk6nwleKQgL_wAlCJO-20" value="2. Solicita lista y ficha de paciente" style="html=1;verticalAlign=bottom;endArrow=block;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;" edge="1" parent="1">
+          <mxGeometry x="0.0008" relative="1" as="geometry">
+            <mxPoint x="446" y="394" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="546" y="394" />
+            </Array>
+            <mxPoint x="825" y="394" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qDYk6nwleKQgL_wAlCJO-21" value="5. Confirmación de guardado" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;" edge="1" parent="1">
+          <mxGeometry x="0.0289" relative="1" as="geometry">
+            <mxPoint x="445" y="434" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="540" y="434" />
+            </Array>
+            <mxPoint x="825" y="434.0000000000001" as="sourcePoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qDYk6nwleKQgL_wAlCJO-22" value="2. Solicita lista y ficha de paciente" style="html=1;verticalAlign=bottom;endArrow=block;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;" edge="1" parent="1">
+          <mxGeometry x="0.0008" relative="1" as="geometry">
+            <mxPoint x="444" y="480" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="544" y="480" />
+            </Array>
+            <mxPoint x="823" y="480" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qDYk6nwleKQgL_wAlCJO-23" value="5. Confirmación de guardado" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;" edge="1" parent="1">
+          <mxGeometry x="0.0289" relative="1" as="geometry">
+            <mxPoint x="446" y="518" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="541" y="518" />
+            </Array>
+            <mxPoint x="826" y="518.0000000000001" as="sourcePoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36" version="27.1.6">
+  <diagram name="Copia de Página-2" id="sYW4Vz67cnVE7Pq5w2d5">
+    <mxGraphModel dx="1872" dy="517" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="uovlXRHEzF_6AcNhnaho-0" />
+        <mxCell id="uovlXRHEzF_6AcNhnaho-1" parent="uovlXRHEzF_6AcNhnaho-0" />
+        <mxCell id="uovlXRHEzF_6AcNhnaho-2" value="1. Ingresa a la sección de hospitalización o procedimientos (a través de la ficha del paciente)" style="html=1;verticalAlign=bottom;endArrow=block;edgeStyle=elbowEdgeStyle;elbow=horizontal;curved=0;rounded=0;" edge="1" parent="uovlXRHEzF_6AcNhnaho-1" source="uovlXRHEzF_6AcNhnaho-4" target="uovlXRHEzF_6AcNhnaho-7">
+          <mxGeometry x="0.006" relative="1" as="geometry">
+            <mxPoint x="130" y="150" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="-98" y="122" />
+            </Array>
+            <mxPoint x="470" y="120" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uovlXRHEzF_6AcNhnaho-3" value="" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};participant=umlActor;" vertex="1" parent="uovlXRHEzF_6AcNhnaho-1">
+          <mxGeometry x="-479" y="36" width="20" height="450" as="geometry" />
+        </mxCell>
+        <mxCell id="uovlXRHEzF_6AcNhnaho-6" value="V_Hospitalizacion" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};" vertex="1" parent="uovlXRHEzF_6AcNhnaho-1">
+          <mxGeometry x="-64" y="38" width="144" height="442" as="geometry" />
+        </mxCell>
+        <mxCell id="uovlXRHEzF_6AcNhnaho-7" value="" style="html=1;points=[[0,0,0,0,5],[0,1,0,0,-5],[1,0,0,0,5],[1,1,0,0,-5]];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};" vertex="1" parent="uovlXRHEzF_6AcNhnaho-6">
+          <mxGeometry x="67" y="59.5" width="10" height="370" as="geometry" />
+        </mxCell>
+        <mxCell id="uovlXRHEzF_6AcNhnaho-8" value="C_Hospitalizacion " style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" vertex="1" parent="uovlXRHEzF_6AcNhnaho-1">
+          <mxGeometry x="676" y="40" width="131" height="442" as="geometry" />
+        </mxCell>
+        <mxCell id="uovlXRHEzF_6AcNhnaho-10" value="" style="html=1;points=[[0,0,0,0,5],[0,1,0,0,-5],[1,0,0,0,5],[1,1,0,0,-5]];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};" vertex="1" parent="uovlXRHEzF_6AcNhnaho-8">
+          <mxGeometry x="60.5" y="77" width="10" height="353" as="geometry" />
+        </mxCell>
+        <mxCell id="uovlXRHEzF_6AcNhnaho-11" value="2. Solicita el formulario de registro de hospitalización" style="html=1;verticalAlign=bottom;endArrow=block;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;" edge="1" parent="uovlXRHEzF_6AcNhnaho-1" source="uovlXRHEzF_6AcNhnaho-7" target="uovlXRHEzF_6AcNhnaho-8">
+          <mxGeometry x="0.005" relative="1" as="geometry">
+            <mxPoint x="300" y="140" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="320" y="140" />
+            </Array>
+            <mxPoint x="700" y="140" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uovlXRHEzF_6AcNhnaho-12" value="5. Muestra el formulario con los campos requeridos (tipo de exámenes realizados, tipo de procedimiento quirúrgico y hora de ingreso y egreso)" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;" edge="1" parent="uovlXRHEzF_6AcNhnaho-1" target="uovlXRHEzF_6AcNhnaho-7" source="uovlXRHEzF_6AcNhnaho-10">
+          <mxGeometry x="0.025" relative="1" as="geometry">
+            <mxPoint x="298" y="236" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="702" y="251" />
+              <mxPoint x="431.17" y="196" />
+            </Array>
+            <mxPoint x="705" y="234" as="sourcePoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uovlXRHEzF_6AcNhnaho-13" value="&lt;code data-end=&quot;613&quot; data-start=&quot;579&quot;&gt;gestion_paciente &lt;/code&gt;" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};size=40;" vertex="1" parent="uovlXRHEzF_6AcNhnaho-1">
+          <mxGeometry x="995" y="38" width="160" height="425" as="geometry" />
+        </mxCell>
+        <mxCell id="uovlXRHEzF_6AcNhnaho-14" value="" style="html=1;points=[[0,0,0,0,5],[0,1,0,0,-5],[1,0,0,0,5],[1,1,0,0,-5]];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};" vertex="1" parent="uovlXRHEzF_6AcNhnaho-13">
+          <mxGeometry x="75" y="57.5" width="10" height="144.5" as="geometry" />
+        </mxCell>
+        <mxCell id="uovlXRHEzF_6AcNhnaho-15" value="3. Consulta datos del paciente (si es necesario para el contexto)" style="html=1;verticalAlign=bottom;endArrow=block;edgeStyle=elbowEdgeStyle;elbow=horizontal;curved=0;rounded=0;" edge="1" parent="uovlXRHEzF_6AcNhnaho-1" target="uovlXRHEzF_6AcNhnaho-14">
+          <mxGeometry x="0.0066" relative="1" as="geometry">
+            <mxPoint x="748" y="165" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="949.5" y="165" />
+            </Array>
+            <mxPoint x="976.5" y="165" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uovlXRHEzF_6AcNhnaho-17" value="&lt;div&gt;7. Envía los datos de la hospitalización/procedimientos&lt;/div&gt;" style="html=1;verticalAlign=bottom;endArrow=block;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;" edge="1" parent="uovlXRHEzF_6AcNhnaho-1" source="uovlXRHEzF_6AcNhnaho-7">
+          <mxGeometry x="0.0053" relative="1" as="geometry">
+            <mxPoint x="7" y="282" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="417.1666666666665" y="282" />
+            </Array>
+            <mxPoint x="735" y="282" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uovlXRHEzF_6AcNhnaho-18" value="Veterinario" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=16;" vertex="1" parent="uovlXRHEzF_6AcNhnaho-1">
+          <mxGeometry x="-514" y="10" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="uovlXRHEzF_6AcNhnaho-21" value="&lt;code data-end=&quot;613&quot; data-start=&quot;579&quot;&gt;gestion_atencionmedica &lt;/code&gt;" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};size=40;" vertex="1" parent="uovlXRHEzF_6AcNhnaho-1">
+          <mxGeometry x="1181" y="38" width="160" height="425" as="geometry" />
+        </mxCell>
+        <mxCell id="uovlXRHEzF_6AcNhnaho-23" value="" style="html=1;points=[[0,0,0,0,5],[0,1,0,0,-5],[1,0,0,0,5],[1,1,0,0,-5]];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};" vertex="1" parent="uovlXRHEzF_6AcNhnaho-21">
+          <mxGeometry x="75" y="314" width="10" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="uovlXRHEzF_6AcNhnaho-27" value="8. Valida y guarda la atención de hospitalización" style="html=1;verticalAlign=bottom;endArrow=block;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;" edge="1" parent="uovlXRHEzF_6AcNhnaho-1" target="uovlXRHEzF_6AcNhnaho-23" source="uovlXRHEzF_6AcNhnaho-10">
+          <mxGeometry x="0.0022" relative="1" as="geometry">
+            <mxPoint x="710" y="399" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="1153" y="399" />
+            </Array>
+            <mxPoint x="1169.5" y="399.0000000000002" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uovlXRHEzF_6AcNhnaho-28" value="9. Valida y asocia los datos al historial clínico" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;edgeStyle=elbowEdgeStyle;elbow=horizontal;curved=0;rounded=0;" edge="1" parent="uovlXRHEzF_6AcNhnaho-1" source="uovlXRHEzF_6AcNhnaho-23" target="uovlXRHEzF_6AcNhnaho-10">
+          <mxGeometry x="0.0023" relative="1" as="geometry">
+            <mxPoint x="710" y="416" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="900.5" y="416" />
+              <mxPoint x="1266" y="517" />
+              <mxPoint x="1396" y="487" />
+              <mxPoint x="1416" y="467" />
+            </Array>
+            <mxPoint x="1170" y="416" as="sourcePoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uovlXRHEzF_6AcNhnaho-29" value="6. Registra la información solicitada y confirma el ingreso" style="html=1;verticalAlign=bottom;endArrow=block;edgeStyle=elbowEdgeStyle;elbow=horizontal;curved=0;rounded=0;" edge="1" parent="uovlXRHEzF_6AcNhnaho-1" source="uovlXRHEzF_6AcNhnaho-4" target="uovlXRHEzF_6AcNhnaho-7">
+          <mxGeometry x="0.0085" relative="1" as="geometry">
+            <mxPoint x="-46" y="258.5" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="-41" y="254" />
+            </Array>
+            <mxPoint x="288" y="258.5" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uovlXRHEzF_6AcNhnaho-30" value="&lt;div&gt;11. Los eventos médicos registrados quedan vinculados a la ficha clínica&lt;/div&gt;" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;" edge="1" parent="uovlXRHEzF_6AcNhnaho-1" target="uovlXRHEzF_6AcNhnaho-4" source="uovlXRHEzF_6AcNhnaho-7">
+          <mxGeometry x="0.003" relative="1" as="geometry">
+            <mxPoint x="-112" y="450" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="-35" y="450" />
+              <mxPoint x="278" y="500" />
+              <mxPoint x="408" y="470" />
+              <mxPoint x="428" y="450" />
+            </Array>
+            <mxPoint x="288" y="450" as="sourcePoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="GqX4YWeKZ9QWxFyIy9Mp-3" value="4. Datos del paciente" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;" edge="1" parent="uovlXRHEzF_6AcNhnaho-1" source="uovlXRHEzF_6AcNhnaho-14">
+          <mxGeometry x="0.0264" relative="1" as="geometry">
+            <mxPoint x="746.5" y="196" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="753.1700000000001" y="196" />
+              <mxPoint x="823.1700000000001" y="176" />
+              <mxPoint x="843.1700000000001" y="156" />
+            </Array>
+            <mxPoint x="1110" y="196" as="sourcePoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="GqX4YWeKZ9QWxFyIy9Mp-6" value="10. Muestra un mensaje de confirmación" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;" edge="1" parent="uovlXRHEzF_6AcNhnaho-1" source="uovlXRHEzF_6AcNhnaho-10" target="uovlXRHEzF_6AcNhnaho-7">
+          <mxGeometry x="0.0263" relative="1" as="geometry">
+            <mxPoint x="300" y="439" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="343.1700000000001" y="439" />
+              <mxPoint x="413.1700000000001" y="419" />
+              <mxPoint x="433.1700000000001" y="399" />
+            </Array>
+            <mxPoint x="565" y="439" as="sourcePoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uovlXRHEzF_6AcNhnaho-4" value="" style="html=1;points=[[0,0,0,0,5],[0,1,0,0,-5],[1,0,0,0,5],[1,1,0,0,-5]];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};" vertex="1" parent="uovlXRHEzF_6AcNhnaho-1">
+          <mxGeometry x="-472" y="91" width="10" height="374" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
