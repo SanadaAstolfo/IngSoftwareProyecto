@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Epicrisis - {{ atencion.paciente.nombre }}</title>
+     <style>
+        /* Puedes usar los mismos estilos de pdf_ficha_clinica.html */
+        body { font-family: sans-serif; margin: 1.5cm; font-size: 10pt; }
+        .header, .footer { text-align: center; margin-bottom: 15px; }
+        .section { margin-bottom: 15px; border: 1px solid #eee; padding: 10px; }
+        .section h2 { margin-top: 0; font-size: 1.2em; border-bottom: 1px solid #ccc; padding-bottom: 5px; }
+        p { margin: 4px 0; }
+        strong { font-weight: bold; }
+         .firma { margin-top: 3cm; text-align: right; }
+         .firma img { max-height: 50px; display: block; margin-left: auto;}
+        .footer { margin-top: 20px; font-size: 0.8em; color: #555; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Epicrisis Médica</h1>
+        <p>Club Entre Patitas</p>
+        <p>Fecha de Atención: {{ atencion.fecha_atencion|date:"d-m-Y H:i" }}</p>
+    </div>
+
+    <div class="section">
+        <h2>Datos del Paciente</h2>
+        <p><strong>Nombre:</strong> {{ atencion.ficha_clinica.paciente.nombre }}</p>
+        <p><strong>Especie/Raza:</strong> {{ atencion.ficha_clinica.paciente.especie }} / {{ atencion.ficha_clinica.paciente.raza }}</p>
+        <p><strong>Tutor:</strong> {{ atencion.ficha_clinica.paciente.tutor.nombre_completo|default:"-" }} (RUT: {{ atencion.ficha_clinica.paciente.tutor.rut }})</p>
+    </div>
+
+    <div class="section">
+        <h2>Resumen de la Atención</h2>
+        <p><strong>Motivo Consulta:</strong> {{ atencion.motivo_consulta }}</p>
+        <p><strong>Anamnesis Remota y Actual:</strong> {{ atencion.anamnesis|default:'-' }}</p>
+    </div>
+
+    <div class="section">
+        <h2>Diagnóstico</h2>
+         <p><strong>Diagnósticos:</strong>
+            {% for diag in atencion.diagnosticos.all %}
+                {{ diag.nombre }}{% if not forloop.last %}, {% endif %}
+            {% empty %}
+                No registrados.
+            {% endfor %}
+        </p>
+    </div>
+
+     <div class="section">
+        <h2>Tratamiento e indicaciones</h2>
+        <p><strong>Tratamiento:</strong> {{ atencion.tratamiento|linebreaksbr|default:"No se especificó tratamiento." }}</p>
+         {% if atencion.recetas.exists %}
+             {% for receta in atencion.recetas.all %}
+                 <p><strong>Receta Médica:</strong> {{ receta.prescripcion|linebreaksbr }}</p>
+             {% endfor %}
+         {% else %}
+             <p>Consultar detalles con el veterinario.</p>
+         {% endif %}
+    </div>
+
+     <div class="firma">
+        {% if firma_url %}
+            <img src="{{ firma_url }}" alt="Firma del Veterinario">
+        {% endif %}
+        <p>_________________________</p>
+        <p>Dr(a). {{ atencion.veterinario.get_full_name|default:atencion.veterinario.username }}</p>
+        <p>Médico Veterinario</p>
+    </div>
+
+    <div class="footer">
+        <p>Documento generado el {% now "d-m-Y H:i" %}</p>
+    </div>
+</body>
+</html>

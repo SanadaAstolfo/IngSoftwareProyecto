@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from simple_history.models import HistoricalRecords
 from datetime import date, timedelta
+from django.utils import timezone
 
 class Perfil(models.Model):
     ROL_CHOICES = [
@@ -14,6 +15,12 @@ class Perfil(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     rut = models.CharField(max_length=12, unique=True)
     rol = models.CharField(max_length=20, choices=ROL_CHOICES)
+    canal_notificacion_preferido = models.CharField(
+        max_length=10,
+        choices=[('EMAIL', 'Correo Electrónico'), ('WHATSAPP', 'WhatsApp'), ('NONE', 'No recibir')],
+        default='EMAIL',
+        verbose_name="Canal de notificación preferido"
+    )
 
     def __str__(self):
         return f"Perfil de {self.user.username} (RUT: {self.rut})"
@@ -279,3 +286,32 @@ class RegistroVacuna(models.Model):
 
     def __str__(self):
         return f"{self.vacuna.nombre} aplicada a {self.paciente.nombre} el {self.fecha_aplicacion}"
+    
+class Mensaje(models.Model):
+    remitente = models.ForeignKey(User, on_delete=models.CASCADE, related_name='mensajes_enviados')
+    destinatario = models.ForeignKey(User, on_delete=models.CASCADE, related_name='mensajes_recibidos')
+    asunto = models.CharField(max_length=200)
+    cuerpo = models.TextField()
+    fecha_envio = models.DateTimeField(default=timezone.now)
+    leido = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"De: {self.remitente.username} | Para: {self.destinatario.username} | Asunto: {self.asunto}"
+
+    class Meta:
+        ordering = ['-fecha_envio']
+
+class Receta(models.Model):
+    atencion_medica = models.ForeignKey(AtencionMedica, on_delete=models.CASCADE, related_name='recetas')
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+    prescripcion = models.TextField(verbose_name="Prescripción")
+    # Campo para CU-50 (Restringir reimpresión)
+    impresa = models.BooleanField(default=False, verbose_name="¿Impresa/Generada?") 
+    # Campo para CU-52 (Firma) - Opcional aquí, podría ir en la generación del PDF
+    # firma_veterinario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name='recetas_firmadas')
+
+    def __str__(self):
+        return f"Receta para Atención ID {self.atencion_medica.id} del {self.fecha_creacion.strftime('%d-%m-%Y')}"
+
+    class Meta:
+        ordering = ['-fecha_creacion']

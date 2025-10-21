@@ -1,14 +1,25 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.contrib.auth import views as auth_views
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.admin.models import LogEntry, CHANGE
 from django.contrib.contenttypes.models import ContentType
+from django.core.exceptions import ObjectDoesNotExist
+from django.http import HttpResponse, HttpResponseForbidden
+from django.template.loader import render_to_string
+from weasyprint import HTML, CSS
+from .decorators import group_required
 from datetime import date, datetime
 from django.utils import timezone
+from django.db.models import Q
+from django.conf import settings
 import pytz
-from .models import Paciente, Tutor, FichaClinica, AtencionMedica, ChequeoFisico, DocumentoAdjunto, Diagnostico, InsumoUtilizado, Cita, Pago, RegistroVacuna
-from .forms import PacienteForm, TutorForm, AtencionGeneralForm, ChequeoFisicoForm, ProcedimientoForm, AtencionHospitalizacionForm, DocumentoAdjuntoForm, InsumoUtilizadoForm, AntecedenteExternoForm, CitaForm, PagoForm, RegistroVacunaForm, CustomAuthenticationForm
+import os
+from .models import Paciente, Tutor, Perfil, FichaClinica, AtencionMedica, ChequeoFisico, DocumentoAdjunto, Diagnostico, InsumoUtilizado, Cita, Pago, RegistroVacuna, Mensaje, Receta
+from .forms import PacienteForm, TutorForm, AtencionGeneralForm, ChequeoFisicoForm, ProcedimientoForm, AtencionHospitalizacionForm, DocumentoAdjuntoForm, InsumoUtilizadoForm, AntecedenteExternoForm, CitaForm, PagoForm, RegistroVacunaForm, CustomAuthenticationForm, MiPerfilForm, MensajeForm, RecetaForm
+
+def es_personal(user):
+    return hasattr(user, 'perfil') and user.perfil.rol in ['ADMIN', 'VET', 'ESP', 'SECRETARIA']
 
 def portal_view(request):
     return render(request, 'portal.html')
@@ -506,3 +517,226 @@ def ver_comprobante(request, pago_id):
         'pago': pago,
     }
     return render(request, 'gestion/comprobante_pago.html', contexto)
+
+@login_required
+def editar_mi_perfil(request):
+    """
+    Vista para que un Tutor edite su propia información de perfil.
+    """
+    user = request.user
+    titulo = "Editar Mi Perfil"
+
+    # Intentamos obtener el Perfil y el Tutor asociados al usuario logueado
+    try:
+        perfil = user.perfil
+        # Asumiendo que hay una relación OneToOne o ForeignKey desde Tutor a User
+        tutor = Tutor.objects.get(user=user) 
+    except (ObjectDoesNotExist, AttributeError):
+        messages.error(request, "No se encontró tu perfil de tutor. Contacta al administrador.")
+        return redirect('portal') # O a donde corresponda si falla
+
+    if request.method == 'POST':
+        form = MiPerfilForm(request.POST, user_instance=user, tutor_instance=tutor, perfil_instance=perfil)
+        if form.is_valid():
+            # Actualizar datos del User
+            user.first_name = form.cleaned_data['first_name']
+            user.last_name = form.cleaned_data['last_name']
+            user.email = form.cleaned_data['email']
+            user.save()
+
+            # Actualizar datos del Tutor
+            tutor.telefono = form.cleaned_data['telefono']
+            tutor.direccion = form.cleaned_data['direccion']
+            tutor.save()
+
+            # Actualizar datos del Perfil
+            perfil.canal_notificacion_preferido = form.cleaned_data['canal_notificacion_preferido']
+            perfil.save()
+
+            messages.success(request, '¡Tu perfil ha sido actualizado exitosamente!')
+            return redirect('editar_mi_perfil') # Redirige a la misma página para ver los cambios
+    else:
+        form = MiPerfilForm(user_instance=user, tutor_instance=tutor, perfil_instance=perfil)
+
+    contexto = {
+        'form': form,
+        'titulo': titulo
+    }
+    # Usaremos la plantilla genérica form.html por ahora, pero podemos crear una específica
+    return render(request, 'gestion/form_editar_perfil.html', contexto)
+
+@login_required
+@user_passes_test(es_personal) # Solo el personal puede acceder a la mensajería
+def bandeja_entrada(request):
+    mensajes_recibidos = Mensaje.objects.filter(destinatario=request.user)
+    mensajes_enviados = Mensaje.objects.filter(remitente=request.user)
+
+    contexto = {
+        'mensajes_recibidos': mensajes_recibidos,
+        'mensajes_enviados': mensajes_enviados,
+        'titulo': "Bandeja de Mensajes"
+    }
+    return render(request, 'gestion/bandeja_entrada.html', contexto)
+
+@login_required
+@user_passes_test(es_personal)
+def ver_mensaje(request, mensaje_id):
+    mensaje = get_object_or_404(Mensaje, id=mensaje_id, destinatario=request.user) # Solo puede ver si es destinatario
+
+    # Marcar como leído si no lo estaba
+    if not mensaje.leido:
+        mensaje.leido = True
+        mensaje.save()
+
+    contexto = {
+        'mensaje': mensaje,
+        'titulo': f"Mensaje: {mensaje.asunto}"
+    }
+    return render(request, 'gestion/mensaje_detalle.html', contexto)
+
+@login_required
+@user_passes_test(es_personal)
+def enviar_mensaje(request):
+    if request.method == 'POST':
+        form = MensajeForm(request.POST)
+        if form.is_valid():
+            mensaje = form.save(commit=False)
+            mensaje.remitente = request.user
+            mensaje.save()
+            messages.success(request, 'Mensaje enviado correctamente.')
+            return redirect('bandeja_entrada')
+    else:
+        form = MensajeForm()
+
+    contexto = {
+        'form': form,
+        'titulo': "Enviar Nuevo Mensaje"
+    }
+    # Reutilizamos la plantilla genérica, adaptándola si es necesario
+    return render(request, 'gestion/form_enviar_mensaje.html', contexto)
+
+@login_required
+@group_required('Veterinario', 'Veterinario especialista')
+def agregar_receta(request, atencion_id):
+    atencion = get_object_or_404(AtencionMedica, pk=atencion_id)
+    paciente = atencion.ficha_clinica.paciente
+    try:
+        receta_instance = Receta.objects.get(atencion_medica=atencion)
+        titulo = f"Editar Receta para Atención de {paciente.nombre}"
+    except Receta.DoesNotExist:
+        receta_instance = None
+        titulo = f"Agregar Receta para Atención de {paciente.nombre}"
+
+    if request.method == 'POST':
+        form = RecetaForm(request.POST, instance=receta_instance)
+        if form.is_valid():
+            receta = form.save(commit=False)
+            receta.atencion_medica = atencion
+            if not form.cleaned_data.get('prescripcion'):
+                if receta_instance:
+                    receta_instance.delete()
+                    messages.info(request, 'Receta eliminada ya que el campo estaba vacío.')
+                else:
+                     messages.warning(request, 'No se guardó la receta porque el campo estaba vacío.')
+            else:
+                receta.save()
+                messages.success(request, f'Receta {"actualizada" if receta_instance else "agregada"} correctamente.')
+
+            return redirect('detalle_paciente', paciente_id=paciente.id)
+        else:
+            messages.error(request, 'Por favor corrige los errores en el formulario.')
+    else:
+        form = RecetaForm(instance=receta_instance)
+
+    contexto = {
+        'form': form,
+        'atencion': atencion,
+        'paciente': paciente,
+        'titulo': titulo
+    }
+    return render(request, 'gestion/receta_form.html', contexto)
+
+def generar_pdf_receta(request, receta_id):
+    receta = get_object_or_404(Receta, pk=receta_id)
+    usuario_actual = request.user
+    es_tutor = hasattr(usuario_actual, 'perfil') and usuario_actual.perfil.rol == 'TUTOR'
+
+    if es_tutor:
+        if receta.atencion_medica.ficha_clinica.paciente.tutor.user != usuario_actual:
+             messages.error(request, "No tienes permiso para ver esta receta.")
+             return redirect('portal')
+
+        if receta.impresa:
+            messages.error(request, "Esta receta ya ha sido generada/impresa una vez y no puede volver a generarse.")
+            return HttpResponseForbidden("Esta receta ya ha sido generada/impresa una vez.")
+
+    firma_url = None
+
+    # try:
+    #     # Asumiendo que tienes un campo 'firma' ImageField en el Perfil del User
+    #     if receta.atencion_medica.veterinario.perfil.firma:
+    #         firma_path = receta.atencion_medica.veterinario.perfil.firma.path
+    #         # Convertir path del sistema a URL accesible por Weasyprint
+    #         firma_url = request.build_absolute_uri(receta.atencion_medica.veterinario.perfil.firma.url)
+    # except (AttributeError, ObjectDoesNotExist):
+    #     firma_url = None
+
+    contexto_pdf = {
+        'receta': receta,
+        'firma_url': firma_url,
+    }
+    html_string = render_to_string('gestion/pdfs/pdf_receta.html', contexto_pdf)
+    html = HTML(string=html_string, base_url=request.build_absolute_uri()) 
+    pdf_file = html.write_pdf()
+    response = HttpResponse(pdf_file, content_type='application/pdf')
+    response['Content-Disposition'] = f'inline; filename="receta_{receta.atencion_medica.ficha_clinica.paciente.nombre}_{receta.id}.pdf"'
+
+    if es_tutor:
+        receta.impresa = True
+        receta.save()
+
+    return response
+
+@login_required
+@group_required('Veterinario', 'Veterinario especialista', 'Secretaria')
+def generar_pdf_ficha(request, atencion_id):
+    atencion = get_object_or_404(AtencionMedica, pk=atencion_id)
+
+    foto_path = None
+    paciente = atencion.ficha_clinica.paciente
+    if paciente.foto:
+        foto_path = paciente.foto.url
+
+    contexto_pdf = {
+        'atencion': atencion,
+        'foto_path': foto_path
+    }
+
+    html_string = render_to_string('gestion/pdfs/pdf_ficha_clinica.html', contexto_pdf)
+    html = HTML(string=html_string, base_url=settings.MEDIA_ROOT)
+    pdf_file = html.write_pdf()
+
+    response = HttpResponse(pdf_file, content_type='application/pdf')
+    response['Content-Disposition'] = f'inline; filename="ficha_{atencion.ficha_clinica.paciente.nombre}_{atencion.id}.pdf"'
+    return response
+
+@login_required
+@group_required('Veterinario', 'Veterinario especialista', 'Secretaria')
+def generar_pdf_epicrisis(request, atencion_id):
+    atencion = get_object_or_404(AtencionMedica, pk=atencion_id)
+
+    firma_url = None
+    # try: ... (lógica futura firma) ... except: ...
+
+    contexto_pdf = {
+        'atencion': atencion,
+        'firma_url': firma_url
+    }
+
+    html_string = render_to_string('gestion/pdfs/pdf_epicrisis.html', contexto_pdf)
+    html = HTML(string=html_string, base_url=request.build_absolute_uri())
+    pdf_file = html.write_pdf()
+
+    response = HttpResponse(pdf_file, content_type='application/pdf')
+    response['Content-Disposition'] = f'inline; filename="epicrisis_{atencion.ficha_clinica.paciente.nombre}_{atencion.id}.pdf"'
+    return response

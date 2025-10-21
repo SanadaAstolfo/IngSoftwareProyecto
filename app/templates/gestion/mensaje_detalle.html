@@ -1,0 +1,17 @@
+{% extends 'gestion/base.html' %}
+
+{% block title %}{{ titulo }}{% endblock %}
+
+{% block content %}
+<main>
+    <h1>{{ titulo }}</h1>
+    <hr>
+    <p><strong>De:</strong> {{ mensaje.remitente.username }}</p>
+    <p><strong>Fecha:</strong> {{ mensaje.fecha_envio|date:"d-m-Y H:i" }}</p>
+    <hr>
+    <p>{{ mensaje.cuerpo|linebreaksbr }}</p>
+    <hr>
+    <a href="{% url 'bandeja_entrada' %}" class="button secondary">Volver a la Bandeja</a>
+    {# Podríamos añadir un botón "Responder" aquí en el futuro #}
+</main>
+{% endblock %}

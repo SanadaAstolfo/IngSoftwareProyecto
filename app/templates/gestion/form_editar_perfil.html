@@ -1,0 +1,57 @@
+{% extends 'gestion/base.html' %}
+
+{% block title %}{{ titulo }}{% endblock %}
+
+{% block content %}
+<main>
+    <h1>{{ titulo }}</h1>
+    <hr>
+    
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <section class="form-container">
+        <form method="post">
+            {% csrf_token %}
+            
+            {% for field in form %}
+                <div class="form-field">
+                    {{ field.label_tag }}
+                    
+                    {% if field.name == 'canal_notificacion_preferido' %}
+                        <ul id="{{ field.id_for_label }}">
+                        {% for radio in field %}
+                            <li>
+                                <label for="{{ radio.id_for_label }}">
+                                    {{ radio.tag }}
+                                    {{ radio.choice_label }}
+                                </label>
+                            </li>
+                        {% endfor %}
+                        </ul>
+                    {% else %}
+                        {{ field }}
+                    {% endif %}
+                    
+                    {% if field.help_text %}
+                        <p class="help-text">{{ field.help_text }}</p>
+                    {% endif %}
+                    {% for error in field.errors %}
+                        <p class="error-text">{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+            
+            <div class="form-actions">
+                <a href="{% url 'portal' %}" class="button secondary">Cancelar</a> {# Asume clase 'button secondary' para cancelar #}
+                <button type="submit" class="button primary">Guardar Cambios</button> {# Asume clase 'button primary' para guardar #}
+            </div>
+        </form>
+    </section>
+</main>
+{% endblock %}

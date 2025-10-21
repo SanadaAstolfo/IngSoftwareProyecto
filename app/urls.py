@@ -22,14 +22,22 @@ urlpatterns = [
     path('tutores/<int:tutor_id>/bloquear/', views.bloquear_datos_tutor, name='bloquear_datos_tutor'),
     path('atencion/<int:atencion_id>/procedimiento/nuevo/', views.crear_procedimiento, name='crear_procedimiento'),
     path('atencion/<int:atencion_id>/insumo/nuevo/', views.agregar_insumo, name='agregar_insumo'),
+    path('atencion/<int:atencion_id>/receta/nuevo/', views.agregar_receta, name='agregar_receta'),
     path('atencion/<int:atencion_id>/adjuntar/', views.adjuntar_documento, name='adjuntar_documento'),
     path('atencion/<int:atencion_id>/historial/', views.ver_historial_atencion, name='ver_historial_atencion'),
+    path('atencion/<int:atencion_id>/ficha-pdf/', views.generar_pdf_ficha, name='generar_pdf_ficha'),
+    path('atencion/<int:atencion_id>/epicrisis-pdf/', views.generar_pdf_epicrisis, name='generar_pdf_epicrisis'),
     path('citas/', views.calendario_citas, name='calendario_citas'),
     path('citas/nueva/', views.crear_cita, name='crear_cita'),
     path('citas/<int:cita_id>/editar/', views.editar_cita, name='editar_cita'),
     path('citas/<int:cita_id>/cancelar/', views.cancelar_cita, name='cancelar_cita'),
     path('citas/<int:cita_id>/registrar-abono/', views.registrar_abono, name='registrar_abono'),
     path('pagos/<int:pago_id>/comprobante/', views.ver_comprobante, name='ver_comprobante'),
+    path('mi-perfil/editar/', views.editar_mi_perfil, name='editar_mi_perfil'),
+    path('mensajes/', views.bandeja_entrada, name='bandeja_entrada'),
+    path('mensajes/enviar/', views.enviar_mensaje, name='enviar_mensaje'),
+    path('mensajes/<int:mensaje_id>/', views.ver_mensaje, name='ver_mensaje'),
+    path('receta/<int:receta_id>/pdf/', views.generar_pdf_receta, name='generar_pdf_receta'),
 ]
 
 if settings.DEBUG:

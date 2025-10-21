@@ -221,9 +221,14 @@
         {% if user.is_authenticated %}
             <nav class="main-menu">
                 <ul>
-                    <li><a href="{% url 'lista_pacientes' %}">Pacientes</a></li>
-                    <li><a href="{% url 'lista_tutores' %}">Tutores</a></li>
-                    <li><a href="{% url 'calendario_citas' %}">Citas</a></li>
+                    {% if not user.perfil.rol == 'TUTOR' %}
+                        <li><a href="{% url 'lista_pacientes' %}">Pacientes</a></li>
+                        <li><a href="{% url 'lista_tutores' %}">Tutores</a></li>
+                        <li><a href="{% url 'calendario_citas' %}">Citas</a></li>
+                        <li><a href="{% url 'bandeja_entrada' %}">Mensajes</a></li>
+                    {% else %}
+                        <li><a href="{% url 'editar_mi_perfil' %}">Editar Mi Perfil</a></li>
+                    {% endif %}
                 </ul>
                 <span class="user-name">Bienvenido, {{ user.username }}</span>     
                 <form action="{% url 'logout' %}" method="post">

@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import AuthenticationForm
-from .models import Paciente, AtencionMedica, ChequeoFisico, Procedimiento, DocumentoAdjunto, Diagnostico, InsumoUtilizado, AntecedenteExterno, Cita, Pago, RegistroVacuna, Tutor
+from .models import Paciente, AtencionMedica, ChequeoFisico, Procedimiento, DocumentoAdjunto, Diagnostico, InsumoUtilizado, AntecedenteExterno, Cita, Pago, RegistroVacuna, Tutor, Perfil, Mensaje, Receta
 
 class PacienteForm(forms.ModelForm):
     class Meta:
@@ -145,3 +145,77 @@ class CustomAuthenticationForm(AuthenticationForm):
         self.fields['password'].widget.attrs.update(
             {'class': 'form-control', 'placeholder': 'Ingrese su contraseña'}
         )
+
+class MiPerfilForm(forms.ModelForm):
+    """
+    Formulario para que un Tutor edite su propia información.
+    """
+    # Campos del modelo User (solo lectura o editables)
+    first_name = forms.CharField(label="Nombre", max_length=100, required=True)
+    last_name = forms.CharField(label="Apellido", max_length=100, required=True)
+    email = forms.EmailField(label="Correo Electrónico", required=True)
+
+    # Campos del modelo Tutor
+    telefono = forms.CharField(label="Teléfono", max_length=15, required=False)
+    direccion = forms.CharField(label="Dirección", widget=forms.Textarea(attrs={'rows': 3}), required=False)
+
+    # Campo del modelo Perfil
+    canal_notificacion_preferido = forms.ChoiceField(
+        label="Canal de Notificación Preferido",
+        choices=Perfil._meta.get_field('canal_notificacion_preferido').choices, # Obtiene las opciones del modelo
+        widget=forms.RadioSelect # Muestra como botones de radio
+    )
+
+    class Meta:
+        # Aunque usamos campos de varios modelos, NO especificamos un 'model' aquí
+        # porque los guardaremos manualmente en la vista.
+        fields = ['first_name', 'last_name', 'email', 'telefono', 'direccion', 'canal_notificacion_preferido']
+
+    def __init__(self, *args, **kwargs):
+        # Recibimos las instancias de user, tutor y perfil para llenar el form
+        self.user = kwargs.pop('user_instance', None)
+        self.tutor = kwargs.pop('tutor_instance', None)
+        self.perfil = kwargs.pop('perfil_instance', None)
+
+        initial = {}
+        if self.user:
+            initial['first_name'] = self.user.first_name
+            initial['last_name'] = self.user.last_name
+            initial['email'] = self.user.email
+        if self.tutor:
+            initial['telefono'] = self.tutor.telefono
+            initial['direccion'] = self.tutor.direccion
+        if self.perfil:
+            initial['canal_notificacion_preferido'] = self.perfil.canal_notificacion_preferido
+
+        kwargs['initial'] = initial
+        super().__init__(*args, **kwargs)
+
+        # Hacemos que el email no sea editable si ya existe (opcional)
+        # if self.user and self.user.email:
+        #     self.fields['email'].disabled = True
+
+class MensajeForm(forms.ModelForm):
+    destinatario = forms.ModelChoiceField(
+        queryset=User.objects.filter(perfil__rol__in=['ADMIN', 'VET', 'ESP', 'SECRETARIA']), # Solo personal
+        label="Para",
+        empty_label="Selecciona un destinatario"
+    )
+
+    class Meta:
+        model = Mensaje
+        fields = ['destinatario', 'asunto', 'cuerpo']
+        widgets = {
+            'cuerpo': forms.Textarea(attrs={'rows': 5}),
+        }
+
+class RecetaForm(forms.ModelForm):
+    class Meta:
+        model = Receta
+        fields = ['prescripcion']
+        widgets = {
+            'prescripcion': forms.Textarea(attrs={'rows': 6, 'placeholder': 'Ingrese aquí la prescripción médica...'}),
+        }
+        labels = {
+            'prescripcion': 'Detalle de la Receta Médica',
+        }
