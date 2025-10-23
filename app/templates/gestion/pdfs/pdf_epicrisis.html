@@ -68,6 +68,14 @@
         <p>Médico Veterinario</p>
     </div>
 
+    <div class="firma-electronica">
+        <p><strong>Firmado electrónicamente (FEA)</strong></p>
+        <p><strong>Por:</strong> {{ atencion.veterinario.get_full_name|default:atencion.veterinario.username }}</p>
+        <p><strong>RUT:</strong> {{ atencion.veterinario.rut|default:"[RUT del Veterinario]" }}</p>
+        <p><strong>Fecha:</strong> {% now "d-m-Y H:i" %}</p>
+        <p><strong>Autenticado en:</strong> sistema.cl</p>
+    </div>
+    
     <div class="footer">
         <p>Documento generado el {% now "d-m-Y H:i" %}</p>
     </div>
