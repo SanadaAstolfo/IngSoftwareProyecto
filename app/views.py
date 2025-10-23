@@ -306,6 +306,84 @@ def detalle_tutor(request, tutor_id):
     }
     return render(request, 'gestion/detalle_tutor.html', contexto)
 
+
+@login_required
+def mis_pacientes(request):
+    """Lista de pacientes para el tutor autenticado (Caso de Uso 53).
+
+    Intenta resolver el Tutor asociado al usuario por `Perfil.rut` o por email.
+    """
+    usuario = request.user
+    tutor = None
+    try:
+        if hasattr(usuario, 'perfil') and usuario.perfil is not None and usuario.perfil.rol == 'TUTOR':
+            perfil = usuario.perfil
+            tutor = Tutor.objects.filter(rut=perfil.rut).first()
+    except Exception:
+        tutor = None
+
+    if tutor is None:
+        tutor = Tutor.objects.filter(email=usuario.email).first()
+
+    if tutor is None:
+        contexto = {'mensaje': 'No hay un Tutor asociado a tu cuenta. Contacta al administrador.'}
+        return render(request, 'gestion/mis_pacientes.html', contexto)
+
+    pacientes = tutor.pacientes.all().order_by('nombre')
+    contexto = {
+        'tutor': tutor,
+        'pacientes': pacientes,
+    }
+    return render(request, 'gestion/mis_pacientes.html', contexto)
+
+
+@login_required
+def detalle_paciente_basico(request, paciente_id):
+    """Muestra solo información básica del paciente al tutor propietario.
+
+    No muestra historial clínico ni observaciones sensibles.
+    """
+    paciente = get_object_or_404(Paciente, pk=paciente_id)
+    usuario = request.user
+
+    # Resolver tutor del usuario
+    tutor_usuario = None
+    try:
+        if hasattr(usuario, 'perfil') and usuario.perfil is not None and usuario.perfil.rol == 'TUTOR':
+            perfil = usuario.perfil
+            tutor_usuario = Tutor.objects.filter(rut=perfil.rut).first()
+    except Exception:
+        tutor_usuario = None
+
+    if tutor_usuario is None:
+        tutor_usuario = Tutor.objects.filter(email=usuario.email).first()
+
+    es_personal_usuario = hasattr(usuario, 'perfil') and usuario.perfil.rol in ['ADMIN', 'VET', 'ESP', 'SECRETARIA']
+
+    if not es_personal_usuario:
+        if tutor_usuario is None or paciente.tutor != tutor_usuario:
+            return HttpResponseForbidden('No tienes permiso para ver los detalles de este paciente.')
+
+    # Registrar el acceso (no crítico)
+    try:
+        LogEntry.objects.log_action(
+            user_id=usuario.id,
+            content_type_id=ContentType.objects.get_for_model(paciente).id,
+            object_id=paciente.id,
+            object_repr=str(paciente),
+            action_flag=CHANGE,
+            change_message="Acceso básico a la ficha del paciente por tutor."
+        )
+    except Exception:
+        pass
+
+    contexto = {
+        'paciente': paciente,
+        'edad': getattr(paciente, 'edad', None),
+        'titulo': f'Información básica de {paciente.nombre}'
+    }
+    return render(request, 'gestion/detalle_paciente_basico.html', contexto)
+
 login_required
 def crear_tutor(request):
     if request.method == 'POST':

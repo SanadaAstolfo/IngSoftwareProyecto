@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Mis Pacientes</h1>
+
+  {% if mensaje %}
+    <div class="alert alert-warning">{{ mensaje }}</div>
+  {% else %}
+    <h2>Tutor: {{ tutor.nombre_completo }}</h2>
+    {% if pacientes and pacientes|length > 0 %}
+      <ul>
+        {% for p in pacientes %}
+          <li>
+            {% if p.foto %}
+              <img src="{{ p.foto.url }}" alt="{{ p.nombre }}" style="height:40px; margin-right:8px; vertical-align:middle;">
+            {% endif %}
+            <a href="{% url 'detalle_paciente_basico' paciente_id=p.id %}">{{ p.nombre }} ({{ p.especie }})</a>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>No tienes pacientes asociados.</p>
+    {% endif %}
+  {% endif %}
+
+{% endblock %}
