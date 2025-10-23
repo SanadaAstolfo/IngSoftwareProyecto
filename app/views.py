@@ -9,6 +9,8 @@ from django.utils import timezone
 import pytz
 from .models import Paciente, Tutor, FichaClinica, AtencionMedica, ChequeoFisico, DocumentoAdjunto, Diagnostico, InsumoUtilizado, Cita, Pago, RegistroVacuna
 from .forms import PacienteForm, TutorForm, AtencionGeneralForm, ChequeoFisicoForm, ProcedimientoForm, AtencionHospitalizacionForm, DocumentoAdjuntoForm, InsumoUtilizadoForm, AntecedenteExternoForm, CitaForm, PagoForm, RegistroVacunaForm, CustomAuthenticationForm
+from django.contrib.auth.models import User
+from django.db.models import Q
 
 def portal_view(request):
     return render(request, 'portal.html')
@@ -294,6 +296,50 @@ def detalle_tutor(request, tutor_id):
         'pacientes': pacientes,
     }
     return render(request, 'gestion/detalle_tutor.html', contexto)
+
+
+@login_required
+def mis_pacientes(request):
+    """Vista para que un tutor autenticado vea solo sus pacientes (Caso de Uso 53).
+
+    Lógica:
+    - Si existe un Perfil con `user.perfil`, intentar obtener Tutor por `rut`.
+    - Si no, intentar por email: `Tutor.email == request.user.email`.
+    - Si no se encuentra tutor, mostrar mensaje indicando que no hay asociación.
+    """
+    # Importar Perfil lazily para evitar errores si no se usa
+    try:
+        from .models import Perfil, Tutor
+    except Exception:
+        from .models import Tutor
+        Perfil = None
+
+    tutor = None
+    # Intentar por Perfil.rut si existe
+    if hasattr(request.user, 'perfil') and request.user.perfil is not None:
+        perfil = request.user.perfil
+        try:
+            tutor = Tutor.objects.filter(rut=perfil.rut).first()
+        except Exception:
+            tutor = None
+
+    # Si no se obtuvo tutor, intentar por email
+    if tutor is None:
+        try:
+            tutor = Tutor.objects.filter(email=request.user.email).first()
+        except Exception:
+            tutor = None
+
+    if tutor is None:
+        contexto = {'mensaje': 'No hay un Tutor asociado a tu cuenta. Contacta al administrador.'}
+        return render(request, 'gestion/mis_pacientes.html', contexto)
+
+    pacientes = tutor.pacientes.all().order_by('nombre')
+    contexto = {
+        'tutor': tutor,
+        'pacientes': pacientes,
+    }
+    return render(request, 'gestion/mis_pacientes.html', contexto)
 
 login_required
 def crear_tutor(request):

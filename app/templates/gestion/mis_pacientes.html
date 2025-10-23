@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Mis Pacientes</h1>
+
+{% if mensaje %}
+  <p>{{ mensaje }}</p>
+{% else %}
+  <h2>Tutor: {{ tutor.nombre_completo }}</h2>
+  {% if pacientes %}
+    <ul>
+      {% for p in pacientes %}
+        <li><a href="{% url 'detalle_paciente' paciente_id=p.id %}">{{ p.nombre }} ({{ p.especie }})</a></li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No tienes pacientes asociados.</p>
+  {% endif %}
+{% endif %}
+
+{% endblock %}

@@ -18,6 +18,7 @@ urlpatterns = [
     path('tutores/', views.lista_tutores, name='lista_tutores'),
     path('tutores/nuevo/', views.crear_tutor, name='crear_tutor'),
     path('tutores/<int:tutor_id>/', views.detalle_tutor, name='detalle_tutor'),
+    path('tutores/mis-pacientes/', views.mis_pacientes, name='mis_pacientes'),
     path('tutores/<int:tutor_id>/registrar-pago/', views.registrar_pago_tutor, name='registrar_pago_tutor'),
     path('tutores/<int:tutor_id>/bloquear/', views.bloquear_datos_tutor, name='bloquear_datos_tutor'),
     path('atencion/<int:atencion_id>/procedimiento/nuevo/', views.crear_procedimiento, name='crear_procedimiento'),
