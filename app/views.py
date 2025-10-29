@@ -8,7 +8,6 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse, HttpResponseForbidden
 from django.template.loader import render_to_string
 from weasyprint import HTML, CSS
-from .decorators import group_required
 from datetime import date, datetime
 from django.utils import timezone
 from django.db.models import Q
@@ -19,7 +18,10 @@ from .models import Paciente, Tutor, Perfil, FichaClinica, AtencionMedica, Chequ
 from .forms import PacienteForm, TutorForm, AtencionGeneralForm, ChequeoFisicoForm, ProcedimientoForm, AtencionHospitalizacionForm, DocumentoAdjuntoForm, InsumoUtilizadoForm, AntecedenteExternoForm, CitaForm, PagoForm, RegistroVacunaForm, CustomAuthenticationForm, MiPerfilForm, MensajeForm, RecetaForm
 
 def es_personal(user):
-    return hasattr(user, 'perfil') and user.perfil.rol in ['ADMIN', 'VET', 'ESP', 'SECRETARIA']
+    return hasattr(user, 'perfil') and user.perfil is not None and user.perfil.rol in ['ADMIN', 'VET', 'ESP', 'SECRETARIA']
+
+def es_tutor(user):
+    return hasattr(user, 'perfil') and user.perfil is not None and user.perfil.rol == 'TUTOR'
 
 def portal_view(request):
     return render(request, 'portal.html')
@@ -55,6 +57,22 @@ def lista_pacientes(request):
 @login_required
 def detalle_paciente(request, paciente_id):
     paciente = get_object_or_404(Paciente, pk=paciente_id)
+    usuario_actual = request.user
+    es_personal_usuario = es_personal(usuario_actual)
+    es_propietario_tutor = False
+    if es_tutor(usuario_actual):
+        try:
+            tutor_del_usuario = Tutor.objects.get(user=usuario_actual)
+            if paciente.tutor == tutor_del_usuario:
+                es_propietario_tutor = True
+        except Tutor.DoesNotExist:
+             messages.warning(request, "Tu perfil de tutor no está completamente configurado.")
+             pass
+
+    if not es_personal_usuario and not es_propietario_tutor:
+        messages.error(request, "No tienes permiso para ver la ficha de este paciente.")
+        return redirect('mis_pacientes' if es_tutor(usuario_actual) else 'portal')
+
     LogEntry.objects.log_action(
         user_id=request.user.id,
         content_type_id=ContentType.objects.get_for_model(paciente).id,
@@ -75,6 +93,8 @@ def detalle_paciente(request, paciente_id):
         'ficha': ficha,
         'atenciones': atenciones,
         'today': date.today(),
+        'es_personal_usuario': es_personal_usuario,
+        'es_propietario_tutor': es_propietario_tutor
     }
     return render(request, 'gestion/detalle_paciente.html', contexto)
 
@@ -306,7 +326,6 @@ def detalle_tutor(request, tutor_id):
     }
     return render(request, 'gestion/detalle_tutor.html', contexto)
 
-
 @login_required
 def mis_pacientes(request):
     """Lista de pacientes para el tutor autenticado (Caso de Uso 53).
@@ -336,55 +355,54 @@ def mis_pacientes(request):
     }
     return render(request, 'gestion/mis_pacientes.html', contexto)
 
+#@login_required
+#def detalle_paciente_basico(request, paciente_id):
+#    """Muestra solo información básica del paciente al tutor propietario.
+#
+#    No muestra historial clínico ni observaciones sensibles.
+#    """
+#    paciente = get_object_or_404(Paciente, pk=paciente_id)
+#    usuario = request.user
+#
+#    # Resolver tutor del usuario
+#    tutor_usuario = None
+#    try:
+#        if hasattr(usuario, 'perfil') and usuario.perfil is not None and usuario.perfil.rol == 'TUTOR':
+#            perfil = usuario.perfil
+#            tutor_usuario = Tutor.objects.filter(rut=perfil.rut).first()
+#    except Exception:
+#        tutor_usuario = None
+#
+#    if tutor_usuario is None:
+#        tutor_usuario = Tutor.objects.filter(email=usuario.email).first()
+#
+#    es_personal_usuario = hasattr(usuario, 'perfil') and usuario.perfil.rol in ['ADMIN', 'VET', 'ESP', 'SECRETARIA']
+#
+#    if not es_personal_usuario:
+#        if tutor_usuario is None or paciente.tutor != tutor_usuario:
+#            return HttpResponseForbidden('No tienes permiso para ver los detalles de este paciente.')
+#
+#    # Registrar el acceso (no crítico)
+#    try:
+#        LogEntry.objects.log_action(
+#            user_id=usuario.id,
+#            content_type_id=ContentType.objects.get_for_model(paciente).id,
+#            object_id=paciente.id,
+#            object_repr=str(paciente),
+#            action_flag=CHANGE,
+#            change_message="Acceso básico a la ficha del paciente por tutor."
+#        )
+#    except Exception:
+#        pass
+#
+#    contexto = {
+#        'paciente': paciente,
+#        'edad': getattr(paciente, 'edad', None),
+#        'titulo': f'Información básica de {paciente.nombre}'
+#    }
+#    return render(request, 'gestion/detalle_paciente_basico.html', contexto)
 
 @login_required
-def detalle_paciente_basico(request, paciente_id):
-    """Muestra solo información básica del paciente al tutor propietario.
-
-    No muestra historial clínico ni observaciones sensibles.
-    """
-    paciente = get_object_or_404(Paciente, pk=paciente_id)
-    usuario = request.user
-
-    # Resolver tutor del usuario
-    tutor_usuario = None
-    try:
-        if hasattr(usuario, 'perfil') and usuario.perfil is not None and usuario.perfil.rol == 'TUTOR':
-            perfil = usuario.perfil
-            tutor_usuario = Tutor.objects.filter(rut=perfil.rut).first()
-    except Exception:
-        tutor_usuario = None
-
-    if tutor_usuario is None:
-        tutor_usuario = Tutor.objects.filter(email=usuario.email).first()
-
-    es_personal_usuario = hasattr(usuario, 'perfil') and usuario.perfil.rol in ['ADMIN', 'VET', 'ESP', 'SECRETARIA']
-
-    if not es_personal_usuario:
-        if tutor_usuario is None or paciente.tutor != tutor_usuario:
-            return HttpResponseForbidden('No tienes permiso para ver los detalles de este paciente.')
-
-    # Registrar el acceso (no crítico)
-    try:
-        LogEntry.objects.log_action(
-            user_id=usuario.id,
-            content_type_id=ContentType.objects.get_for_model(paciente).id,
-            object_id=paciente.id,
-            object_repr=str(paciente),
-            action_flag=CHANGE,
-            change_message="Acceso básico a la ficha del paciente por tutor."
-        )
-    except Exception:
-        pass
-
-    contexto = {
-        'paciente': paciente,
-        'edad': getattr(paciente, 'edad', None),
-        'titulo': f'Información básica de {paciente.nombre}'
-    }
-    return render(request, 'gestion/detalle_paciente_basico.html', contexto)
-
-login_required
 def crear_tutor(request):
     if request.method == 'POST':
         form = TutorForm(request.POST)
@@ -694,7 +712,6 @@ def enviar_mensaje(request):
     return render(request, 'gestion/form_enviar_mensaje.html', contexto)
 
 @login_required
-@group_required('Veterinario', 'Veterinario especialista')
 def agregar_receta(request, atencion_id):
     atencion = get_object_or_404(AtencionMedica, pk=atencion_id)
     paciente = atencion.ficha_clinica.paciente
@@ -737,27 +754,33 @@ def agregar_receta(request, atencion_id):
 def generar_pdf_receta(request, receta_id):
     receta = get_object_or_404(Receta, pk=receta_id)
     usuario_actual = request.user
-    es_tutor = hasattr(usuario_actual, 'perfil') and usuario_actual.perfil.rol == 'TUTOR'
+    es_personal_usuario = es_personal(usuario_actual)
+    es_propietario_tutor_receta = False
 
-    if es_tutor:
-        if receta.atencion_medica.ficha_clinica.paciente.tutor.user != usuario_actual:
-             messages.error(request, "No tienes permiso para ver esta receta.")
-             return redirect('portal')
+    if es_tutor(usuario_actual):
+        try:
+            tutor_del_usuario = Tutor.objects.get(user=usuario_actual)
+            if receta.atencion_medica.ficha_clinica.paciente.tutor == tutor_del_usuario:
+                es_propietario_tutor_receta = True
+        except Tutor.DoesNotExist: pass
 
-        if receta.impresa:
-            messages.error(request, "Esta receta ya ha sido generada/impresa una vez y no puede volver a generarse.")
-            return HttpResponseForbidden("Esta receta ya ha sido generada/impresa una vez.")
+    if not es_personal_usuario and not es_propietario_tutor_receta:
+        messages.error(request, "No tienes permiso para ver esta receta.")
+        return redirect('mis_pacientes' if es_tutor(usuario_actual) else 'portal')
+
+    if es_propietario_tutor_receta and receta.impresa:
+        messages.error(request, "Esta receta ya ha sido generada/impresa una vez.")
+        return HttpResponseForbidden("Receta ya generada.")
 
     firma_url = None
-
-    # try:
-    #     # Asumiendo que tienes un campo 'firma' ImageField en el Perfil del User
-    #     if receta.atencion_medica.veterinario.perfil.firma:
-    #         firma_path = receta.atencion_medica.veterinario.perfil.firma.path
-    #         # Convertir path del sistema a URL accesible por Weasyprint
-    #         firma_url = request.build_absolute_uri(receta.atencion_medica.veterinario.perfil.firma.url)
-    # except (AttributeError, ObjectDoesNotExist):
-    #     firma_url = None
+    veterinario = receta.atencion_medica.veterinario
+    if veterinario:
+        try:
+            perfil_vet = veterinario.perfil
+            if perfil_vet and perfil_vet.firma:
+                firma_url = request.build_absolute_uri(perfil_vet.firma.url)
+        except ObjectDoesNotExist: pass
+        except AttributeError: messages.warning(request, "Error perfil vet. firma.")
 
     contexto_pdf = {
         'receta': receta,
@@ -769,29 +792,27 @@ def generar_pdf_receta(request, receta_id):
     response = HttpResponse(pdf_file, content_type='application/pdf')
     response['Content-Disposition'] = f'inline; filename="receta_{receta.atencion_medica.ficha_clinica.paciente.nombre}_{receta.id}.pdf"'
 
-    if es_tutor:
+    if es_propietario_tutor_receta:
         receta.impresa = True
         receta.save()
 
     return response
 
 @login_required
-@group_required('Veterinario', 'Veterinario especialista', 'Secretaria')
 def generar_pdf_ficha(request, atencion_id):
     atencion = get_object_or_404(AtencionMedica, pk=atencion_id)
-
-    foto_path = None
+    foto_url = None
     paciente = atencion.ficha_clinica.paciente
     if paciente.foto:
-        foto_path = paciente.foto.url
+        foto_url = request.build_absolute_uri(paciente.foto.url)
 
     contexto_pdf = {
         'atencion': atencion,
-        'foto_path': foto_path
+        'foto_url': foto_url
     }
-
+    
     html_string = render_to_string('gestion/pdfs/pdf_ficha_clinica.html', contexto_pdf)
-    html = HTML(string=html_string, base_url=settings.MEDIA_ROOT)
+    html = HTML(string=html_string, base_url=request.build_absolute_uri())
     pdf_file = html.write_pdf()
 
     response = HttpResponse(pdf_file, content_type='application/pdf')
@@ -799,12 +820,32 @@ def generar_pdf_ficha(request, atencion_id):
     return response
 
 @login_required
-@group_required('Veterinario', 'Veterinario especialista', 'Secretaria')
 def generar_pdf_epicrisis(request, atencion_id):
     atencion = get_object_or_404(AtencionMedica, pk=atencion_id)
+    usuario_actual = request.user
+    es_personal_usuario = es_personal(usuario_actual)
+    es_propietario_tutor_epicrisis = False
+
+    if es_tutor(usuario_actual):
+        try:
+            tutor_del_usuario = Tutor.objects.get(user=usuario_actual)
+            if atencion.ficha_clinica.paciente.tutor == tutor_del_usuario:
+                es_propietario_tutor_epicrisis = True
+        except Tutor.DoesNotExist: pass
+
+    if not es_personal_usuario and not es_propietario_tutor_epicrisis:
+        messages.error(request, "No tienes permiso para ver esta epicrisis.")
+        return redirect('mis_pacientes' if es_tutor(usuario_actual) else 'portal')
 
     firma_url = None
-    # try: ... (lógica futura firma) ... except: ...
+    veterinario = atencion.veterinario
+    if veterinario:
+        try:
+            perfil_vet = veterinario.perfil
+            if perfil_vet and perfil_vet.firma:
+                firma_url = request.build_absolute_uri(perfil_vet.firma.url)
+        except ObjectDoesNotExist: pass
+        except AttributeError: messages.warning(request, "Error perfil vet. firma.")
 
     contexto_pdf = {
         'atencion': atencion,

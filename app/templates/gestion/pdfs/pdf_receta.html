@@ -51,20 +51,27 @@
     <div class="firma">
         {% if firma_url %}
             <img src="{{ firma_url }}" alt="Firma del Veterinario">
+        {% else %}
+             <p style="height: 60px; line-height: 60px; color:#aaa;">(Firma no disponible)</p>
         {% endif %}
         <p>_________________________</p>
         <p>Dr(a). {{ receta.atencion_medica.veterinario.get_full_name|default:receta.atencion_medica.veterinario.username }}</p>
+        {% with perfil_vet=receta.atencion_medica.veterinario.perfil %}
+            {% if perfil_vet and perfil_vet.rut %}
+            <p>RUT: {{ perfil_vet.rut }}</p>
+            {% endif %}
+        {% endwith %}
         <p>Médico Veterinario</p>
     </div>
-
+    {#
     <div class="firma-electronica">
         <p><strong>Firmado electrónicamente (FEA)</strong></p>
         <p><strong>Por:</strong> {{ receta.atencion_medica.veterinario.get_full_name|default:receta.atencion_medica.veterinario.username }}</p>
-        <p><strong>RUT:</strong> {{ receta.atencion_medica.veterinario.rut|default:"[RUT del Veterinario]" }}</p>
+        <p><strong>RUT:</strong> {% if receta.atencion_medica.veterinario.perfil %}{{ receta.atencion_medica.veterinario.perfil.rut|default:"[RUT Vet]" }}{% else %}[RUT Vet]{% endif %}</p>
         <p><strong>Fecha:</strong> {% now "d-m-Y H:i" %}</p>
         <p><strong>Autenticado en:</strong> sistema.cl</p>
     </div>
-    
+    #}
     {% include 'gestion/partials/_footer.html' %}
     
 </body>

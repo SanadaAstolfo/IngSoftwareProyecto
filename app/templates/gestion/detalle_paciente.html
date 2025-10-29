@@ -19,8 +19,10 @@
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h1>Ficha de {{ paciente.nombre }}</h1>
                 <div>
+                    {% if es_personal_usuario %}
                     <a href="{% url 'editar_paciente' paciente.id %}" class="btn btn-secondary">Editar Paciente</a>
                     <a href="{% url 'seleccionar_tipo_atencion' paciente.id %}" class="btn btn-primary">Registrar Nueva Atención</a>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -48,7 +50,9 @@
     <div class="card mb-4">
         <div class="card-header d-flex justify-content-between align-items-center">
             Antecedentes Médicos Externos
-            <a href="{% url 'cargar_antecedente' paciente.id %}" class="btn btn-outline-primary btn-sm">+ Cargar Antecedente</a>
+            {% if es_personal_usuario %}
+                <a href="{% url 'cargar_antecedente' paciente.id %}" class="btn btn-outline-primary btn-sm">+ Cargar Antecedente</a>
+            {% endif %}
         </div>
         <div class="card-body">
             {% if paciente.antecedentes_externos.all %}
@@ -68,7 +72,9 @@
     <div class="card mb-4">
         <div class="card-header d-flex justify-content-between align-items-center">
             Historial de Vacunación
-            <a href="{% url 'registrar_vacuna' paciente.id %}" class="btn btn-outline-success btn-sm">+ Registrar Vacuna</a>
+            {% if es_personal_usuario %}
+                <a href="{% url 'registrar_vacuna' paciente.id %}" class="btn btn-outline-success btn-sm">Registrar Vacuna</a>
+            {% endif %}
         </div>
         <div class="card-body">
             {% if paciente.historial_vacunas.all %}
@@ -116,20 +122,24 @@
                 {% endif %}
                 <span class="badge bg-primary ms-2">{{ atencion.get_lugar_atencion_display }}</span>
                 <span class="badge bg-info ms-1">{{ atencion.get_tipo_visita_display }}</span>
-                <a href="{% url 'generar_pdf_ficha' atencion.id %}" target="_blank" class="button pdf-button">Ver Ficha PDF</a> 
+                {% if es_personal_usuario %}
+                    <a href="{% url 'generar_pdf_ficha' atencion.id %}" target="_blank" class="button pdf-button">Ver Ficha PDF</a> 
+                {% endif %}
                 <a href="{% url 'generar_pdf_epicrisis' atencion.id %}" target="_blank" class="button pdf-button">Ver Epicrisis PDF</a>
-                <div>
-                    {% if atencion.esta_cerrada %}
-                        <span class="badge bg-success">Ficha Cerrada</span>
-                    {% else %}    
-                        <a href="{% url 'editar_atencion' paciente.id atencion.id %}" class="btn btn-secondary btn-sm">Editar</a>
-                        {% if atencion.estado == 'Completa' %}
-                            <a href="{% url 'cerrar_atencion' paciente.id atencion.id %}" class="btn btn-warning btn-sm">Cerrar Atención</a>
+                {% if es_personal_usuario %}
+                    <div>
+                        {% if atencion.esta_cerrada %}
+                            <span class="badge bg-success">Ficha Cerrada</span>
+                        {% else %}    
+                            <a href="{% url 'editar_atencion' paciente.id atencion.id %}" class="btn btn-secondary btn-sm">Editar</a>
+                            {% if atencion.estado == 'Completa' %}
+                                <a href="{% url 'cerrar_atencion' paciente.id atencion.id %}" class="btn btn-warning btn-sm">Cerrar Atención</a>
+                            {% endif %}
+                            <a href="{% url 'borrar_atencion' paciente.id atencion.id %}" class="btn btn-danger btn-sm">Borrar</a>
                         {% endif %}
-                        <a href="{% url 'borrar_atencion' paciente.id atencion.id %}" class="btn btn-danger btn-sm">Borrar</a>
-                    {% endif %}
-                    <a href="{% url 'ver_historial_atencion' atencion.id %}" class="btn btn-info btn-sm">Historial</a>
-                </div>
+                        <a href="{% url 'ver_historial_atencion' atencion.id %}" class="btn btn-info btn-sm">Historial</a>
+                    </div>
+                {% endif %}
             </div>
             <div class="card-body">
                 <p><strong>Veterinario a cargo:</strong> {{ atencion.veterinario.username|default:"No asignado" }}</p>
@@ -189,7 +199,9 @@
                         {% else %}
                             <p><small>No hay documentos para esta atención.</small></p>
                         {% endif %}
-                        <a href="{% url 'adjuntar_documento' atencion.id %}" class="btn btn-outline-info btn-sm mt-2">+ Adjuntar Documento</a>
+                        {% if es_personal_usuario and not atencion.esta_cerrada %}
+                            <a href="{% url 'adjuntar_documento' atencion.id %}" class="btn btn-outline-info btn-sm mt-2">+ Adjuntar Documento</a>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="card-body">
@@ -198,14 +210,18 @@
                         {% for atencion in atenciones %}
                             <div class="list-group list-group-flush">
                                 {% if atencion.recetas.exists %}
-                                    <a href="{% url 'agregar_receta' atencion.id %}" class="btn btn-outline-info btn-sm mt-2">Editar Receta</a>
+                                    {% if es_personal_usuario and not atencion.esta_cerrada %}
+                                        <a href="{% url 'agregar_receta' atencion.id %}" class="btn btn-outline-info btn-sm mt-2">Editar Receta</a>
+                                    {% endif %}
                                     {% for receta in atencion.recetas.all %}
                                         <a href="{% url 'generar_pdf_receta' receta.id %}" target="_blank" class="btn btn-outline-info btn-sm mt-2">
                                             Ver/Descargar Receta PDF (ID: {{ receta.id }})
                                         </a>
                                     {% endfor %}
                                 {% else %}
-                                    <a href="{% url 'agregar_receta' atencion.id %}" class="btn btn-outline-success btn-sm mt-2">Agregar Receta</a>
+                                    {% if es_personal_usuario and not atencion.esta_cerrada %}
+                                        <a href="{% url 'agregar_receta' atencion.id %}" class="btn btn-outline-success btn-sm mt-2">Agregar Receta</a>
+                                    {% endif %}
                                 {% endif %}
                                 </div>
                             </div>
@@ -243,7 +259,9 @@
                         {% endif %}
                             <p><small>No hay procedimientos registrados para esta atención.</small></p>
                         {% endif %}
-                        <a href="{% url 'crear_procedimiento' atencion.id %}" class="btn btn-outline-primary btn-sm mt-2">+ Añadir Procedimiento</a>
+                        {% if es_personal_usuario and not atencion.esta_cerrada %}
+                            <a href="{% url 'crear_procedimiento' atencion.id %}" class="btn btn-outline-primary btn-sm mt-2">+ Añadir Procedimiento</a>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="card-body">
@@ -273,7 +291,9 @@
                         {% else %}
                             <p><small>No se registraron insumos para esta atención.</small></p>
                         {% endif %}
-                        <a href="{% url 'agregar_insumo' atencion.id %}" class="btn btn-outline-success btn-sm mt-2">+ Agregar Insumo</a>
+                        {% if es_personal_usuario and not atencion.esta_cerrada %}
+                            <a href="{% url 'agregar_insumo' atencion.id %}" class="btn btn-outline-success btn-sm mt-2">+ Agregar Insumo</a>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="card-body">

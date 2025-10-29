@@ -1,26 +1,44 @@
-{% extends 'base.html' %}
+{% extends 'gestion/base.html' %} {# Usa la base de gestión para consistencia #}
+
+{% block title %}Mis Pacientes{% endblock %}
 
 {% block content %}
-  <h1>Mis Pacientes</h1>
+<main class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="h3">Mis Pacientes</h1> {# h3 #}
+        <a href="{% url 'editar_mi_perfil' %}" class="btn btn-sm btn-outline-secondary">Editar mi perfil</a>
+    </div>
+    <hr>
 
-  {% if mensaje %}
-    <div class="alert alert-warning">{{ mensaje }}</div>
-  {% else %}
-    <h2>Tutor: {{ tutor.nombre_completo }}</h2>
-    {% if pacientes and pacientes|length > 0 %}
-      <ul>
-        {% for p in pacientes %}
-          <li>
-            {% if p.foto %}
-              <img src="{{ p.foto.url }}" alt="{{ p.nombre }}" style="height:40px; margin-right:8px; vertical-align:middle;">
-            {% endif %}
-            <a href="{% url 'detalle_paciente_basico' paciente_id=p.id %}">{{ p.nombre }} ({{ p.especie }})</a>
-          </li>
-        {% endfor %}
-      </ul>
+    {% if mensaje %}
+        <div class="alert alert-warning">{{ mensaje }}</div>
+            <a href="{% url 'portal' %}" class="btn btn-secondary mt-2">Volver al Portal</a>
+    {% elif tutor %}
+    <h2 class="h5 mb-3">Tutor: {{ tutor.nombre_completo }}</h2> {# h5 #}
+    {% if pacientes %}
+        <div class="list-group"> {# Usar list-group para mejor estilo #}
+            {% for p in pacientes %}
+                <a href="{% url 'detalle_paciente' paciente_id=p.id %}" class="list-group-item list-group-item-action d-flex align-items-center"> {# Enlace actualizado #}
+                    {% if p.foto %}
+                        <img src="{{ p.foto.url }}" alt="{{ p.nombre }}" style="height:40px; width: 40px; object-fit: cover; border-radius: 50%; margin-right:15px;">
+                    {% else %}
+                        <span style="display: inline-block; height: 40px; width: 40px; background-color: #eee; border-radius: 50%; text-align: center; line-height: 40px; margin-right: 15px; color:#aaa;">🐾</span>
+                    {% endif %}
+                    <span class="fw-bold">{{ p.nombre }}</span>
+                    <small class="text-muted ms-3">({{ p.especie }} / {{ p.raza }})</small>
+                    <span class="ms-auto"><i class="fas fa-chevron-right text-secondary"></i></span> {# Icono flecha #}
+                </a>
+            {% endfor %}
+        </div>
     {% else %}
-      <p>No tienes pacientes asociados.</p>
+        <p class="text-muted">No tienes pacientes asociados registrados en el sistema.</p>
     {% endif %}
-  {% endif %}
+        <hr class="mt-4">
+        <a href="{% url 'portal' %}" class="btn btn-secondary">Volver al Portal</a>
+    {% else %}
+        <div class="alert alert-danger">Error: No se encontró el registro de tutor asociado a tu cuenta. Contacta al administrador.</div>
+        <a href="{% url 'portal' %}" class="btn btn-secondary mt-2">Volver al Portal</a>
+    {% endif %}
 
+</main>
 {% endblock %}

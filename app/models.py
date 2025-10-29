@@ -15,6 +15,13 @@ class Perfil(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     rut = models.CharField(max_length=12, unique=True)
     rol = models.CharField(max_length=20, choices=ROL_CHOICES)
+    firma = models.ImageField(
+        upload_to='firmas/',
+        null=True,
+        blank=True,
+        verbose_name="Imagen de Firma/Timbre"
+        #validators=[validate_image_extension] si defines la función de validación
+    )
     canal_notificacion_preferido = models.CharField(
         max_length=10,
         choices=[('EMAIL', 'Correo Electrónico'), ('WHATSAPP', 'WhatsApp'), ('NONE', 'No recibir')],
