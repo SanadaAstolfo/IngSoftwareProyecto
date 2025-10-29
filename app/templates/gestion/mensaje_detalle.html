@@ -14,4 +14,107 @@
     <a href="{% url 'bandeja_entrada' %}" class="button secondary">Volver a la Bandeja</a>
     {# Podríamos añadir un botón "Responder" aquí en el futuro #}
 </main>
+<style>
+    main {
+    width: 100%;
+    max-width: 58rem;
+    margin: 3.5rem auto 4rem auto;
+    padding: 3.5rem 3rem;
+    background: var(--card-bg);
+    border-radius: 2.5rem;
+    box-shadow: 0 8px 38px rgba(107, 182, 184, 0.10);
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    flex-direction: column;
+    gap: 2.2rem;
+}
+
+main h1 {
+    font-size: 2.7rem;
+    font-weight: 800;
+    margin-bottom: 1.8rem;
+    letter-spacing: -0.5px;
+    color: var(--secondary-color);
+    text-align: left;
+}
+
+hr {
+    border: none;
+    border-top: 2px solid var(--secondary-color);
+    width: 100%;
+    margin: 1.4rem 0;
+    opacity: 0.18;
+}
+
+main p {
+    font-size: 1.75rem;
+    color: var(--dark-color);
+    line-height: 1.8;
+    margin-bottom: 0.8rem;
+    word-break: break-word;
+}
+
+main p strong {
+    color: var(--primary-color);
+    font-weight: 700;
+    margin-right: 0.8rem;
+    font-size: 1.15em;
+}
+
+main a.button,
+main a.secondary {
+    display: inline-block;
+    margin-top: 3rem;
+    margin-bottom: 2.5rem;
+    background: linear-gradient(135deg, #95A5A6, #7F8C8D);
+    color: #fff;
+    padding: 1.1rem 2.7rem;
+    border-radius: 1.2rem;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 1.6rem;
+    letter-spacing: 0.2px;
+    transition: background 0.18s, box-shadow 0.2s, transform 0.16s;
+    box-shadow: 0 4px 18px rgba(149, 165, 166, 0.13);
+}
+
+main a.button.secondary:hover, 
+main a.secondary:hover {
+    background: linear-gradient(135deg, var(--accent-color), var(--warm-orange));
+    color: #fff;
+    transform: translateY(-2px) scale(1.035);
+}
+
+@media (max-width: 900px) {
+    main {
+        max-width: 97vw;
+        padding: 2.5rem 1.4rem;
+    }
+    main h1 {
+        font-size: 2.3rem;
+    }
+    main p {
+        font-size: 1.45rem;
+    }
+}
+
+@media (max-width: 520px) {
+    main {
+        border-radius: 1.2rem;
+        padding: 1.1rem 0.7rem;
+    }
+    main h1 {
+        font-size: 2.05rem;
+    }
+    main p {
+        font-size: 1.14rem;
+    }
+    main a.button,
+    main a.secondary {
+        font-size: 1.14rem;
+        padding: 0.8rem 1.2rem;
+        border-radius: 0.8rem;
+    }
+}
+</style>
 {% endblock %}

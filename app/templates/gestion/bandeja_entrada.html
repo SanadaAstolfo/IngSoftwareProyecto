@@ -68,5 +68,141 @@
     .mensaje-no-leido {
         font-weight: bold;
     }
+    /* ==========================================================================
+   TABLAS - ESTILOS PARA TABLAS DE MENSAJES
+   ========================================================================== */
+
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 2rem 0 3rem 0;
+    background: var(--card-bg);
+    border-radius: 2.2rem;
+    box-shadow: 0 6px 25px rgba(52, 152, 219, 0.08);
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden;
+    font-size: 1.6rem;
+    table-layout: auto;
+}
+
+thead {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color:  var(--primary-color)#6BB6B8;
+}
+
+th, td {
+    padding: 1.6rem 2rem;
+    text-align: left;
+    vertical-align: middle;
+    border-bottom: 2px solid var(--light-accent);
+    font-family: 'Poppins', sans-serif;
+}
+
+th {
+    font-size: 1.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    border-bottom: 4px solid var(--primary-color);
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+tr {
+    background: var(--card-bg);
+    transition: background 0.2s;
+}
+
+tr:hover {
+    background: var(--background-color);
+}
+
+.mensaje-no-leido {
+    background: #FFE5B4 !important;
+    font-weight: 700;
+    color: var(--dark-color);
+}
+
+a.button, a.primary {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: #fff;
+    padding: 1.1rem 2.5rem;
+    border-radius: 1.2rem;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 1.7rem;
+    margin-bottom: 2.5rem;
+    margin-top: 1.5rem;
+    transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+    box-shadow: 0 5px 18px rgba(107, 182, 184, 0.14);
+    letter-spacing: 0.2px;
+}
+
+a.button.primary:hover, a.primary:hover {
+    background: linear-gradient(135deg, var(--accent-color), var(--warm-orange));
+    color: #fff;
+    transform: translateY(-3px) scale(1.04);
+}
+
+hr {
+    border: none;
+    border-top: 2px solid var(--secondary-color);
+    width: 100%;
+    margin: 3rem 0;
+    opacity: 0.16;
+}
+
+/* Responsive table */
+@media (max-width: 900px) {
+    table, thead, tbody, th, td, tr {
+        display: block;
+        width: 100%;
+    }
+    thead tr {
+        display: none;
+    }
+    tr {
+        margin-bottom: 2.2rem;
+        border-radius: 1.7rem;
+        box-shadow: 0 3px 12px rgba(52,152,219,0.08);
+        background: var(--card-bg);
+    }
+    td {
+        padding: 1.3rem 1.5rem;
+        text-align: left;
+        position: relative;
+        border: none;
+        border-bottom: 1px solid var(--light-accent);
+    }
+    td:before {
+        content: attr(data-label);
+        font-weight: 700;
+        text-transform: uppercase;
+        color: var(--primary-color);
+        margin-right: 1em;
+        min-width: 10rem;
+        display: inline-block;
+    }
+    tbody tr:last-child td {
+        border-bottom: none;
+    }
+}
+
+/* Asegura que los enlaces de asunto en la tabla sean visibles y estilizados */
+td a {
+    color: var(--secondary-color);
+    font-weight: 600;
+    text-decoration: underline;
+    transition: color 0.2s;
+}
+
+td a:hover {
+    color: var(--accent-color);
+    text-decoration: underline;
+}
 </style>
 {% endblock %}
