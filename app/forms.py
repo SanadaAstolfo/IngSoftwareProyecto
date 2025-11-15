@@ -30,9 +30,10 @@ class AtencionGeneralForm(forms.ModelForm):
     class Meta:
         model = AtencionMedica
         exclude = ['diagnostico']
-        fields = ['tipo_atencion', 'tipo_visita', 'motivo_consulta', 'anamnesis', 'estado_emocional', 'diagnosticos', 'prediagnosticos', 'tratamiento', 'estado', 'observaciones_sensibles']
+        fields = ['tipo_atencion', 'tipo_visita', 'motivo_consulta', 'anamnesis', 'estado_emocional', 'diagnosticos', 'prediagnosticos', 'tratamiento', 'estado', 'observaciones_sensibles', 'tipo_especialidad']
         widgets = {
             'tipo_atencion': forms.Select(attrs={'class': 'form-select'}),
+            'tipo_especialidad': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ej: Dermatología, Cirugía'}),
             'tipo_visita': forms.Select(attrs={'class': 'form-select'}),
             'motivo_consulta': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
             'anamnesis': forms.Textarea(attrs={'class': 'form-control', 'rows': 5}),

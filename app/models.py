@@ -130,6 +130,12 @@ class AtencionMedica(models.Model):
     tipo_atencion = models.CharField(max_length=10, choices=TIPO_ATENCION_CHOICES)
     tipo_visita = models.CharField(max_length=20, choices=TIPO_VISITA_CHOICES)
     motivo_consulta = models.TextField(help_text="Debe tener un mínimo de 10 caracteres.")
+    tipo_especialidad = models.CharField(
+    max_length=100,
+    blank=True,
+    null=True,
+    verbose_name="Tipo de especialidad",
+    help_text="Ej: Dermatología, Cirugía, Cardiología")
     anamnesis = models.TextField(verbose_name="Anamnesis (antecedentes previos y actuales)")
     #diagnostico = models.TextField()
     diagnosticos = models.ManyToManyField(Diagnostico, related_name='atenciones', blank=True, verbose_name="Diagnósticos")
