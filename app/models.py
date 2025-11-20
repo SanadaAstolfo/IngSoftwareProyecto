@@ -71,6 +71,7 @@ class Paciente(models.Model):
     especie = models.CharField(max_length=50)
     raza = models.CharField(max_length=50)
     sexo = models.CharField(max_length=10)
+    Estado_Reproductivo = models.CharField(max_length=50)
     fecha_nacimiento = models.DateField()
     microchip_tatuaje = models.CharField(max_length=50, blank=True, null=True)
     alertas = models.ManyToManyField(AlertaClinica, blank=True, verbose_name="Alertas Clinicas")
