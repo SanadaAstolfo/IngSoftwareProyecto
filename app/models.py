@@ -129,6 +129,7 @@ class AtencionMedica(models.Model):
     veterinario = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     tipo_atencion = models.CharField(max_length=10, choices=TIPO_ATENCION_CHOICES)
     tipo_visita = models.CharField(max_length=20, choices=TIPO_VISITA_CHOICES)
+    tipo_especialidad = models.CharField(max_length=100, blank=True, null=True, verbose_name="Tipo de especialidad", help_text="Ej: Dermatología, Cirugía, Cardiología")
     motivo_consulta = models.TextField(help_text="Debe tener un mínimo de 10 caracteres.")
     anamnesis = models.TextField(verbose_name="Anamnesis (antecedentes previos y actuales)")
     #diagnostico = models.TextField()
