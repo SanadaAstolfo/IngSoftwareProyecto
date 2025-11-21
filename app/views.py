@@ -7,7 +7,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse, HttpResponseForbidden
 from django.template.loader import render_to_string
-from weasyprint import HTML, CSS
+# WeasyPrint se importa dinámicamente donde se necesita
 from datetime import date, datetime
 from django.utils import timezone
 from django.db.models import Q
@@ -762,6 +762,8 @@ def agregar_receta(request, atencion_id):
     return render(request, 'gestion/receta_form.html', contexto)
 
 def generar_pdf_receta(request, receta_id):
+    from weasyprint import HTML
+    
     receta = get_object_or_404(Receta, pk=receta_id)
     usuario_actual = request.user
     es_personal_usuario = es_personal(usuario_actual)
@@ -811,6 +813,8 @@ def generar_pdf_receta(request, receta_id):
 @login_required
 @group_required('Administrador', 'Veterinario', 'Veterinario Especialista', 'Secretaria')
 def generar_pdf_ficha(request, atencion_id):
+    from weasyprint import HTML
+    
     atencion = get_object_or_404(AtencionMedica, pk=atencion_id)
     foto_url = None
     paciente = atencion.ficha_clinica.paciente
@@ -832,6 +836,8 @@ def generar_pdf_ficha(request, atencion_id):
 
 @login_required
 def generar_pdf_epicrisis(request, atencion_id):
+    from weasyprint import HTML
+    
     atencion = get_object_or_404(AtencionMedica, pk=atencion_id)
     usuario_actual = request.user
     es_personal_usuario = es_personal(usuario_actual)

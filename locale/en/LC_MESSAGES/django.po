@@ -1,0 +1,84 @@
+# Translations for English.
+# This file is distributed under the same license as the PACKAGE package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-11-21\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+
+#: app/templates/portal.html
+msgid "¡Bienvenido a Club Entre Patitas!"
+msgstr "Welcome to Club Entre Patitas!"
+
+msgid "Tu plataforma de confianza para el cuidado veterinario"
+msgstr "Your trusted platform for veterinary care"
+
+msgid "Selecciona tu tipo de usuario para acceder a las funcionalidades específicas del sistema."
+msgstr "Select your user type to access the specific features of the system."
+
+msgid "Nuestro sistema está diseñado para brindar la mejor experiencia tanto a veterinarios como a dueños de mascotas."
+msgstr "Our system is designed to provide the best experience for both veterinarians and pet owners."
+
+msgid "Funcionario de Club Entre Patitas"
+msgstr "Club Entre Patitas Staff"
+
+msgid "Acceso completo al sistema de gestión de fichas médicas, pacientes y herramientas profesionales."
+msgstr "Full access to medical records management system, patients and professional tools."
+
+msgid "Crear y gestionar fichas médicas"
+msgstr "Create and manage medical records"
+
+msgid "Programar citas y controles"
+msgstr "Schedule appointments and checkups"
+
+msgid "Generar reportes médicos"
+msgstr "Generate medical reports"
+
+msgid "Acceso completo a la base de datos"
+msgstr "Full database access"
+
+msgid "Soy Funcionario de"
+msgstr "I am a Staff Member of"
+
+msgid "Dueño de Mascota"
+msgstr "Pet Owner"
+
+msgid "Accede al historial médico de tu mascota y mantente informado sobre su salud y tratamientos."
+msgstr "Access your pet's medical history and stay informed about their health and treatments."
+
+msgid "Ver historial médico de tu mascota"
+msgstr "View your pet's medical history"
+
+msgid "Consultar próximas citas"
+msgstr "Check upcoming appointments"
+
+msgid "Seguimiento de tratamientos"
+msgstr "Treatment tracking"
+
+msgid "Contacto directo con veterinarios"
+msgstr "Direct contact with veterinarians"
+
+msgid "Soy Dueño de Mascota"
+msgstr "I am a Pet Owner"
+
+msgid "Pacientes"
+msgstr "Patients"
+
+msgid "Tutores"
+msgstr "Tutors"
+
+msgid "Citas"
+msgstr "Appointments"
+
+msgid "Mensajes"
+msgstr "Messages"
+
+msgid "Cerrar Sesión"
+msgstr "Logout"
+
+msgid "Bienvenido"
+msgstr "Welcome"

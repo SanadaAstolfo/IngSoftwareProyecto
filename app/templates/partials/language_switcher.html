@@ -1,0 +1,45 @@
+{% load i18n %}
+
+<div class="language-switcher">
+    <form action="{% url 'set_language' %}" method="post" style="display: inline;">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ request.path }}">
+        <select name="language" id="language-select" onchange="this.form.submit()" class="lang-select">
+            {% get_current_language as LANGUAGE_CODE %}
+            <option value="es" {% if LANGUAGE_CODE == 'es' %}selected{% endif %}>Español</option>
+            <option value="en" {% if LANGUAGE_CODE == 'en' %}selected{% endif %}>English</option>
+        </select>
+    </form>
+</div>
+
+<style>
+    .language-switcher {
+        position: fixed;
+        top: 2rem;
+        right: 2rem;
+        z-index: 1000;
+    }
+
+    .lang-select {
+        padding: 0.7rem 1.2rem;
+        border-radius: 0.5rem;
+        border: 2px solid #6BB6B8;
+        background-color: white;
+        color: #6BB6B8;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 1.4rem;
+    }
+
+    .lang-select:hover {
+        background-color: #6BB6B8;
+        color: white;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .lang-select option {
+        color: #6BB6B8;
+        background-color: white;
+    }
+</style>
