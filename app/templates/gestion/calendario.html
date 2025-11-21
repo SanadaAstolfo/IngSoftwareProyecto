@@ -43,11 +43,27 @@
                 </div>
                 <p class="mb-1">Veterinario: {{ cita.veterinario.username|default:"Sin asignar" }}</p>
                 <p class="mb-1">Estado: {{ cita.get_estado_display }}</p>
-                <div>
-                    <a href="{% url 'editar_cita' cita.id %}" class="btn btn-sm btn-secondary">Editar</a>
-                    <a href="{% url 'registrar_abono' cita.id %}" class="btn btn-sm btn-success">Registrar Abono</a>
+                <div class="btn-group" role="group">
+                    {% if cita.paciente %}
+                        <a href="{% url 'seleccionar_tipo_atencion' cita.paciente.id %}" class="btn btn-sm btn-primary">
+                            <i class="bi bi-play-circle"></i> Iniciar Consulta
+                        </a>
+                    {% elif cita.nombre_paciente_temporal %}
+                        <a href="{% url 'crear_paciente' %}?nombre={{ cita.nombre_paciente_temporal|urlencode }}&tutor={{ cita.nombre_tutor_temporal|urlencode }}" 
+                           class="btn btn-sm btn-warning">
+                            <i class="bi bi-plus-circle"></i> Registrar Paciente e Iniciar
+                        </a>
+                    {% endif %}
+                    <a href="{% url 'editar_cita' cita.id %}" class="btn btn-sm btn-secondary">
+                        <i class="bi bi-pencil"></i> Editar
+                    </a>
+                    <a href="{% url 'registrar_abono' cita.id %}" class="btn btn-sm btn-success">
+                        <i class="bi bi-cash"></i> Registrar Abono
+                    </a>
                     {% if cita.estado != 'Cancelada' %}
-                        <a href="{% url 'cancelar_cita' cita.id %}" class="btn btn-sm btn-danger">Cancelar</a>
+                        <a href="{% url 'cancelar_cita' cita.id %}" class="btn btn-sm btn-danger">
+                            <i class="bi bi-x-circle"></i> Cancelar
+                        </a>
                     {% endif %}
                 </div>
                 {% if cita.pagos.all %}

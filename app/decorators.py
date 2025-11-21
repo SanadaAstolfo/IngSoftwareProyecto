@@ -4,10 +4,6 @@ from django.contrib import messages
 from functools import wraps
 
 def group_required(*group_names):
-    """
-    Decorador que verifica si el usuario pertenece a alguno de los grupos especificados.
-    Redirige a la página 'portal' y muestra un mensaje si no pertenece.
-    """
     def decorator(view_func):
         @wraps(view_func)
         def _wrapped_view(request, *args, **kwargs):

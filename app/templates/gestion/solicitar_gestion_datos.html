@@ -1,0 +1,72 @@
+{% extends 'gestion/base.html' %}
+
+{% block title %}{{ titulo }}{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width: 800px;">
+    <h1 class="mb-4">🔒 {{ titulo }}</h1>
+    
+    <div class="alert alert-info">
+        <h5><i class="bi bi-info-circle"></i> Información sobre Gestión de Datos Personales</h5>
+        <p class="mb-2">De acuerdo con la Ley de Protección de Datos Personales, usted tiene derecho a:</p>
+        <ul class="mb-0">
+            <li><strong>Acceso:</strong> Solicitar una copia de sus datos personales almacenados.</li>
+            <li><strong>Modificación:</strong> Solicitar la corrección de datos incorrectos o desactualizados.</li>
+            <li><strong>Cancelación:</strong> Solicitar la eliminación de sus datos personales.</li>
+            <li><strong>Bloqueo:</strong> Solicitar el bloqueo temporal de sus datos personales.</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {{ form.non_field_errors }}
+                    </div>
+                {% endif %}
+
+                <div class="mb-4">
+                    <label class="form-label fw-bold">{{ form.tipo_solicitud.label }}</label>
+                    {% if form.tipo_solicitud.help_text %}
+                        <div class="form-text mb-2">{{ form.tipo_solicitud.help_text }}</div>
+                    {% endif %}
+                    
+                    <div class="d-flex flex-column gap-2">
+                        {% for radio in form.tipo_solicitud %}
+                            <div class="form-check">
+                                {{ radio.tag }}
+                                <label class="form-check-label" for="{{ radio.id_for_label }}">
+                                    {{ radio.choice_label }}
+                                </label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    
+                    {% if form.tipo_solicitud.errors %}
+                        <div class="alert alert-danger mt-2 p-2">
+                            {{ form.tipo_solicitud.errors|striptags }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="alert alert-warning">
+                    <strong>Nota:</strong> Su solicitud será revisada por el personal administrativo. 
+                    Recibirá una notificación cuando sea procesada.
+                </div>
+
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-send"></i> Enviar Solicitud
+                    </button>
+                    <a href="{% url 'mis_solicitudes_datos' %}" class="btn btn-secondary">
+                        <i class="bi bi-arrow-left"></i> Ver Mis Solicitudes
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

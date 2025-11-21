@@ -1,0 +1,97 @@
+{% extends 'gestion/base.html' %}
+
+{% block title %}{{ titulo }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>📋 {{ titulo }}</h1>
+        <a href="{% url 'solicitar_gestion_datos' %}" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> Nueva Solicitud
+        </a>
+    </div>
+
+    {% if solicitudes %}
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead class="table-light">
+                    <tr>
+                        <th>Folio</th>
+                        <th>Tipo de Solicitud</th>
+                        <th>Fecha</th>
+                        <th>Estado</th>
+                        <th>Resolución</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for solicitud in solicitudes %}
+                    <tr>
+                        <td>#{{ solicitud.id }}</td>
+                        <td>
+                            <span class="badge bg-secondary">
+                                {{ solicitud.get_tipo_solicitud_display }}
+                            </span>
+                        </td>
+                        <td>{{ solicitud.fecha_solicitud|date:"d/m/Y H:i" }}</td>
+                        <td>
+                            {% if solicitud.estado == 'Pendiente' %}
+                                <span class="badge bg-warning text-dark">⏳ Pendiente</span>
+                            {% elif solicitud.estado == 'Aprobada' %}
+                                <span class="badge bg-success">✅ Aprobada</span>
+                            {% elif solicitud.estado == 'Rechazada' %}
+                                <span class="badge bg-danger">❌ Rechazada</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if solicitud.resolucion %}
+                                <button type="button" class="btn btn-sm btn-info" 
+                                        data-bs-toggle="modal" 
+                                        data-bs-target="#resolucionModal{{ solicitud.id }}">
+                                    Ver Detalle
+                                </button>
+                                
+                                <!-- Modal -->
+                                <div class="modal fade" id="resolucionModal{{ solicitud.id }}" tabindex="-1">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Resolución de Solicitud #{{ solicitud.id }}</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p><strong>Tipo:</strong> {{ solicitud.get_tipo_solicitud_display }}</p>
+                                                <p><strong>Estado:</strong> {{ solicitud.get_estado_display }}</p>
+                                                <p><strong>Gestionado por:</strong> 
+                                                    {% if solicitud.usuario_responsable %}
+                                                        {{ solicitud.usuario_responsable.get_full_name|default:solicitud.usuario_responsable.username }}
+                                                    {% else %}
+                                                        -
+                                                    {% endif %}
+                                                </p>
+                                                <hr>
+                                                <p><strong>Resolución:</strong></p>
+                                                <p>{{ solicitud.resolucion|linebreaksbr }}</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <span class="text-muted">En proceso...</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            <i class="bi bi-info-circle"></i> No has realizado ninguna solicitud de gestión de datos aún.
+            <a href="{% url 'solicitar_gestion_datos' %}" class="alert-link">Haz clic aquí para crear una</a>.
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

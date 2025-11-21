@@ -8,79 +8,261 @@
     <hr>
     <form method="post">
         {% csrf_token %}
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header">Datos de la Atención</div>
-                    
-                    <div class="card-body">
-                        {% if atencion_form.non_field_errors %}
-                            <div class="alert alert-danger">
-                                {{ atencion_form.non_field_errors }}
-                            </div>
-                        {% endif %}
-
-                        {% for field in atencion_form.visible_fields %}
-                            <div class="mb-3">
-                                {{ field.label_tag }}
-                                {{ field }}
-                                {% if field.errors %}
-                                    <div class="alert alert-danger p-1 mt-1">
-                                        {{ field.errors|striptags }}
-                                    </div>
-                                {% endif %}
-                                {% if field.help_text %}
-                                    <div class="form-text">{{ field.help_text }}</div>
-                                {% endif %}
-                            </div>
-                        {% endfor %}
-                    </div>
-                    </div>
+        
+        <!-- 1. INFORMACIÓN GENERAL -->
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">📋 Información General de la Consulta</h5>
             </div>
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header">Chequeo Físico</div>
-                    <div class="card-body">
-                        {% for field in chequeo_form %}
-                            <div class="mb-3">
-                                {{ field.label_tag }}
-                                {{ field }}
-                            </div>
-                        {% endfor %}
+            <div class="card-body">
+                {% if atencion_form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {{ atencion_form.non_field_errors }}
                     </div>
+                {% endif %}
+
+                <div class="mb-3">
+                    {{ atencion_form.motivo_consulta.label_tag }}
+                    {{ atencion_form.motivo_consulta }}
+                    {% if atencion_form.motivo_consulta.errors %}
+                        <div class="alert alert-danger p-1 mt-1">
+                            {{ atencion_form.motivo_consulta.errors|striptags }}
+                        </div>
+                    {% endif %}
+                    {% if atencion_form.motivo_consulta.help_text %}
+                        <div class="form-text">{{ atencion_form.motivo_consulta.help_text }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    {{ atencion_form.anamnesis.label_tag }}
+                    {{ atencion_form.anamnesis }}
+                    {% if atencion_form.anamnesis.errors %}
+                        <div class="alert alert-danger p-1 mt-1">
+                            {{ atencion_form.anamnesis.errors|striptags }}
+                        </div>
+                    {% endif %}
+                    {% if atencion_form.anamnesis.help_text %}
+                        <div class="form-text">{{ atencion_form.anamnesis.help_text }}</div>
+                    {% endif %}
+                </div>
+
+                {% if atencion_form.estado_emocional %}
+                <div class="mb-3">
+                    {{ atencion_form.estado_emocional.label_tag }}
+                    {{ atencion_form.estado_emocional }}
+                    {% if atencion_form.estado_emocional.errors %}
+                        <div class="alert alert-danger p-1 mt-1">
+                            {{ atencion_form.estado_emocional.errors|striptags }}
+                        </div>
+                    {% endif %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- 2. CHEQUEO FÍSICO EN GRID ORDENADO -->
+        <div class="card mb-4">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0">🩺 Chequeo Físico</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        {{ chequeo_form.temperatura.label_tag }}
+                        {{ chequeo_form.temperatura }}
+                        {% if chequeo_form.temperatura.errors %}
+                            <div class="text-danger small">{{ chequeo_form.temperatura.errors|striptags }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        {{ chequeo_form.peso.label_tag }}
+                        {{ chequeo_form.peso }}
+                        {% if chequeo_form.peso.errors %}
+                            <div class="text-danger small">{{ chequeo_form.peso.errors|striptags }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        {{ chequeo_form.condicion_corporal.label_tag }}
+                        {{ chequeo_form.condicion_corporal }}
+                        {% if chequeo_form.condicion_corporal.errors %}
+                            <div class="text-danger small">{{ chequeo_form.condicion_corporal.errors|striptags }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 mb-3">
+                        {{ chequeo_form.frecuencia_cardiaca.label_tag }}
+                        {{ chequeo_form.frecuencia_cardiaca }}
+                        {% if chequeo_form.frecuencia_cardiaca.errors %}
+                            <div class="text-danger small">{{ chequeo_form.frecuencia_cardiaca.errors|striptags }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        {{ chequeo_form.frecuencia_respiratoria.label_tag }}
+                        {{ chequeo_form.frecuencia_respiratoria }}
+                        {% if chequeo_form.frecuencia_respiratoria.errors %}
+                            <div class="text-danger small">{{ chequeo_form.frecuencia_respiratoria.errors|striptags }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        {{ chequeo_form.tllc.label_tag }}
+                        {{ chequeo_form.tllc }}
+                        {% if chequeo_form.tllc.errors %}
+                            <div class="text-danger small">{{ chequeo_form.tllc.errors|striptags }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        {{ chequeo_form.mucosas.label_tag }}
+                        {{ chequeo_form.mucosas }}
+                        {% if chequeo_form.mucosas.errors %}
+                            <div class="text-danger small">{{ chequeo_form.mucosas.errors|striptags }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="mb-3">
+                    {{ chequeo_form.anotaciones.label_tag }}
+                    {{ chequeo_form.anotaciones }}
+                    {% if chequeo_form.anotaciones.errors %}
+                        <div class="text-danger small">{{ chequeo_form.anotaciones.errors|striptags }}</div>
+                    {% endif %}
                 </div>
             </div>
         </div>
-        <div class="mt-4">
-            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-            <a href="{% url 'detalle_paciente' paciente.id %}" class="btn btn-secondary">Cancelar</a>
+
+        <!-- 3. PREDIAGNÓSTICO -->
+        {% if atencion_form.prediagnostico %}
+        <div class="card mb-4">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0">🔍 Prediagnóstico</h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    {{ atencion_form.prediagnostico.label_tag }}
+                    {{ atencion_form.prediagnostico }}
+                    {% if atencion_form.prediagnostico.errors %}
+                        <div class="alert alert-danger p-1 mt-1">
+                            {{ atencion_form.prediagnostico.errors|striptags }}
+                        </div>
+                    {% endif %}
+                    {% if atencion_form.prediagnostico.help_text %}
+                        <div class="form-text">{{ atencion_form.prediagnostico.help_text }}</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- 4. DATOS ADMINISTRATIVOS -->
+        <div class="card mb-4">
+            <div class="card-header bg-secondary text-white">
+                <h5 class="mb-0">⚙️ Datos Administrativos</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    {% if atencion_form.tipo_atencion %}
+                    <div class="col-md-4 mb-3">
+                        {{ atencion_form.tipo_atencion.label_tag }}
+                        {{ atencion_form.tipo_atencion }}
+                        {% if atencion_form.tipo_atencion.errors %}
+                            <div class="text-danger small">{{ atencion_form.tipo_atencion.errors|striptags }}</div>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                    
+                    {% if atencion_form.tipo_visita %}
+                    <div class="col-md-4 mb-3">
+                        {{ atencion_form.tipo_visita.label_tag }}
+                        {{ atencion_form.tipo_visita }}
+                        {% if atencion_form.tipo_visita.errors %}
+                            <div class="text-danger small">{{ atencion_form.tipo_visita.errors|striptags }}</div>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                    
+                    {% if atencion_form.lugar_atencion %}
+                    <div class="col-md-4 mb-3">
+                        {{ atencion_form.lugar_atencion.label_tag }}
+                        {{ atencion_form.lugar_atencion }}
+                        {% if atencion_form.lugar_atencion.errors %}
+                            <div class="text-danger small">{{ atencion_form.lugar_atencion.errors|striptags }}</div>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                </div>
+
+                {% if atencion_form.jaula_numero or atencion_form.fecha_egreso or atencion_form.notas_hospitalizacion %}
+                <hr>
+                <h6 class="text-muted">Datos de Hospitalización</h6>
+                <div class="row">
+                    {% if atencion_form.jaula_numero %}
+                    <div class="col-md-6 mb-3">
+                        {{ atencion_form.jaula_numero.label_tag }}
+                        {{ atencion_form.jaula_numero }}
+                    </div>
+                    {% endif %}
+                    
+                    {% if atencion_form.fecha_egreso %}
+                    <div class="col-md-6 mb-3">
+                        {{ atencion_form.fecha_egreso.label_tag }}
+                        {{ atencion_form.fecha_egreso }}
+                    </div>
+                    {% endif %}
+                </div>
+                
+                {% if atencion_form.notas_hospitalizacion %}
+                <div class="mb-3">
+                    {{ atencion_form.notas_hospitalizacion.label_tag }}
+                    {{ atencion_form.notas_hospitalizacion }}
+                </div>
+                {% endif %}
+                {% endif %}
+
+                {% if atencion_form.estado %}
+                <div class="mb-3">
+                    {{ atencion_form.estado.label_tag }}
+                    {{ atencion_form.estado }}
+                </div>
+                {% endif %}
+
+                {% if atencion_form.observaciones_sensibles %}
+                <div class="mb-3">
+                    {{ atencion_form.observaciones_sensibles.label_tag }}
+                    {{ atencion_form.observaciones_sensibles }}
+                    {% if atencion_form.observaciones_sensibles.help_text %}
+                        <div class="form-text">{{ atencion_form.observaciones_sensibles.help_text }}</div>
+                    {% endif %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- 5. DIAGNÓSTICO DEFINITIVO (DESTACADO AL FINAL) -->
+        {% if atencion_form.diagnostico %}
+        <div class="card mb-4 border-warning">
+            <div class="card-header bg-warning text-dark">
+                <h5 class="mb-0">✅ Diagnóstico Definitivo</h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    {{ atencion_form.diagnostico.label_tag }}
+                    {{ atencion_form.diagnostico }}
+                    {% if atencion_form.diagnostico.errors %}
+                        <div class="alert alert-danger p-1 mt-1">
+                            {{ atencion_form.diagnostico.errors|striptags }}
+                        </div>
+                    {% endif %}
+                    {% if atencion_form.diagnostico.help_text %}
+                        <div class="form-text">{{ atencion_form.diagnostico.help_text }}</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="mt-4 d-flex gap-2">
+            <button type="submit" class="btn btn-primary btn-lg">💾 Guardar Cambios</button>
+            <a href="{% url 'detalle_paciente' paciente.id %}" class="btn btn-secondary btn-lg">❌ Cancelar</a>
         </div>
     </form>
-{% endblock %}
-
-{% block scripts %}
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const diagnosticoSelect = document.getElementById('id_diagnostico_opciones');
-            const diagnosticoTextoInput = document.getElementById('id_diagnostico_personalizado');
-
-            if (!diagnosticoSelect || !diagnosticoTextoInput) return;
-
-            function toggleOtroDiagnostico() {
-                const selectedOptionText = diagnosticoSelect.options[diagnosticoSelect.selectedIndex].text;
-                
-                if (selectedOptionText === 'Otro') {
-                    diagnosticoTextoInput.disabled = false;
-                    diagnosticoTextoInput.placeholder = 'Escribe el diagnóstico aquí...';
-                } else {
-                    diagnosticoTextoInput.disabled = true;
-                    diagnosticoTextoInput.value = '';
-                    diagnosticoTextoInput.placeholder = '';
-                }
-            }
-
-            toggleOtroDiagnostico();
-            diagnosticoSelect.addEventListener('change', toggleOtroDiagnostico);
-        });
-    </script>
 {% endblock %}

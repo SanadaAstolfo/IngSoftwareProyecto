@@ -3,6 +3,9 @@ from . import views
 from django.conf import settings
 
 urlpatterns = [
+    # Login exclusivo para tutores
+    path('acceso-tutor/', views.TutorLoginView.as_view(), name='login_tutor'),
+    
     path('pacientes/', views.lista_pacientes, name='lista_pacientes'),
     path('pacientes/nuevo/', views.crear_paciente, name='crear_paciente'),
     path('pacientes/<int:paciente_id>/', views.detalle_paciente, name='detalle_paciente'),
@@ -39,6 +42,11 @@ urlpatterns = [
     path('mensajes/enviar/', views.enviar_mensaje, name='enviar_mensaje'),
     path('mensajes/<int:mensaje_id>/', views.ver_mensaje, name='ver_mensaje'),
     path('receta/<int:receta_id>/pdf/', views.generar_pdf_receta, name='generar_pdf_receta'),
+    # Gestión de Datos Personales (CU 30)
+    path('datos-personales/solicitar/', views.solicitar_gestion_datos, name='solicitar_gestion_datos'),
+    path('datos-personales/mis-solicitudes/', views.mis_solicitudes_datos, name='mis_solicitudes_datos'),
+    path('datos-personales/lista/', views.lista_solicitudes_datos, name='lista_solicitudes_datos'),
+    path('datos-personales/gestionar/<int:solicitud_id>/', views.gestionar_solicitud_datos, name='gestionar_solicitud_datos'),
 ]
 
 if settings.DEBUG:

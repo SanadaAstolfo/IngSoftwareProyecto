@@ -221,13 +221,18 @@
         {% if user.is_authenticated %}
             <nav class="main-menu">
                 <ul>
-                    {% if not user.perfil.rol == 'TUTOR' %}
+                    {% if user.is_staff %}
+                        {# Menú para Personal (Administrador, Veterinario, Especialista, Secretaria) #}
                         <li><a href="{% url 'lista_pacientes' %}">Pacientes</a></li>
                         <li><a href="{% url 'lista_tutores' %}">Tutores</a></li>
-                        <li><a href="{% url 'calendario_citas' %}">Citas</a></li>
+                        <li><a href="{% url 'calendario_citas' %}">Agenda</a></li>
+                        <li><a href="{% url 'lista_solicitudes_datos' %}">Solicitudes</a></li>
                         <li><a href="{% url 'bandeja_entrada' %}">Mensajes</a></li>
                     {% else %}
-                        <li><a href="{% url 'editar_mi_perfil' %}">Editar Mi Perfil</a></li>
+                        {# Menú para Tutores #}
+                        <li><a href="{% url 'mis_pacientes' %}">Mis Mascotas</a></li>
+                        <li><a href="{% url 'mis_solicitudes_datos' %}">Solicitudes</a></li>
+                        <li><a href="{% url 'editar_mi_perfil' %}">Mi Perfil</a></li>
                     {% endif %}
                 </ul>
                 <span class="user-name">Bienvenido, {{ user.username }}</span>     
@@ -247,6 +252,7 @@
 
     {% include 'gestion/partials/_footer.html' %}
 
+    <script src="{% static 'gestion/js/rut-formatter.js' %}"></script>
     <script src="{% static 'gestion/js/script.js' %}"></script>
 </body>
 </html>

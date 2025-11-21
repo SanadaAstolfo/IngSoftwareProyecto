@@ -1,3 +1,4 @@
+{% load custom_filters %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -65,7 +66,7 @@
         <h2>Datos del Paciente</h2>
         <p><strong>Nombre:</strong> {{ atencion.ficha_clinica.paciente.nombre }}</p>
         <p><strong>Especie/Raza:</strong> {{ atencion.ficha_clinica.paciente.especie }} / {{ atencion.ficha_clinica.paciente.raza }}</p>
-        <p><strong>Tutor:</strong> {{ atencion.ficha_clinica.paciente.tutor.nombre_completo|default:"-" }} (RUT: {{ atencion.ficha_clinica.paciente.tutor.rut }})</p>
+        <p><strong>Tutor:</strong> {{ atencion.ficha_clinica.paciente.tutor.nombre_completo|default:"-" }} (RUT: {{ atencion.ficha_clinica.paciente.tutor.rut|format_rut }})</p>
     </div>
 
     <div class="section">
@@ -107,7 +108,7 @@
         <p>Dr(a). {{ atencion.veterinario.get_full_name|default:atencion.veterinario.username }}</p>
         {% with perfil_vet=atencion.veterinario.perfil %}
             {% if perfil_vet and perfil_vet.rut %}
-            <p>RUT: {{ perfil_vet.rut }}</p>
+            <p>RUT: {{ perfil_vet.rut|format_rut }}</p>
             {% endif %}
         {% endwith %}
         <p>Médico Veterinario</p>
@@ -116,7 +117,7 @@
     <div class="firma-electronica">
         <p><strong>Firmado electrónicamente (FEA)</strong></p>
         <p><strong>Por:</strong> {{ atencion.veterinario.get_full_name|default:atencion.veterinario.username }}</p>
-        <p><strong>RUT:</strong> {{ atencion.veterinario.rut|default:"[RUT del Veterinario]" }}</p>
+        <p><strong>RUT:</strong> {{ atencion.veterinario.rut|format_rut|default:"[RUT del Veterinario]" }}</p>
         <p><strong>Fecha:</strong> {% now "d-m-Y H:i" %}</p>
         <p><strong>Autenticado en:</strong> sistema.cl</p>
     </div>

@@ -14,14 +14,19 @@ from django.db.models import Q
 from django.conf import settings
 import pytz
 import os
-from .models import Paciente, Tutor, Perfil, FichaClinica, AtencionMedica, ChequeoFisico, DocumentoAdjunto, Diagnostico, InsumoUtilizado, Cita, Pago, RegistroVacuna, Mensaje, Receta
-from .forms import PacienteForm, TutorForm, AtencionGeneralForm, ChequeoFisicoForm, ProcedimientoForm, AtencionHospitalizacionForm, DocumentoAdjuntoForm, InsumoUtilizadoForm, AntecedenteExternoForm, CitaForm, PagoForm, RegistroVacunaForm, CustomAuthenticationForm, MiPerfilForm, MensajeForm, RecetaForm
+from .models import Paciente, Tutor, Perfil, FichaClinica, AtencionMedica, ChequeoFisico, DocumentoAdjunto, InsumoUtilizado, Cita, Pago, RegistroVacuna, Mensaje, Receta, SolicitudDatosPersonales
+from .forms import PacienteForm, TutorForm, AtencionGeneralForm, ChequeoFisicoForm, ProcedimientoForm, AtencionHospitalizacionForm, DocumentoAdjuntoForm, InsumoUtilizadoForm, AntecedenteExternoForm, CitaForm, PagoForm, RegistroVacunaForm, CustomAuthenticationForm, MiPerfilForm, MensajeForm, RecetaForm, SolicitudDatosPersonalesForm
+from .decorators import group_required
 
 def es_personal(user):
-    return hasattr(user, 'perfil') and user.perfil is not None and user.perfil.rol in ['ADMIN', 'VET', 'ESP', 'SECRETARIA']
+    if not user.is_authenticated:
+        return False
+    return user.groups.filter(name__in=['Administrador', 'Veterinario', 'Veterinario Especialista', 'Secretaria']).exists() or user.is_superuser
 
 def es_tutor(user):
-    return hasattr(user, 'perfil') and user.perfil is not None and user.perfil.rol == 'TUTOR'
+    if not user.is_authenticated:
+        return False
+    return user.groups.filter(name='Tutor').exists()
 
 def portal_view(request):
     return render(request, 'portal.html')
@@ -30,7 +35,15 @@ class CustomLoginView(auth_views.LoginView):
     authentication_form = CustomAuthenticationForm
     template_name = 'registration/login.html'
 
+class TutorLoginView(auth_views.LoginView):
+    authentication_form = CustomAuthenticationForm
+    template_name = 'registration/login_tutor.html'
+    
+    def get_success_url(self):
+        return '/tutores/mis-pacientes/'
+
 @login_required
+@group_required('Administrador', 'Veterinario', 'Veterinario Especialista', 'Secretaria')
 def lista_pacientes(request):
     queryset = Paciente.objects.all()
 
@@ -39,7 +52,12 @@ def lista_pacientes(request):
     fecha_query = request.GET.get('fecha')
 
     if nombre_query:
-        queryset = queryset.filter(nombre__icontains=nombre_query)
+        # Búsqueda mejorada: incluye nombre del paciente, nombre del tutor y RUT del tutor
+        queryset = queryset.filter(
+            Q(nombre__icontains=nombre_query) |
+            Q(tutor__nombre_completo__icontains=nombre_query) |
+            Q(tutor__rut__icontains=nombre_query)
+        )
 
     if diagnostico_query:
         queryset = queryset.filter(atenciones__diagnostico__icontains=diagnostico_query)
@@ -99,6 +117,7 @@ def detalle_paciente(request, paciente_id):
     return render(request, 'gestion/detalle_paciente.html', contexto)
 
 @login_required
+@group_required('Administrador', 'Veterinario', 'Veterinario Especialista', 'Secretaria')
 def crear_paciente(request):
     if request.method == 'POST':
         form = PacienteForm(request.POST, request.FILES)
@@ -116,6 +135,7 @@ def crear_paciente(request):
     return render(request, 'gestion/form.html', contexto)
 
 @login_required
+@group_required('Administrador', 'Veterinario', 'Veterinario Especialista', 'Secretaria')
 def editar_paciente(request, paciente_id):
     paciente = get_object_or_404(Paciente, pk=paciente_id)
     if request.method == 'POST':
@@ -135,6 +155,7 @@ def editar_paciente(request, paciente_id):
     return render(request, 'gestion/form.html', contexto)
 
 @login_required
+@group_required('Administrador', 'Veterinario', 'Veterinario Especialista', 'Secretaria')
 def borrar_paciente(request, paciente_id):
     paciente = get_object_or_404(Paciente, pk=paciente_id)
 
@@ -145,11 +166,13 @@ def borrar_paciente(request, paciente_id):
     return render(request, 'gestion/borrar_paciente.html', {'paciente': paciente})
 
 @login_required
+@group_required('Administrador', 'Veterinario', 'Veterinario Especialista', 'Secretaria')
 def seleccionar_tipo_atencion(request, paciente_id):
     paciente = get_object_or_404(Paciente, pk=paciente_id)
     return render(request, 'gestion/seleccionar_tipo_atencion.html', {'paciente': paciente})
 
 @login_required
+@group_required('Administrador', 'Veterinario', 'Veterinario Especialista', 'Secretaria')
 def crear_atencion(request, paciente_id, tipo_ficha):
     paciente = get_object_or_404(Paciente, pk=paciente_id)
     ficha, created = FichaClinica.objects.get_or_create(paciente=paciente)
@@ -191,6 +214,7 @@ def crear_atencion(request, paciente_id, tipo_ficha):
     return render(request, 'gestion/atencion_form.html', contexto)
 
 @login_required
+@group_required('Veterinario', 'Veterinario Especialista')
 def editar_atencion(request, paciente_id, atencion_id):
     atencion = get_object_or_404(AtencionMedica, pk=atencion_id)
     paciente = get_object_or_404(Paciente, pk=paciente_id)
@@ -228,6 +252,7 @@ def editar_atencion(request, paciente_id, atencion_id):
     return render(request, 'gestion/atencion_form.html', contexto)
 
 @login_required
+@group_required('Veterinario', 'Veterinario Especialista')
 def borrar_atencion(request, paciente_id, atencion_id):
     atencion = get_object_or_404(AtencionMedica, pk=atencion_id)
 
@@ -242,6 +267,7 @@ def borrar_atencion(request, paciente_id, atencion_id):
     return render(request, 'gestion/borrar_atencion.html', contexto)
 
 @login_required
+@group_required('Veterinario', 'Veterinario Especialista')
 def crear_procedimiento(request, atencion_id):
     atencion = get_object_or_404(AtencionMedica, pk=atencion_id)
 
@@ -264,6 +290,7 @@ def crear_procedimiento(request, atencion_id):
     return render(request, 'gestion/form.html', contexto)
 
 @login_required
+@group_required('Administrador', 'Veterinario', 'Veterinario Especialista', 'Secretaria')
 def ver_historial_atencion(request, atencion_id):
     atencion = get_object_or_404(AtencionMedica, pk=atencion_id)
     historial = atencion.history.all()
@@ -274,6 +301,7 @@ def ver_historial_atencion(request, atencion_id):
     return render(request, 'gestion/historial_atencion.html', contexto)
 
 @login_required
+@group_required('Veterinario', 'Veterinario Especialista')
 def adjuntar_documento(request, atencion_id):
     atencion = get_object_or_404(AtencionMedica, pk=atencion_id)
     if request.method == 'POST':
@@ -294,6 +322,7 @@ def adjuntar_documento(request, atencion_id):
     return render(request, 'gestion/form.html', contexto)
 
 @login_required
+@group_required('Veterinario', 'Veterinario Especialista')
 def cerrar_atencion(request, paciente_id, atencion_id):
     atencion = get_object_or_404(AtencionMedica, pk=atencion_id)
     atencion.esta_cerrada = True
@@ -301,6 +330,7 @@ def cerrar_atencion(request, paciente_id, atencion_id):
     return redirect('detalle_paciente', paciente_id=paciente_id)
 
 @login_required
+@group_required('Administrador', 'Veterinario', 'Veterinario Especialista', 'Secretaria')
 def lista_tutores(request):
     tutores = Tutor.objects.all().order_by('nombre_completo')
     contexto = {
@@ -309,6 +339,7 @@ def lista_tutores(request):
     return render(request, 'gestion/lista_tutores.html', contexto)
 
 @login_required
+@group_required('Administrador', 'Veterinario', 'Veterinario Especialista', 'Secretaria')
 def detalle_tutor(request, tutor_id):
     tutor = get_object_or_404(Tutor, pk=tutor_id)
     LogEntry.objects.log_action(
@@ -327,20 +358,20 @@ def detalle_tutor(request, tutor_id):
     return render(request, 'gestion/detalle_tutor.html', contexto)
 
 @login_required
+@group_required('Tutor')
 def mis_pacientes(request):
-    """Lista de pacientes para el tutor autenticado (Caso de Uso 53).
-
-    Intenta resolver el Tutor asociado al usuario por `Perfil.rut` o por email.
-    """
     usuario = request.user
     tutor = None
+    
+    # Primero intentar por RUT del perfil
     try:
-        if hasattr(usuario, 'perfil') and usuario.perfil is not None and usuario.perfil.rol == 'TUTOR':
+        if hasattr(usuario, 'perfil') and usuario.perfil is not None:
             perfil = usuario.perfil
             tutor = Tutor.objects.filter(rut=perfil.rut).first()
     except Exception:
         tutor = None
 
+    # Si no se encontró, intentar por email
     if tutor is None:
         tutor = Tutor.objects.filter(email=usuario.email).first()
 
@@ -355,54 +386,8 @@ def mis_pacientes(request):
     }
     return render(request, 'gestion/mis_pacientes.html', contexto)
 
-#@login_required
-#def detalle_paciente_basico(request, paciente_id):
-#    """Muestra solo información básica del paciente al tutor propietario.
-#
-#    No muestra historial clínico ni observaciones sensibles.
-#    """
-#    paciente = get_object_or_404(Paciente, pk=paciente_id)
-#    usuario = request.user
-#
-#    # Resolver tutor del usuario
-#    tutor_usuario = None
-#    try:
-#        if hasattr(usuario, 'perfil') and usuario.perfil is not None and usuario.perfil.rol == 'TUTOR':
-#            perfil = usuario.perfil
-#            tutor_usuario = Tutor.objects.filter(rut=perfil.rut).first()
-#    except Exception:
-#        tutor_usuario = None
-#
-#    if tutor_usuario is None:
-#        tutor_usuario = Tutor.objects.filter(email=usuario.email).first()
-#
-#    es_personal_usuario = hasattr(usuario, 'perfil') and usuario.perfil.rol in ['ADMIN', 'VET', 'ESP', 'SECRETARIA']
-#
-#    if not es_personal_usuario:
-#        if tutor_usuario is None or paciente.tutor != tutor_usuario:
-#            return HttpResponseForbidden('No tienes permiso para ver los detalles de este paciente.')
-#
-#    # Registrar el acceso (no crítico)
-#    try:
-#        LogEntry.objects.log_action(
-#            user_id=usuario.id,
-#            content_type_id=ContentType.objects.get_for_model(paciente).id,
-#            object_id=paciente.id,
-#            object_repr=str(paciente),
-#            action_flag=CHANGE,
-#            change_message="Acceso básico a la ficha del paciente por tutor."
-#        )
-#    except Exception:
-#        pass
-#
-#    contexto = {
-#        'paciente': paciente,
-#        'edad': getattr(paciente, 'edad', None),
-#        'titulo': f'Información básica de {paciente.nombre}'
-#    }
-#    return render(request, 'gestion/detalle_paciente_basico.html', contexto)
-
 @login_required
+@group_required('Administrador', 'Veterinario', 'Veterinario Especialista', 'Secretaria')
 def crear_tutor(request):
     if request.method == 'POST':
         form = TutorForm(request.POST)
@@ -420,6 +405,7 @@ def crear_tutor(request):
     return render(request, 'gestion/form.html', contexto)
 
 @login_required
+@group_required('Veterinario', 'Veterinario Especialista')
 def agregar_insumo(request, atencion_id):
     atencion = get_object_or_404(AtencionMedica, pk=atencion_id)
     if request.method == 'POST':
@@ -441,13 +427,15 @@ def agregar_insumo(request, atencion_id):
     return render(request, 'gestion/form.html', contexto)
 
 @login_required
+@group_required('Administrador', 'Veterinario', 'Veterinario Especialista', 'Secretaria')
 def bloquear_datos_tutor(request, tutor_id):
-    tutor = get_object_or_404(Tutor, pk=tutor_id)
+    tutor = get_object_or_404(Tutor, id=tutor_id)
     tutor.datos_bloqueados = True
     tutor.save()
     return redirect('detalle_tutor', tutor_id=tutor.id)
 
 @login_required
+@group_required('Veterinario', 'Veterinario Especialista')
 def cargar_antecedente(request, paciente_id):
     paciente = get_object_or_404(Paciente, pk=paciente_id)
     if request.method == 'POST':
@@ -469,6 +457,7 @@ def cargar_antecedente(request, paciente_id):
     return render(request, 'gestion/form.html', contexto)
 
 @login_required
+@group_required('Administrador', 'Veterinario', 'Veterinario Especialista', 'Secretaria')
 def calendario_citas(request):
     titulo = "Calendario de Citas"
     fecha_filtro = request.GET.get('fecha')
@@ -498,6 +487,7 @@ def calendario_citas(request):
     return render(request, 'gestion/calendario.html', contexto)
 
 @login_required
+@group_required('Administrador', 'Veterinario', 'Veterinario Especialista', 'Secretaria')
 def crear_cita(request):
     if request.method == 'POST':
         form = CitaForm(request.POST)
@@ -515,6 +505,7 @@ def crear_cita(request):
     return render(request, 'gestion/form.html', contexto)
 
 @login_required
+@group_required('Administrador', 'Veterinario', 'Veterinario Especialista', 'Secretaria')
 def editar_cita(request, cita_id):
     cita = get_object_or_404(Cita, pk=cita_id)
     if request.method == 'POST':
@@ -533,6 +524,7 @@ def editar_cita(request, cita_id):
     return render(request, 'gestion/form.html', contexto)
 
 @login_required
+@group_required('Administrador', 'Veterinario', 'Veterinario Especialista', 'Secretaria')
 def cancelar_cita(request, cita_id):
     cita = get_object_or_404(Cita, pk=cita_id)
     if request.method == 'POST':
@@ -543,6 +535,7 @@ def cancelar_cita(request, cita_id):
     return render(request, 'gestion/confirmar_cancelacion.html', {'cita': cita})
 
 @login_required
+@group_required('Administrador', 'Veterinario', 'Veterinario Especialista', 'Secretaria')
 def registrar_abono(request, cita_id):
     cita = get_object_or_404(Cita, pk=cita_id)
     if request.method == 'POST':
@@ -565,6 +558,7 @@ def registrar_abono(request, cita_id):
     return render(request, 'gestion/form.html', contexto)
 
 @login_required
+@group_required('Veterinario', 'Veterinario Especialista')
 def registrar_vacuna(request, paciente_id):
     paciente = get_object_or_404(Paciente, pk=paciente_id)
     if request.method == 'POST':
@@ -586,6 +580,7 @@ def registrar_vacuna(request, paciente_id):
     return render(request, 'gestion/form.html', contexto)
 
 @login_required
+@group_required('Administrador', 'Veterinario', 'Veterinario Especialista', 'Secretaria')
 def registrar_pago_tutor(request, tutor_id):
     tutor = get_object_or_404(Tutor, pk=tutor_id)
     if request.method == 'POST':
@@ -607,14 +602,28 @@ def registrar_pago_tutor(request, tutor_id):
     return render(request, 'gestion/form.html', contexto)
 
 @login_required
+@group_required('Administrador', 'Veterinario', 'Veterinario Especialista', 'Secretaria', 'Tutor')
 def ver_comprobante(request, pago_id):
     pago = get_object_or_404(Pago, pk=pago_id)
+    
+    # Verificar permisos: El personal puede ver todos, los tutores solo los suyos
+    if es_tutor(request.user):
+        try:
+            tutor_usuario = Tutor.objects.get(email=request.user.email)
+            if pago.tutor != tutor_usuario:
+                messages.error(request, "No tienes permiso para ver este comprobante.")
+                return redirect('mis_pacientes')
+        except Tutor.DoesNotExist:
+            messages.error(request, "No se encontró tu perfil de tutor.")
+            return redirect('portal')
+    
     contexto = {
         'pago': pago,
     }
     return render(request, 'gestion/comprobante_pago.html', contexto)
 
 @login_required
+@group_required('Tutor')
 def editar_mi_perfil(request):
     """
     Vista para que un Tutor edite su propia información de perfil.
@@ -662,7 +671,7 @@ def editar_mi_perfil(request):
     return render(request, 'gestion/form_editar_perfil.html', contexto)
 
 @login_required
-@user_passes_test(es_personal) # Solo el personal puede acceder a la mensajería
+@group_required('Administrador', 'Veterinario', 'Veterinario Especialista', 'Secretaria')
 def bandeja_entrada(request):
     mensajes_recibidos = Mensaje.objects.filter(destinatario=request.user)
     mensajes_enviados = Mensaje.objects.filter(remitente=request.user)
@@ -675,7 +684,7 @@ def bandeja_entrada(request):
     return render(request, 'gestion/bandeja_entrada.html', contexto)
 
 @login_required
-@user_passes_test(es_personal)
+@group_required('Administrador', 'Veterinario', 'Veterinario Especialista', 'Secretaria')
 def ver_mensaje(request, mensaje_id):
     mensaje = get_object_or_404(Mensaje, id=mensaje_id, destinatario=request.user) # Solo puede ver si es destinatario
 
@@ -691,7 +700,7 @@ def ver_mensaje(request, mensaje_id):
     return render(request, 'gestion/mensaje_detalle.html', contexto)
 
 @login_required
-@user_passes_test(es_personal)
+@group_required('Administrador', 'Veterinario', 'Veterinario Especialista', 'Secretaria')
 def enviar_mensaje(request):
     if request.method == 'POST':
         form = MensajeForm(request.POST)
@@ -712,6 +721,7 @@ def enviar_mensaje(request):
     return render(request, 'gestion/form_enviar_mensaje.html', contexto)
 
 @login_required
+@group_required('Veterinario', 'Veterinario Especialista')
 def agregar_receta(request, atencion_id):
     atencion = get_object_or_404(AtencionMedica, pk=atencion_id)
     paciente = atencion.ficha_clinica.paciente
@@ -799,6 +809,7 @@ def generar_pdf_receta(request, receta_id):
     return response
 
 @login_required
+@group_required('Administrador', 'Veterinario', 'Veterinario Especialista', 'Secretaria')
 def generar_pdf_ficha(request, atencion_id):
     atencion = get_object_or_404(AtencionMedica, pk=atencion_id)
     foto_url = None
@@ -859,3 +870,93 @@ def generar_pdf_epicrisis(request, atencion_id):
     response = HttpResponse(pdf_file, content_type='application/pdf')
     response['Content-Disposition'] = f'inline; filename="epicrisis_{atencion.ficha_clinica.paciente.nombre}_{atencion.id}.pdf"'
     return response
+
+# Vista para gestión de datos personales (CU 30)
+@login_required
+@group_required('Tutor')
+def solicitar_gestion_datos(request):
+    try:
+        tutor = Tutor.objects.get(email=request.user.email)
+    except Tutor.DoesNotExist:
+        messages.error(request, "No se encontró un perfil de tutor asociado a tu cuenta.")
+        return redirect('portal')
+    
+    if request.method == 'POST':
+        form = SolicitudDatosPersonalesForm(request.POST)
+        if form.is_valid():
+            solicitud = form.save(commit=False)
+            solicitud.tutor = tutor
+            solicitud.save()
+            messages.success(request, f"Tu solicitud de {solicitud.get_tipo_solicitud_display()} ha sido enviada. Será procesada por el personal.")
+            return redirect('mis_solicitudes_datos')
+    else:
+        form = SolicitudDatosPersonalesForm()
+    
+    contexto = {
+        'form': form,
+        'titulo': 'Solicitar Gestión de Datos Personales'
+    }
+    return render(request, 'gestion/solicitar_gestion_datos.html', contexto)
+
+@login_required
+@group_required('Tutor')
+def mis_solicitudes_datos(request):
+    try:
+        tutor = Tutor.objects.get(email=request.user.email)
+    except Tutor.DoesNotExist:
+        messages.error(request, "No se encontró un perfil de tutor asociado a tu cuenta.")
+        return redirect('portal')
+    
+    solicitudes = SolicitudDatosPersonales.objects.filter(tutor=tutor).order_by('-fecha_solicitud')
+    
+    contexto = {
+        'solicitudes': solicitudes,
+        'titulo': 'Mis Solicitudes de Gestión de Datos'
+    }
+    return render(request, 'gestion/mis_solicitudes_datos.html', contexto)
+
+@login_required
+@group_required('Administrador', 'Veterinario', 'Veterinario Especialista', 'Secretaria')
+def lista_solicitudes_datos(request):
+    solicitudes = SolicitudDatosPersonales.objects.all().order_by('-fecha_solicitud')
+    
+    # Filtrar por estado si se solicita
+    estado_filtro = request.GET.get('estado')
+    if estado_filtro:
+        solicitudes = solicitudes.filter(estado=estado_filtro)
+    
+    contexto = {
+        'solicitudes': solicitudes,
+        'titulo': 'Solicitudes de Gestión de Datos Personales'
+    }
+    return render(request, 'gestion/lista_solicitudes_datos.html', contexto)
+
+@login_required
+@group_required('Administrador', 'Veterinario', 'Veterinario Especialista', 'Secretaria')
+def gestionar_solicitud_datos(request, solicitud_id):
+    solicitud = get_object_or_404(SolicitudDatosPersonales, pk=solicitud_id)
+    
+    if request.method == 'POST':
+        accion = request.POST.get('accion')
+        resolucion = request.POST.get('resolucion', '')
+        
+        if accion == 'aprobar':
+            solicitud.estado = 'Aprobada'
+            solicitud.resolucion = resolucion
+            solicitud.usuario_responsable = request.user
+            solicitud.save()
+            messages.success(request, "Solicitud aprobada exitosamente.")
+        elif accion == 'rechazar':
+            solicitud.estado = 'Rechazada'
+            solicitud.resolucion = resolucion
+            solicitud.usuario_responsable = request.user
+            solicitud.save()
+            messages.success(request, "Solicitud rechazada.")
+        
+        return redirect('lista_solicitudes_datos')
+    
+    contexto = {
+        'solicitud': solicitud,
+        'titulo': f'Gestionar Solicitud #{solicitud.id}'
+    }
+    return render(request, 'gestion/gestionar_solicitud_datos.html', contexto)

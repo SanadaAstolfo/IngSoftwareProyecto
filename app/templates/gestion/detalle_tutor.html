@@ -1,4 +1,5 @@
 {% extends 'gestion/base.html' %}
+{% load custom_filters %}
 
 {% block title %}Detalle de {{ tutor.nombre_completo}}{% endblock %}
 
@@ -8,7 +9,7 @@
     <div class="card mb-4">
         <div class="card-header">Información de Contacto</div>
         <div class="card-body">
-            <p><strong>RUT:</strong> {{ tutor.rut }}</p>
+            <p><strong>RUT:</strong> {{ tutor.rut|format_rut }}</p>
             <p><strong>Email:</strong> {{ tutor.email }}</p>
             <p><strong>Teléfono:</strong> {{ tutor.telefono }}</p>
             <p><strong>Dirección:</strong> {{ tutor.direccion }}</p>

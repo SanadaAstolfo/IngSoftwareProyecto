@@ -1,0 +1,374 @@
+{% extends 'gestion/base.html' %}
+{% load static %}
+
+{% block title %}Acceso para Tutores - Club Entre Patitas{% endblock %}
+
+{% block head %}
+{{ block.super }}
+<style>
+    /* Estilos específicos para el login de tutores */
+    .login-tutor-container {
+        min-height: 80vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem 1rem;
+        background: linear-gradient(135deg, #fef3e2 0%, #fff5e6 100%);
+    }
+
+    .login-tutor-card {
+        background: white;
+        border-radius: 2rem;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        max-width: 450px;
+        width: 100%;
+        animation: slideUp 0.5s ease-out;
+    }
+
+    @keyframes slideUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .login-tutor-header {
+        background: linear-gradient(135deg, #F4A261, #E76F51);
+        padding: 3rem 2rem;
+        text-align: center;
+        color: white;
+    }
+
+    .login-tutor-icon {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+        animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+        0%, 100% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-10px);
+        }
+    }
+
+    .login-tutor-header h1 {
+        font-size: 2rem;
+        margin: 0 0 0.5rem 0;
+        font-weight: 700;
+    }
+
+    .login-tutor-header p {
+        font-size: 1.1rem;
+        margin: 0;
+        opacity: 0.95;
+    }
+
+    .login-tutor-body {
+        padding: 3rem 2.5rem;
+    }
+
+    .login-tutor-form .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .login-tutor-form label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        color: #2C3E50;
+        font-size: 1rem;
+    }
+
+    .login-tutor-form .input-group {
+        position: relative;
+    }
+
+    .login-tutor-form .input-icon {
+        position: absolute;
+        left: 1.2rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #F4A261;
+        font-size: 1.2rem;
+        z-index: 10;
+    }
+
+    .login-tutor-form .form-control {
+        padding: 1rem 1rem 1rem 3.5rem;
+        border: 2px solid #e0e0e0;
+        border-radius: 1rem;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        width: 100%;
+    }
+
+    .login-tutor-form .form-control:focus {
+        border-color: #F4A261;
+        box-shadow: 0 0 0 0.2rem rgba(244, 162, 97, 0.25);
+        outline: none;
+    }
+
+    .login-tutor-btn {
+        background: linear-gradient(135deg, #F4A261, #E76F51);
+        color: white;
+        border: none;
+        padding: 1.2rem 2rem;
+        border-radius: 1rem;
+        font-size: 1.1rem;
+        font-weight: 700;
+        width: 100%;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-top: 1rem;
+    }
+
+    .login-tutor-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(244, 162, 97, 0.4);
+    }
+
+    .login-tutor-btn:active {
+        transform: translateY(0);
+    }
+
+    .alert {
+        border-radius: 1rem;
+        padding: 1rem 1.2rem;
+        margin-bottom: 1.5rem;
+        border: none;
+    }
+
+    .alert-danger {
+        background-color: #fee;
+        color: #c33;
+    }
+
+    .alert-info {
+        background-color: #e3f2fd;
+        color: #1976d2;
+    }
+
+    .login-tutor-footer {
+        text-align: center;
+        padding-top: 1.5rem;
+        border-top: 1px solid #e0e0e0;
+        margin-top: 1.5rem;
+    }
+
+    .login-tutor-footer p {
+        color: #7f8c8d;
+        font-size: 0.9rem;
+        margin: 0;
+    }
+
+    .login-tutor-footer a {
+        color: #F4A261;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .login-tutor-footer a:hover {
+        text-decoration: underline;
+    }
+
+    /* Responsive */
+    @media (max-width: 576px) {
+        .login-tutor-card {
+            border-radius: 1.5rem;
+        }
+
+        .login-tutor-header {
+            padding: 2rem 1.5rem;
+        }
+
+        .login-tutor-header h1 {
+            font-size: 1.6rem;
+        }
+
+        .login-tutor-body {
+            padding: 2rem 1.5rem;
+        }
+
+        .login-tutor-icon {
+            font-size: 3rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="login-tutor-container">
+    <div class="login-tutor-card">
+        <!-- Header con diseño cálido -->
+        <div class="login-tutor-header">
+            <div class="login-tutor-icon">🐶</div>
+            <h1>¡Bienvenido!</h1>
+            <p>Portal de Tutores</p>
+        </div>
+
+        <!-- Cuerpo del formulario -->
+        <div class="login-tutor-body">
+            {% if form.errors %}
+                <div class="alert alert-danger">
+                    <strong>❌ Error:</strong> Usuario o contraseña incorrectos. Por favor, inténtalo de nuevo.
+                </div>
+            {% endif %}
+
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <form method="post" class="login-tutor-form">
+                {% csrf_token %}
+                
+                <!-- Campo Usuario/RUT -->
+                <div class="form-group">
+                    <label for="{{ form.username.id_for_label }}">Usuario o RUT</label>
+                    <div class="input-group">
+                        <i class="fas fa-id-card input-icon"></i>
+                        <input 
+                            type="text" 
+                            name="{{ form.username.name }}" 
+                            id="{{ form.username.id_for_label }}"
+                            class="form-control" 
+                            placeholder="Ingresa tu usuario o RUT"
+                            required
+                            autofocus
+                        >
+                    </div>
+                </div>
+
+                <!-- Campo Contraseña -->
+                <div class="form-group">
+                    <label for="{{ form.password.id_for_label }}">Contraseña</label>
+                    <div class="input-group">
+                        <i class="fas fa-lock input-icon"></i>
+                        <input 
+                            type="password" 
+                            name="{{ form.password.name }}" 
+                            id="{{ form.password.id_for_label }}"
+                            class="form-control" 
+                            placeholder="Ingresa tu contraseña"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <!-- Botón de ingreso -->
+                <button type="submit" class="login-tutor-btn">
+                    <i class="fas fa-paw"></i> Ingresar
+                </button>
+            </form>
+
+            <!-- Footer -->
+            <div class="login-tutor-footer">
+                <p>¿Problemas para ingresar? <a href="mailto:clubentrepatitas@gmail.com">Contáctanos</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Función para formatear RUT chileno con puntos y guión
+    function formatRut(rut) {
+        // Eliminar todo excepto números y K/k
+        let value = rut.replace(/[^0-9kK]/g, '');
+        
+        // Convertir k minúscula a mayúscula
+        value = value.replace(/k/g, 'K');
+        
+        // Si está vacío, retornar vacío
+        if (value.length === 0) return '';
+        
+        // Si tiene menos de 2 caracteres, no formatear
+        if (value.length < 2) return value;
+        
+        // Separar dígito verificador (último carácter)
+        let dv = value.slice(-1);
+        let numero = value.slice(0, -1);
+        
+        // Formatear con puntos (de derecha a izquierda)
+        let formatted = '';
+        let count = 0;
+        
+        for (let i = numero.length - 1; i >= 0; i--) {
+            if (count === 3) {
+                formatted = '.' + formatted;
+                count = 0;
+            }
+            formatted = numero[i] + formatted;
+            count++;
+        }
+        
+        // Agregar guión y dígito verificador
+        return formatted + '-' + dv;
+    }
+    
+    // Función para limpiar el RUT (quitar formato) antes de enviar
+    function cleanRut(rut) {
+        return rut.replace(/\./g, '').replace(/-/g, '');
+    }
+    
+    // Aplicar formato en tiempo real al campo de usuario/RUT
+    document.addEventListener('DOMContentLoaded', function() {
+        const rutInput = document.getElementById('{{ form.username.id_for_label }}');
+        const form = document.querySelector('.login-tutor-form');
+        
+        if (rutInput) {
+            // Evento para formatear mientras escribe
+            rutInput.addEventListener('input', function(e) {
+                let cursorPosition = this.selectionStart;
+                let oldLength = this.value.length;
+                
+                // Formatear el valor
+                this.value = formatRut(this.value);
+                
+                // Ajustar posición del cursor
+                let newLength = this.value.length;
+                if (newLength > oldLength) {
+                    cursorPosition += (newLength - oldLength);
+                }
+                
+                this.setSelectionRange(cursorPosition, cursorPosition);
+            });
+            
+            // Evento para validar al perder el foco
+            rutInput.addEventListener('blur', function() {
+                if (this.value) {
+                    this.value = formatRut(this.value);
+                }
+            });
+        }
+        
+        // Limpiar el RUT antes de enviar el formulario
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                if (rutInput && rutInput.value) {
+                    // Guardar el valor formateado para mostrar
+                    const formattedValue = rutInput.value;
+                    
+                    // Limpiar el RUT para el envío
+                    rutInput.value = cleanRut(rutInput.value);
+                    
+                    // Opcional: restaurar el formato después del envío si hay error
+                    // (esto se manejará en la recarga de la página)
+                }
+            });
+        }
+    });
+</script>
+{% endblock %}

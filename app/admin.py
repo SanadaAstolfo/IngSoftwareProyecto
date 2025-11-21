@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
-from .models import Perfil, Tutor, Paciente, FichaClinica, AtencionMedica, ChequeoFisico, Procedimiento, Diagnostico, Insumo, InsumoUtilizado, AlertaClinica, SolicitudDatosPersonales, AntecedenteExterno, Cita, Pago, Vacuna, RegistroVacuna, Mensaje, Receta
+from .models import Perfil, Tutor, Paciente, FichaClinica, AtencionMedica, ChequeoFisico, Procedimiento, Insumo, InsumoUtilizado, AlertaClinica, SolicitudDatosPersonales, AntecedenteExterno, Cita, Pago, Vacuna, RegistroVacuna, Mensaje, Receta
 
 class PerfilInline(admin.StackedInline):
     model = Perfil
@@ -19,7 +19,6 @@ admin.site.register(FichaClinica)
 admin.site.register(AtencionMedica)
 admin.site.register(ChequeoFisico)
 admin.site.register(Procedimiento)
-admin.site.register(Diagnostico)
 admin.site.register(Insumo)
 admin.site.register(InsumoUtilizado)
 admin.site.register(AlertaClinica)

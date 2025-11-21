@@ -10,7 +10,7 @@
         <p class="welcome-subtitle">Tu plataforma de confianza para el cuidado veterinario</p>
         <p class="welcome-description">
             Selecciona tu tipo de usuario para acceder a las funcionalidades específicas del sistema. 
-            Nuestro sistema está diseñado para brindar la mejor experiencia tanto a veterinarios como a dueños de mascotas.
+            Nuestro sistema está diseñado para brindar la mejor experiencia tanto a profesionales veterinarios como a tutores de mascotas.
         </p>
     </section>
 
@@ -35,21 +35,23 @@
             </div>
         </a>
 
-        <div class="user-card cliente-card" onclick="alert('Portal de clientes en desarrollo')">
-            <div class="user-icon">
-                <i class="fa-solid fa-heart"></i>
-            </div>
-            <h2 class="user-title">Dueño de Mascota</h2>
-            <p class="user-description">
-                Accede al historial médico de tu mascota y mantente informado sobre su salud y tratamientos.
-            </p>
-            <ul class="user-features">
-                <li><i class="fa-solid fa-eye"></i> Ver historial médico de tu mascota</li>
-                <li><i class="fa-solid fa-calendar-check"></i> Consultar próximas citas</li>
-                <li><i class="fa-solid fa-pills"></i> Seguimiento de tratamientos</li>
-                <li><i class="fa-solid fa-phone"></i> Contacto directo con veterinarios</li>
-            </ul>
-            <div class="select-btn">Soy Dueño de Mascota</div>
+        <div class="user-card cliente-card">
+            <a href="{% url 'login_tutor' %}" style="text-decoration: none; color: inherit; display: block;">
+                <div class="user-icon">
+                    <i class="fa-solid fa-heart"></i>
+                </div>
+                <h2 class="user-title">Tutor de Mascota</h2>
+                <p class="user-description">
+                    Accede al historial médico de tu mascota y manténte informado sobre su salud y tratamientos.
+                </p>
+                <ul class="user-features">
+                    <li><i class="fa-solid fa-eye"></i> Ver historial médico de tu mascota</li>
+                    <li><i class="fa-solid fa-calendar-check"></i> Consultar próximas citas</li>
+                    <li><i class="fa-solid fa-file-medical"></i> Acceso a recetas y epicrisis</li>
+                    <li><i class="fa-solid fa-user-lock"></i> Gestión de datos personales</li>
+                </ul>
+                <div class="select-btn">Soy Tutor de Mascota</div>
+            </a>
         </div>
     </section>
 </div>

@@ -66,12 +66,20 @@ class Tutor(models.Model):
         return self.nombre_completo
 
 class Paciente(models.Model):
+    SEXO_CHOICES = [
+        ('Macho', 'Macho'),
+        ('Hembra', 'Hembra'),
+    ]
+    ESTADO_REPRODUCTIVO_CHOICES = [
+        ('Entero', 'Entero'),
+        ('Castrado', 'Castrado/Esterilizado'),
+    ]
     foto = models.ImageField(upload_to='fotos_pacientes/', blank=True, null=True, verbose_name="Fotografía del Paciente")
     nombre = models.CharField(max_length=50)
     especie = models.CharField(max_length=50)
     raza = models.CharField(max_length=50)
-    sexo = models.CharField(max_length=10)
-    Estado_Reproductivo = models.CharField(max_length=50)
+    sexo = models.CharField(max_length=10, choices=SEXO_CHOICES)
+    estado_reproductivo = models.CharField(max_length=20, choices=ESTADO_REPRODUCTIVO_CHOICES, default='Entero', verbose_name="Estado Reproductivo")
     fecha_nacimiento = models.DateField()
     microchip_tatuaje = models.CharField(max_length=50, blank=True, null=True)
     alertas = models.ManyToManyField(AlertaClinica, blank=True, verbose_name="Alertas Clinicas")
@@ -98,13 +106,6 @@ class FichaClinica(models.Model):
     def __str__(self):
         return f"Ficha de {self.paciente.nombre}"
 
-class Diagnostico(models.Model):
-    nombre = models.CharField(max_length=100, unique=True)
-    descripcion = models.TextField(blank=True, null=True)
-
-    def __str__(self):
-        return self.nombre
-
 class AtencionMedica(models.Model):
     ESTADO_CHOICES = [
         ('Pendiente', 'Pendiente'),
@@ -113,6 +114,11 @@ class AtencionMedica(models.Model):
     TIPO_ATENCION_CHOICES = [
         ('Clínica', 'Clínica Veterinaria'),
         ('Club', 'Club Entre Patitas')
+    ]
+    LUGAR_CHOICES = [
+        ('Sede Bilbao', 'Sede Bilbao'),
+        ('Sede Eliodoro Yáñez', 'Sede Eliodoro Yáñez'),
+        ('Domicilio', 'Domicilio'),
     ]
     TIPO_VISITA_CHOICES = [
         ('Consulta', 'Consulta Básica'),
@@ -127,15 +133,14 @@ class AtencionMedica(models.Model):
     ficha_clinica = models.ForeignKey(FichaClinica, on_delete=models.CASCADE, related_name='atenciones')
     fecha_atencion = models.DateTimeField(auto_now_add=True)
     veterinario = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    lugar_atencion = models.CharField(max_length=30, choices=LUGAR_CHOICES, default='Sede Bilbao', verbose_name="Sede / Lugar")
     tipo_atencion = models.CharField(max_length=10, choices=TIPO_ATENCION_CHOICES)
     tipo_visita = models.CharField(max_length=20, choices=TIPO_VISITA_CHOICES)
     tipo_especialidad = models.CharField(max_length=100, blank=True, null=True, verbose_name="Tipo de especialidad", help_text="Ej: Dermatología, Cirugía, Cardiología")
     motivo_consulta = models.TextField(help_text="Debe tener un mínimo de 10 caracteres.")
     anamnesis = models.TextField(verbose_name="Anamnesis (antecedentes previos y actuales)")
-    #diagnostico = models.TextField()
-    diagnosticos = models.ManyToManyField(Diagnostico, related_name='atenciones', blank=True, verbose_name="Diagnósticos")
-    prediagnosticos = models.ManyToManyField(Diagnostico, related_name='atenciones_prediagnostico', blank=True, verbose_name="Prediagnósticos (Opcional)")
-    tratamiento = models.TextField()
+    prediagnostico = models.TextField(blank=True, verbose_name="Prediagnóstico", help_text="Ingrese el prediagnóstico aquí.")
+    diagnostico = models.TextField(blank=True, verbose_name="Diagnóstico", help_text="Ingrese el diagnóstico final.")
     estado_emocional = models.CharField(max_length=20, choices=ESTADO_EMOCIONAL_CHOICES, blank=True, null=True, verbose_name="Comportamiento del Paciente")
 
     estado = models.CharField(max_length=20, choices=ESTADO_CHOICES, default='Pendiente', verbose_name="Estado de la Ficha")
@@ -154,10 +159,14 @@ class AtencionMedica(models.Model):
 
 class ChequeoFisico(models.Model):
     atencion_medica = models.OneToOneField(AtencionMedica, on_delete=models.CASCADE, related_name='chequeo')
-    temperatura = models.DecimalField(max_digits=4, decimal_places=2)
-    peso = models.DecimalField(max_digits=5, decimal_places=2)
-    condicion_corporal = models.CharField(max_length=100)
-    anotaciones = models.TextField(blank=True, null=True)
+    temperatura = models.DecimalField(max_digits=4, decimal_places=1, verbose_name="Temperatura (°C)")
+    peso = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Peso (Kg)")
+    frecuencia_cardiaca = models.CharField(max_length=50, blank=True, verbose_name="Frecuencia Cardíaca (FC)")
+    frecuencia_respiratoria = models.CharField(max_length=50, blank=True, verbose_name="Frecuencia Respiratoria (FR)")
+    tllc = models.CharField(max_length=50, blank=True, verbose_name="TLLC")
+    mucosas = models.CharField(max_length=100, blank=True, verbose_name="Mucosas")
+    condicion_corporal = models.CharField(max_length=50, verbose_name="Condición Corporal")
+    anotaciones = models.TextField(blank=True, verbose_name="Hallazgos / Anotaciones")
 
     def __str__(self):
         return f"Chequeo Físico del {self.atencion_medica.fecha_atencion.strftime('%d-%m-%Y')}"
@@ -251,7 +260,52 @@ class Cita(models.Model):
         ('Cancelada', 'Cancelada'),
         ('Completada', 'Completada'),
     ]
-    paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE, related_name='citas')
+    SEDE_CHOICES = [
+        ('Sede Bilbao', 'Sede Bilbao'),
+        ('Sede Eliodoro Yáñez', 'Sede Eliodoro Yáñez'),
+        ('Domicilio', 'Domicilio'),
+    ]
+    ESPECIALIDAD_CHOICES = [
+        ('General', 'Medicina General'),
+        ('Cirugía', 'Cirugía'),
+        ('Dermatología', 'Dermatología'),
+        ('Cardiología', 'Cardiología'),
+        ('Oftalmología', 'Oftalmología'),
+        ('Traumatología', 'Traumatología'),
+        ('Odontología', 'Odontología'),
+    ]
+    
+    paciente = models.ForeignKey(
+        Paciente, 
+        on_delete=models.CASCADE, 
+        related_name='citas',
+        null=True,
+        blank=True
+    )
+    nombre_paciente_temporal = models.CharField(
+        max_length=100, 
+        blank=True, 
+        null=True,
+        verbose_name="Nombre del Paciente (temporal)"
+    )
+    nombre_tutor_temporal = models.CharField(
+        max_length=100, 
+        blank=True, 
+        null=True,
+        verbose_name="Nombre del Tutor (temporal)"
+    )
+    sede = models.CharField(
+        max_length=30, 
+        choices=SEDE_CHOICES, 
+        default='Sede Bilbao',
+        verbose_name="Sede"
+    )
+    especialidad = models.CharField(
+        max_length=30, 
+        choices=ESPECIALIDAD_CHOICES, 
+        default='General',
+        verbose_name="Especialidad"
+    )
     es_especialista = models.BooleanField(default=False, verbose_name="¿Es cita con especialista?")
     veterinario = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='citas_asignadas')
     fecha_hora = models.DateTimeField(help_text="Día y hora de la cita")
@@ -261,7 +315,8 @@ class Cita(models.Model):
     notas = models.TextField(blank=True, null=True, help_text="Notas adicionales para la cita")
 
     def __str__(self):
-        return f"Cita para {self.paciente.nombre} el {self.fecha_hora.strftime('%d/%m/%Y a las %H:%M')}"
+        nombre_display = self.paciente.nombre if self.paciente else self.nombre_paciente_temporal
+        return f"Cita para {nombre_display} el {self.fecha_hora.strftime('%d/%m/%Y a las %H:%M')}"
     
 class Pago(models.Model):
     cita = models.ForeignKey(Cita, on_delete=models.CASCADE, related_name='pagos', null=True, blank=True)
