@@ -1,13 +1,14 @@
 {% extends 'gestion/base.html' %}
+{% load i18n %}
 
-{% block title %}Ficha de {{ paciente.nombre }}{% endblock %}
+{% block title %}{% trans "Ficha de" %} {{ paciente.nombre }}{% endblock %}
 
 {% block content %}
     <div class="row">
         <div class="col-md-3">
             <div class="paciente-foto-container">
                 {% if paciente.foto %}
-                    <img src="{{ paciente.foto.url }}" class="paciente-foto" alt="Foto de {{ paciente.nombre }}">
+                    <img src="{{ paciente.foto.url }}" class="paciente-foto" alt="{% trans 'Foto de' %} {{ paciente.nombre }}">
                 {% else %}
                     <div class="paciente-foto-placeholder">
                         <i class="fas fa-paw"></i>
@@ -17,11 +18,11 @@
         </div>
         <div class="col-md-9">
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <h1>Ficha de {{ paciente.nombre }}</h1>
+                <h1>{% trans "Ficha de" %} {{ paciente.nombre }}</h1>
                 <div>
                     {% if es_personal_usuario %}
-                    <a href="{% url 'editar_paciente' paciente.id %}" class="btn btn-secondary">Editar Paciente</a>
-                    <a href="{% url 'seleccionar_tipo_atencion' paciente.id %}" class="btn btn-primary">Registrar Nueva Atención</a>
+                    <a href="{% url 'editar_paciente' paciente.id %}" class="btn btn-secondary">{% trans "Editar Paciente" %}</a>
+                    <a href="{% url 'seleccionar_tipo_atencion' paciente.id %}" class="btn btn-primary">{% trans "Registrar Nueva Atención" %}</a>
                     {% endif %}
                 </div>
             </div>
@@ -29,7 +30,7 @@
     </div>
         {% if paciente.alertas.all %}
             <div class="alert alert-warning" role="alert">
-                <h4 class="alert-heading">¡Atención!</h4>
+                <h4 class="alert-heading">{% trans "¡Atención!" %}</h4>
                 <ul class="mb-0">
                 {% for alerta in paciente.alertas.all %}
                     <li>
@@ -40,18 +41,18 @@
             </div>
         {% endif %}
     <div class="card mb-4">
-        <div class="card-header">Datos del Paciente</div>
+        <div class="card-header">{% trans "Datos del Paciente" %}</div>
         <div class="card-body">
-            <p><strong>Especie:</strong> {{ paciente.especie }} | <strong>Raza:</strong> {{ paciente.raza }}</p>
-            <p><strong>Fecha de Nacimiento:</strong> {{ paciente.fecha_nacimiento }} | <strong>Edad:</strong> {{ paciente.edad }} años</p>
-            <p><strong>Tutor:</strong> {{ paciente.tutor.nombre_completo }} ({{ paciente.tutor.email }})</p>
+            <p><strong>{% trans "Especie" %}:</strong> {{ paciente.especie }} | <strong>{% trans "Raza" %}:</strong> {{ paciente.raza }}</p>
+            <p><strong>{% trans "Fecha de Nacimiento" %}:</strong> {{ paciente.fecha_nacimiento }} | <strong>{% trans "Edad" %}:</strong> {{ paciente.edad }} {% trans "años" %}</p>
+            <p><strong>{% trans "Tutor" %}:</strong> {{ paciente.tutor.nombre_completo }} ({{ paciente.tutor.email }})</p>
         </div>
     </div>
     <div class="card mb-4">
         <div class="card-header d-flex justify-content-between align-items-center">
-            Antecedentes Médicos Externos
+            {% trans "Antecedentes Médicos Externos" %}
             {% if es_personal_usuario %}
-                <a href="{% url 'cargar_antecedente' paciente.id %}" class="btn btn-outline-primary btn-sm">+ Cargar Antecedente</a>
+                <a href="{% url 'cargar_antecedente' paciente.id %}" class="btn btn-outline-primary btn-sm">+ {% trans "Cargar Antecedente" %}</a>
             {% endif %}
         </div>
         <div class="card-body">
@@ -65,15 +66,15 @@
                 {% endfor %}
                 </ul>
             {% else %}
-                <p class="mb-0">No se han cargado antecedentes externos para este paciente.</p>
+                <p class="mb-0">{% trans "No se han cargado antecedentes externos para este paciente." %}</p>
             {% endif %}
         </div>
     </div>
     <div class="card mb-4">
         <div class="card-header d-flex justify-content-between align-items-center">
-            Historial de Vacunación
+            {% trans "Historial de Vacunación" %}
             {% if es_personal_usuario %}
-                <a href="{% url 'registrar_vacuna' paciente.id %}" class="btn btn-outline-success btn-sm">Registrar Vacuna</a>
+                <a href="{% url 'registrar_vacuna' paciente.id %}" class="btn btn-outline-success btn-sm">{% trans "Registrar Vacuna" %}</a>
             {% endif %}
         </div>
         <div class="card-body">
@@ -81,10 +82,10 @@
                 <table class="table table-sm table-hover">
                     <thead>
                         <tr>
-                            <th>Vacuna</th>
-                            <th>Fecha Aplicación</th>
-                            <th>Próxima Dosis</th>
-                            <th>Estado</th>
+                            <th>{% trans "Vacuna" %}</th>
+                            <th>{% trans "Fecha Aplicación" %}</th>
+                            <th>{% trans "Próxima Dosis" %}</th>
+                            <th>{% trans "Estado" %}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -95,9 +96,9 @@
                             <td>{{ registro.proxima_dosis_fecha }}</td>
                             <td>
                                 {% if registro.proxima_dosis_fecha > today %}
-                                    <span class="badge bg-success">Vigente</span>
+                                    <span class="badge bg-success">{% trans "Vigente" %}</span>
                                 {% else %}
-                                    <span class="badge bg-danger">Vencida</span>
+                                    <span class="badge bg-danger">{% trans "Vencida" %}</span>
                                 {% endif %}
                             </td>
                         </tr>
@@ -105,16 +106,16 @@
                     </tbody>
                 </table>
             {% else %}
-                <p class="mb-0">No hay vacunas registradas para este paciente.</p>
+                <p class="mb-0">{% trans "No hay vacunas registradas para este paciente." %}</p>
             {% endif %}
         </div>
     </div>
-    <h2>Historial de Atenciones</h2>
+    <h2>{% trans "Historial de Atenciones" %}</h2>
 
     {% for atencion in atenciones %}
         <div class="card mb-3">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <strong>Atención del {{ atencion.fecha_atencion.date }}</strong>
+                <strong>{% trans "Atención del" %} {{ atencion.fecha_atencion.date }}</strong>
                 {% if atencion.estado == 'Completa' %}
                     <span class="badge bg-success">{{ atencion.estado }}</span>
                 {% else %}
@@ -123,21 +124,21 @@
                 <span class="badge bg-primary ms-2">{{ atencion.get_lugar_atencion_display }}</span>
                 <span class="badge bg-info ms-1">{{ atencion.get_tipo_visita_display }}</span>
                 {% if es_personal_usuario %}
-                    <a href="{% url 'generar_pdf_ficha' atencion.id %}" target="_blank" class="button pdf-button">Ver Ficha PDF</a> 
+                    <a href="{% url 'generar_pdf_ficha' atencion.id %}" target="_blank" class="button pdf-button">{% trans "Ver Ficha PDF" %}</a> 
                 {% endif %}
-                <a href="{% url 'generar_pdf_epicrisis' atencion.id %}" target="_blank" class="button pdf-button">Ver Epicrisis PDF</a>
+                <a href="{% url 'generar_pdf_epicrisis' atencion.id %}" target="_blank" class="button pdf-button">{% trans "Ver Epicrisis PDF" %}</a>
                 {% if es_personal_usuario %}
                     <div>
                         {% if atencion.esta_cerrada %}
-                            <span class="badge bg-success">Ficha Cerrada</span>
+                            <span class="badge bg-success">{% trans "Ficha Cerrada" %}</span>
                         {% else %}    
-                            <a href="{% url 'editar_atencion' paciente.id atencion.id %}" class="btn btn-secondary btn-sm">Editar</a>
+                            <a href="{% url 'editar_atencion' paciente.id atencion.id %}" class="btn btn-secondary btn-sm">{% trans "Editar" %}</a>
                             {% if atencion.estado == 'Completa' %}
-                                <a href="{% url 'cerrar_atencion' paciente.id atencion.id %}" class="btn btn-warning btn-sm">Cerrar Atención</a>
+                                <a href="{% url 'cerrar_atencion' paciente.id atencion.id %}" class="btn btn-warning btn-sm">{% trans "Cerrar Atención" %}</a>
                             {% endif %}
-                            <a href="{% url 'borrar_atencion' paciente.id atencion.id %}" class="btn btn-danger btn-sm">Borrar</a>
+                            <a href="{% url 'borrar_atencion' paciente.id atencion.id %}" class="btn btn-danger btn-sm">{% trans "Borrar" %}</a>
                         {% endif %}
-                        <a href="{% url 'ver_historial_atencion' atencion.id %}" class="btn btn-info btn-sm">Historial</a>
+                        <a href="{% url 'ver_historial_atencion' atencion.id %}" class="btn btn-info btn-sm">{% trans "Historial" %}</a>
                     </div>
                 {% endif %}
             </div>

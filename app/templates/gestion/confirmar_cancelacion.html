@@ -1,15 +1,16 @@
 {% extends 'gestion/base.html' %}
+{% load i18n %}
 
-{% block title %}Confirmar Cancelación{% endblock %}
+{% block title %}{% trans "Confirmar Cancelación" %}{% endblock %}
 
 {% block content %}
     <div class="text-center">
-        <h2>¿Estás seguro?</h2>
-        <p>Estás a punto de cancelar la cita para <strong>{{ cita.paciente.nombre }}</strong> del {{ cita.fecha_hora }}.</p>
+        <h2>{% trans "¿Estás seguro?" %}</h2>
+        <p>{% trans "Estás a punto de cancelar la cita para" %} <strong>{{ cita.paciente.nombre }}</strong> {% trans "del" %} {{ cita.fecha_hora }}.</p>
         <form class="confirmation-form" method="post">
             {% csrf_token %}
-            <button type="submit" class="btn btn-danger">Sí, Cancelar Cita</button>
-            <a href="{% url 'calendario_citas' %}" class="btn btn-secondary">No, volver</a>
+            <button type="submit" class="btn btn-danger">{% trans "Sí, Cancelar Cita" %}</button>
+            <a href="{% url 'calendario_citas' %}" class="btn btn-secondary">{% trans "No, volver" %}</a>
         </form>
     </div>
 {% endblock %}

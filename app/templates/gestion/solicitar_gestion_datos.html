@@ -1,4 +1,5 @@
 {% extends 'gestion/base.html' %}
+{% load i18n %}
 
 {% block title %}{{ titulo }}{% endblock %}
 
@@ -7,13 +8,13 @@
     <h1 class="mb-4">🔒 {{ titulo }}</h1>
     
     <div class="alert alert-info">
-        <h5><i class="bi bi-info-circle"></i> Información sobre Gestión de Datos Personales</h5>
-        <p class="mb-2">De acuerdo con la Ley de Protección de Datos Personales, usted tiene derecho a:</p>
+        <h5><i class="bi bi-info-circle"></i> {% trans "Información sobre Gestión de Datos Personales" %}</h5>
+        <p class="mb-2">{% trans "De acuerdo con la Ley de Protección de Datos Personales, usted tiene derecho a:" %}</p>
         <ul class="mb-0">
-            <li><strong>Acceso:</strong> Solicitar una copia de sus datos personales almacenados.</li>
-            <li><strong>Modificación:</strong> Solicitar la corrección de datos incorrectos o desactualizados.</li>
-            <li><strong>Cancelación:</strong> Solicitar la eliminación de sus datos personales.</li>
-            <li><strong>Bloqueo:</strong> Solicitar el bloqueo temporal de sus datos personales.</li>
+            <li><strong>{% trans "Acceso:" %}</strong> {% trans "Solicitar una copia de sus datos personales almacenados." %}</li>
+            <li><strong>{% trans "Modificación:" %}</strong> {% trans "Solicitar la corrección de datos incorrectos o desactualizados." %}</li>
+            <li><strong>{% trans "Cancelación:" %}</strong> {% trans "Solicitar la eliminación de sus datos personales." %}</li>
+            <li><strong>{% trans "Bloqueo:" %}</strong> {% trans "Solicitar el bloqueo temporal de sus datos personales." %}</li>
         </ul>
     </div>
 
@@ -53,16 +54,15 @@
                 </div>
 
                 <div class="alert alert-warning">
-                    <strong>Nota:</strong> Su solicitud será revisada por el personal administrativo. 
-                    Recibirá una notificación cuando sea procesada.
+                    <strong>{% trans "Nota:" %}</strong> {% trans "Su solicitud será revisada por el personal administrativo. Recibirá una notificación cuando sea procesada." %}
                 </div>
 
                 <div class="d-flex gap-2">
                     <button type="submit" class="btn btn-primary">
-                        <i class="bi bi-send"></i> Enviar Solicitud
+                        <i class="bi bi-send"></i> {% trans "Enviar Solicitud" %}
                     </button>
                     <a href="{% url 'mis_solicitudes_datos' %}" class="btn btn-secondary">
-                        <i class="bi bi-arrow-left"></i> Ver Mis Solicitudes
+                        <i class="bi bi-arrow-left"></i> {% trans "Ver Mis Solicitudes" %}
                     </a>
                 </div>
             </form>

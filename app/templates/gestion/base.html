@@ -228,22 +228,22 @@
                 <ul>
                     {% if user.is_staff %}
                         {# Menú para Personal (Administrador, Veterinario, Especialista, Secretaria) #}
-                        <li><a href="{% url 'lista_pacientes' %}">Pacientes</a></li>
-                        <li><a href="{% url 'lista_tutores' %}">Tutores</a></li>
-                        <li><a href="{% url 'calendario_citas' %}">Agenda</a></li>
-                        <li><a href="{% url 'lista_solicitudes_datos' %}">Solicitudes</a></li>
-                        <li><a href="{% url 'bandeja_entrada' %}">Mensajes</a></li>
+                        <li><a href="{% url 'lista_pacientes' %}">{% trans "Pacientes" %}</a></li>
+                        <li><a href="{% url 'lista_tutores' %}">{% trans "Tutores" %}</a></li>
+                        <li><a href="{% url 'calendario_citas' %}">{% trans "Agenda" %}</a></li>
+                        <li><a href="{% url 'lista_solicitudes_datos' %}">{% trans "Solicitudes" %}</a></li>
+                        <li><a href="{% url 'bandeja_entrada' %}">{% trans "Mensajes" %}</a></li>
                     {% else %}
                         {# Menú para Tutores #}
-                        <li><a href="{% url 'mis_pacientes' %}">Mis Mascotas</a></li>
-                        <li><a href="{% url 'mis_solicitudes_datos' %}">Solicitudes</a></li>
-                        <li><a href="{% url 'editar_mi_perfil' %}">Mi Perfil</a></li>
+                        <li><a href="{% url 'mis_pacientes' %}">{% trans "Mis Mascotas" %}</a></li>
+                        <li><a href="{% url 'mis_solicitudes_datos' %}">{% trans "Solicitudes" %}</a></li>
+                        <li><a href="{% url 'editar_mi_perfil' %}">{% trans "Mi Perfil" %}</a></li>
                     {% endif %}
                 </ul>
-                <span class="user-name">Bienvenido, {{ user.username }}</span>     
+                <span class="user-name">{% trans "Bienvenido" %}, {{ user.username }}</span>     
                 <form action="{% url 'logout' %}" method="post">
                     {% csrf_token %}
-                    <button type="submit" class="logout">Cerrar Sesión</button>
+                    <button type="submit" class="logout">{% trans "Cerrar Sesión" %}</button>
                 </form>
             </nav>
         {% endif %}

@@ -1,4 +1,5 @@
 {% extends 'gestion/base.html' %}
+{% load i18n %}
 
 {% block title %}{{ titulo }}{% endblock %}
 
@@ -6,19 +7,19 @@
 <main>
     <h1>{{ titulo }}</h1>
     <hr>
-    <a href="{% url 'enviar_mensaje' %}" class="button primary">Redactar Nuevo Mensaje</a>
+    <a href="{% url 'enviar_mensaje' %}" class="button primary">{% trans "Redactar Nuevo Mensaje" %}</a>
     <hr>
 
     <section>
-        <h2>Mensajes Recibidos</h2>
+        <h2>{% trans "Mensajes Recibidos" %}</h2>
         {% if mensajes_recibidos %}
         <table>
             <thead>
                 <tr>
-                    <th>De</th>
-                    <th>Asunto</th>
-                    <th>Fecha</th>
-                    <th>Estado</th>
+                    <th>{% trans "De" %}</th>
+                    <th>{% trans "Asunto" %}</th>
+                    <th>{% trans "Fecha" %}</th>
+                    <th>{% trans "Estado" %}</th>
                 </tr>
             </thead>
             <tbody>
@@ -27,25 +28,25 @@
                     <td>{{ msg.remitente.username }}</td>
                     <td><a href="{% url 'ver_mensaje' msg.id %}">{{ msg.asunto }}</a></td>
                     <td>{{ msg.fecha_envio|date:"d-m-Y H:i" }}</td>
-                    <td>{% if not msg.leido %}No leído{% else %}Leído{% endif %}</td>
+                    <td>{% if not msg.leido %}{% trans "No leído" %}{% else %}{% trans "Leído" %}{% endif %}</td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
         {% else %}
-        <p>No tienes mensajes recibidos.</p>
+        <p>{% trans "No tienes mensajes recibidos." %}</p>
         {% endif %}
     </section>
 
     <section style="margin-top: 2rem;">
-        <h2>Mensajes Enviados</h2>
+        <h2>{% trans "Mensajes Enviados" %}</h2>
         {% if mensajes_enviados %}
         <table>
              <thead>
                 <tr>
-                    <th>Para</th>
-                    <th>Asunto</th>
-                    <th>Fecha</th>
+                    <th>{% trans "Para" %}</th>
+                    <th>{% trans "Asunto" %}</th>
+                    <th>{% trans "Fecha" %}</th>
                 </tr>
             </thead>
             <tbody>
@@ -59,7 +60,7 @@
             </tbody>
         </table>
         {% else %}
-        <p>No has enviado ningún mensaje.</p>
+        <p>{% trans "No has enviado ningún mensaje." %}</p>
         {% endif %}
     </section>
 </main>

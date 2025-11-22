@@ -1,4 +1,5 @@
 {% extends 'gestion/base.html' %}
+{% load i18n %}
 
 {% block title %}{{ titulo }}{% endblock %}
 
@@ -117,7 +118,7 @@
                                          {{ boton_texto|default:"Guardar" }}
                                     </button>
                                     <a href="{{ request.META.HTTP_REFERER|default:'/pacientes/' }}" class="btn btn-secondary">
-                                         Cancelar
+                                         {% trans "Cancelar" %}
                                     </a>
                                 </div>
                             </div>
@@ -127,12 +128,13 @@
                     <!-- Botón de borrar (solo si existe el objeto) -->
                     {% if object %}
                         <div class="danger-zone mt-3">
-                            <h3 class="danger-zone-title">⚠️ Zona Peligrosa</h3>
-                            <p class="danger-zone-text">Esta acción es irreversible. Se eliminará el paciente y todos sus registros asociados.</p>
+                            <h3 class="danger-zone-title">⚠️ {% trans "Zona Peligrosa" %}</h3>
+                            <p class="danger-zone-text">{% trans "Esta acción es irreversible. Se eliminará el paciente y todos sus registros asociados." %}</p>
+                            {% trans "¿Estás seguro de que deseas borrar este paciente? Esta acción no se puede deshacer." as confirm_message %}
                             <a href="{% url 'borrar_paciente' object.id %}" 
                                class="btn btn-danger"
-                               onclick="return confirm('¿Estás seguro de que deseas borrar este paciente? Esta acción no se puede deshacer.');">
-                                🗑️ Borrar Paciente
+                               onclick="return confirm('{{ confirm_message|escapejs }}');">
+                                🗑️ {% trans "Borrar Paciente" %}
                             </a>
                         </div>
                     {% endif %}

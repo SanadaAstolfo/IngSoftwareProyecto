@@ -1,84 +1,2304 @@
-# Translations for English.
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-21\n"
+"POT-Creation-Date: 2025-11-22 03:10-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: app/templates/portal.html
-msgid "¡Bienvenido a Club Entre Patitas!"
-msgstr "Welcome to Club Entre Patitas!"
+#: .\app\templates\gestion\bandeja_entrada.html:10
+msgid "Redactar Nuevo Mensaje"
+msgstr "Compose New Message"
 
-msgid "Tu plataforma de confianza para el cuidado veterinario"
-msgstr "Your trusted platform for veterinary care"
+#: .\app\templates\gestion\bandeja_entrada.html:14
+msgid "Mensajes Recibidos"
+msgstr "Received Messages"
 
-msgid "Selecciona tu tipo de usuario para acceder a las funcionalidades específicas del sistema."
-msgstr "Select your user type to access the specific features of the system."
+#: .\app\templates\gestion\bandeja_entrada.html:19
+#: .\app\templates\gestion\mensaje_detalle.html:10
+msgid "De"
+msgstr "From"
 
-msgid "Nuestro sistema está diseñado para brindar la mejor experiencia tanto a veterinarios como a dueños de mascotas."
-msgstr "Our system is designed to provide the best experience for both veterinarians and pet owners."
+#: .\app\templates\gestion\bandeja_entrada.html:20
+#: .\app\templates\gestion\bandeja_entrada.html:48
+msgid "Asunto"
+msgstr "Subject"
 
-msgid "Funcionario de Club Entre Patitas"
-msgstr "Club Entre Patitas Staff"
+#: .\app\templates\gestion\bandeja_entrada.html:21
+#: .\app\templates\gestion\bandeja_entrada.html:49
+#: .\app\templates\gestion\detalle_tutor.html:36
+#: .\app\templates\gestion\lista_solicitudes_datos.html:37
+#: .\app\templates\gestion\mensaje_detalle.html:11
+#: .\app\templates\gestion\mis_solicitudes_datos.html:22
+msgid "Fecha"
+msgstr "Date"
 
-msgid "Acceso completo al sistema de gestión de fichas médicas, pacientes y herramientas profesionales."
-msgstr "Full access to medical records management system, patients and professional tools."
+#: .\app\templates\gestion\bandeja_entrada.html:22
+#: .\app\templates\gestion\calendario.html:46
+#: .\app\templates\gestion\detalle_paciente.html:88
+#: .\app\templates\gestion\lista_solicitudes_datos.html:38
+#: .\app\templates\gestion\lista_solicitudes_datos.html:87
+#: .\app\templates\gestion\mis_solicitudes_datos.html:23
+msgid "Estado"
+msgstr "Status"
 
-msgid "Crear y gestionar fichas médicas"
-msgstr "Create and manage medical records"
+#: .\app\templates\gestion\bandeja_entrada.html:31
+msgid "No leído"
+msgstr "Unread"
 
-msgid "Programar citas y controles"
-msgstr "Schedule appointments and checkups"
+#: .\app\templates\gestion\bandeja_entrada.html:31
+msgid "Leído"
+msgstr "Read"
 
-msgid "Generar reportes médicos"
-msgstr "Generate medical reports"
+#: .\app\templates\gestion\bandeja_entrada.html:37
+msgid "No tienes mensajes recibidos."
+msgstr "You have no received messages."
 
-msgid "Acceso completo a la base de datos"
-msgstr "Full database access"
+#: .\app\templates\gestion\bandeja_entrada.html:42
+msgid "Mensajes Enviados"
+msgstr "Sent Messages"
 
-msgid "Soy Funcionario de"
-msgstr "I am a Staff Member of"
+#: .\app\templates\gestion\bandeja_entrada.html:47
+msgid "Para"
+msgstr "To"
 
-msgid "Dueño de Mascota"
-msgstr "Pet Owner"
+#: .\app\templates\gestion\bandeja_entrada.html:63
+msgid "No has enviado ningún mensaje."
+msgstr "You haven't sent any messages."
 
-msgid "Accede al historial médico de tu mascota y mantente informado sobre su salud y tratamientos."
-msgstr "Access your pet's medical history and stay informed about their health and treatments."
-
-msgid "Ver historial médico de tu mascota"
-msgstr "View your pet's medical history"
-
-msgid "Consultar próximas citas"
-msgstr "Check upcoming appointments"
-
-msgid "Seguimiento de tratamientos"
-msgstr "Treatment tracking"
-
-msgid "Contacto directo con veterinarios"
-msgstr "Direct contact with veterinarians"
-
-msgid "Soy Dueño de Mascota"
-msgstr "I am a Pet Owner"
-
+#: .\app\templates\gestion\base.html:231
 msgid "Pacientes"
 msgstr "Patients"
 
+#: .\app\templates\gestion\base.html:232
 msgid "Tutores"
-msgstr "Tutors"
+msgstr "Guardians"
 
-msgid "Citas"
-msgstr "Appointments"
+#: .\app\templates\gestion\base.html:233
+msgid "Agenda"
+msgstr "Calendar"
 
+#: .\app\templates\gestion\base.html:234 .\app\templates\gestion\base.html:239
+msgid "Solicitudes"
+msgstr "Requests"
+
+#: .\app\templates\gestion\base.html:235
 msgid "Mensajes"
 msgstr "Messages"
 
-msgid "Cerrar Sesión"
-msgstr "Logout"
+#: .\app\templates\gestion\base.html:238
+msgid "Mis Mascotas"
+msgstr "My Pets"
 
+#: .\app\templates\gestion\base.html:240
+msgid "Mi Perfil"
+msgstr "My Profile"
+
+#: .\app\templates\gestion\base.html:243
 msgid "Bienvenido"
 msgstr "Welcome"
+
+#: .\app\templates\gestion\base.html:246
+msgid "Cerrar Sesión"
+msgstr "Log Out"
+
+#: .\app\templates\gestion\borrar_paciente.html:4
+msgid "Confirmar Borrado"
+msgstr "Confirm Deletion"
+
+#: .\app\templates\gestion\borrar_paciente.html:10
+#: .\app\templates\gestion\confirmar_cancelacion.html:8
+msgid "¿Estás seguro?"
+msgstr "Are you sure?"
+
+#: .\app\templates\gestion\borrar_paciente.html:13
+msgid "Estás a punto de borrar permanentemente a"
+msgstr "You are about to permanently delete"
+
+#: .\app\templates\gestion\borrar_paciente.html:13
+msgid "y toda su ficha clínica."
+msgstr "and all their medical records."
+
+#: .\app\templates\gestion\borrar_paciente.html:14
+msgid "Esta acción no se puede deshacer."
+msgstr "This action cannot be undone."
+
+#: .\app\templates\gestion\borrar_paciente.html:17
+msgid "Sí, Confirmar Borrado"
+msgstr "Yes, Confirm Deletion"
+
+#: .\app\templates\gestion\borrar_paciente.html:18
+#: .\app\templates\gestion\form.html:121
+#: .\app\templates\gestion\form_editar_perfil.html:52
+#: .\app\templates\gestion\form_enviar_mensaje.html:22
+#: .\app\templates\gestion\receta_form.html:33
+msgid "Cancelar"
+msgstr "Cancel"
+
+#: .\app\templates\gestion\calendario.html:4
+msgid "Calendario de Citas"
+msgstr "Appointment Calendar"
+
+#: .\app\templates\gestion\calendario.html:9
+msgid "Agendar Nueva Cita"
+msgstr "Schedule New Appointment"
+
+#: .\app\templates\gestion\calendario.html:16
+msgid "Filtrar por fecha:"
+msgstr "Filter by date:"
+
+#: .\app\templates\gestion\calendario.html:20
+msgid "Filtrar"
+msgstr "Filter"
+
+#: .\app\templates\gestion\calendario.html:23
+msgid "Ver Citas de Hoy"
+msgstr "View Today's Appointments"
+
+#: .\app\templates\gestion\calendario.html:26
+msgid "Mostrar Todas"
+msgstr "Show All"
+
+#: .\app\templates\gestion\calendario.html:37
+msgid "Especialista"
+msgstr "Specialist"
+
+#: .\app\templates\gestion\calendario.html:40
+msgid "A Domicilio"
+msgstr "Home Visit"
+
+#: .\app\templates\gestion\calendario.html:45
+msgid "Veterinario"
+msgstr "Veterinarian"
+
+#: .\app\templates\gestion\calendario.html:50
+msgid "Iniciar Consulta"
+msgstr "Start Consultation"
+
+#: .\app\templates\gestion\calendario.html:55
+msgid "Registrar Paciente e Iniciar"
+msgstr "Register Patient and Start"
+
+#: .\app\templates\gestion\calendario.html:59
+#: .\app\templates\gestion\detalle_paciente.html:135
+msgid "Editar"
+msgstr "Edit"
+
+#: .\app\templates\gestion\comprobante_pago.html:11
+#: .\app\templates\gestion\comprobante_pago.html:715
+#, fuzzy
+#| msgid "Ver Comprobante"
+msgid "Comprobante de Pago"
+msgstr "Payment Receipt"
+
+#: .\app\templates\gestion\comprobante_pago.html:720
+#, fuzzy
+#| msgid "Ver Comprobante"
+msgid "Nº de Comprobante:"
+msgstr "Receipt Number:"
+
+#: .\app\templates\gestion\comprobante_pago.html:724
+#, fuzzy
+#| msgid "Fecha de Atención"
+msgid "Fecha de Emisión:"
+msgstr "Issue Date:"
+
+#: .\app\templates\gestion\comprobante_pago.html:728
+#, fuzzy
+#| msgid "Tutor"
+msgid "Tutor:"
+msgstr "Guardian:"
+
+#: .\app\templates\gestion\comprobante_pago.html:732
+msgid "Monto Pagado:"
+msgstr "Amount Paid:"
+
+#: .\app\templates\gestion\comprobante_pago.html:736
+#, fuzzy
+#| msgid "Método"
+msgid "Método de Pago:"
+msgstr "Payment Method:"
+
+#: .\app\templates\gestion\comprobante_pago.html:741
+msgid "Asociado a Cita:"
+msgstr "Associated with Appointment:"
+
+#: .\app\templates\gestion\comprobante_pago.html:742
+msgid "Cita para"
+msgstr "Appointment for"
+
+#: .\app\templates\gestion\comprobante_pago.html:742
+msgid "el"
+msgstr "on"
+
+#: .\app\templates\gestion\comprobante_pago.html:747
+#, fuzzy
+#| msgid "Nota:"
+msgid "Notas:"
+msgstr "Notes:"
+
+#: .\app\templates\gestion\comprobante_pago.html:754
+msgid "Gracias por su pago."
+msgstr "Thank you for your payment."
+
+#: .\app\templates\gestion\confirmar_cancelacion.html:4
+#, fuzzy
+#| msgid "Confirmar Gestión"
+msgid "Confirmar Cancelación"
+msgstr "Confirm Cancellation"
+
+#: .\app\templates\gestion\confirmar_cancelacion.html:9
+#, fuzzy
+#| msgid "Estás a punto de borrar permanentemente a"
+msgid "Estás a punto de cancelar la cita para"
+msgstr "You are about to cancel the appointment for"
+
+#: .\app\templates\gestion\confirmar_cancelacion.html:9
+msgid "del"
+msgstr "on"
+
+#: .\app\templates\gestion\confirmar_cancelacion.html:12
+#, fuzzy
+#| msgid "Cancelar"
+msgid "Sí, Cancelar Cita"
+msgstr "Yes, Cancel Appointment"
+
+#: .\app\templates\gestion\confirmar_cancelacion.html:13
+#, fuzzy
+#| msgid "Volver"
+msgid "No, volver"
+msgstr "No, go back"
+
+#: .\app\templates\gestion\detalle_paciente.html:4
+#: .\app\templates\gestion\detalle_paciente.html:21
+msgid "Ficha de"
+msgstr "File of"
+
+#: .\app\templates\gestion\detalle_paciente.html:11
+msgid "Foto de"
+msgstr "Photo of"
+
+#: .\app\templates\gestion\detalle_paciente.html:24
+msgid "Editar Paciente"
+msgstr "Edit Patient"
+
+#: .\app\templates\gestion\detalle_paciente.html:25
+msgid "Registrar Nueva Atención"
+msgstr "Register New Visit"
+
+#: .\app\templates\gestion\detalle_paciente.html:33
+msgid "¡Atención!"
+msgstr "Attention!"
+
+#: .\app\templates\gestion\detalle_paciente.html:44
+msgid "Datos del Paciente"
+msgstr "Patient Data"
+
+#: .\app\templates\gestion\detalle_paciente.html:46
+#: .\app\templates\gestion\detalle_tutor.html:68
+msgid "Especie"
+msgstr "Species"
+
+#: .\app\templates\gestion\detalle_paciente.html:46
+msgid "Raza"
+msgstr "Breed"
+
+#: .\app\templates\gestion\detalle_paciente.html:47
+msgid "Fecha de Nacimiento"
+msgstr "Date of Birth"
+
+#: .\app\templates\gestion\detalle_paciente.html:47
+msgid "Edad"
+msgstr "Age"
+
+#: .\app\templates\gestion\detalle_paciente.html:47
+msgid "años"
+msgstr "years"
+
+#: .\app\templates\gestion\detalle_paciente.html:48
+#: .\app\templates\gestion\lista_solicitudes_datos.html:34
+#: .\app\templates\gestion\lista_solicitudes_datos.html:84
+#: .\app\templates\gestion\mis_pacientes.html:18
+msgid "Tutor"
+msgstr "Guardian"
+
+#: .\app\templates\gestion\detalle_paciente.html:53
+msgid "Antecedentes Médicos Externos"
+msgstr "External Medical Records"
+
+#: .\app\templates\gestion\detalle_paciente.html:55
+msgid "Cargar Antecedente"
+msgstr "Upload Record"
+
+#: .\app\templates\gestion\detalle_paciente.html:69
+msgid "No se han cargado antecedentes externos para este paciente."
+msgstr "No external records have been uploaded for this patient."
+
+#: .\app\templates\gestion\detalle_paciente.html:75
+msgid "Historial de Vacunación"
+msgstr "Vaccination History"
+
+#: .\app\templates\gestion\detalle_paciente.html:77
+msgid "Registrar Vacuna"
+msgstr "Register Vaccine"
+
+#: .\app\templates\gestion\detalle_paciente.html:85
+msgid "Vacuna"
+msgstr "Vaccine"
+
+#: .\app\templates\gestion\detalle_paciente.html:86
+msgid "Fecha Aplicación"
+msgstr "Application Date"
+
+#: .\app\templates\gestion\detalle_paciente.html:87
+msgid "Próxima Dosis"
+msgstr "Next Dose"
+
+#: .\app\templates\gestion\detalle_paciente.html:99
+msgid "Vigente"
+msgstr "Valid"
+
+#: .\app\templates\gestion\detalle_paciente.html:101
+msgid "Vencida"
+msgstr "Expired"
+
+#: .\app\templates\gestion\detalle_paciente.html:109
+msgid "No hay vacunas registradas para este paciente."
+msgstr "No vaccines registered for this patient."
+
+#: .\app\templates\gestion\detalle_paciente.html:113
+msgid "Historial de Atenciones"
+msgstr "Visit History"
+
+#: .\app\templates\gestion\detalle_paciente.html:118
+msgid "Atención del"
+msgstr "Visit from"
+
+#: .\app\templates\gestion\detalle_paciente.html:127
+msgid "Ver Ficha PDF"
+msgstr "View PDF Record"
+
+#: .\app\templates\gestion\detalle_paciente.html:129
+msgid "Ver Epicrisis PDF"
+msgstr "View Epicrisis PDF"
+
+#: .\app\templates\gestion\detalle_paciente.html:133
+msgid "Ficha Cerrada"
+msgstr "Closed Record"
+
+#: .\app\templates\gestion\detalle_paciente.html:137
+msgid "Cerrar Atención"
+msgstr "Close Visit"
+
+#: .\app\templates\gestion\detalle_paciente.html:139
+msgid "Borrar"
+msgstr "Delete"
+
+#: .\app\templates\gestion\detalle_paciente.html:141
+msgid "Historial"
+msgstr "History"
+
+#: .\app\templates\gestion\detalle_tutor.html:5
+msgid "Detalle de"
+msgstr "Details of"
+
+#: .\app\templates\gestion\detalle_tutor.html:11
+msgid "Información de Contacto"
+msgstr "Contact Information"
+
+#: .\app\templates\gestion\detalle_tutor.html:13
+#: .\app\templates\gestion\lista_solicitudes_datos.html:35
+msgid "RUT"
+msgstr "ID Number"
+
+#: .\app\templates\gestion\detalle_tutor.html:14
+#: .\app\templates\gestion\lista_solicitudes_datos.html:85
+msgid "Email"
+msgstr "Email"
+
+#: .\app\templates\gestion\detalle_tutor.html:15
+msgid "Teléfono"
+msgstr "Phone"
+
+#: .\app\templates\gestion\detalle_tutor.html:16
+msgid "Dirección"
+msgstr "Address"
+
+#: .\app\templates\gestion\detalle_tutor.html:21
+msgid "Atención"
+msgstr "Attention"
+
+#: .\app\templates\gestion\detalle_tutor.html:21
+msgid "Los datos de este tutor están bloqueados y no pueden ser modificados."
+msgstr "This guardian's data is locked and cannot be modified."
+
+#: .\app\templates\gestion\detalle_tutor.html:24
+msgid "Bloquear Datos de Tutor"
+msgstr "Lock Guardian Data"
+
+#: .\app\templates\gestion\detalle_tutor.html:28
+msgid "Estado de Cuenta"
+msgstr "Account Status"
+
+#: .\app\templates\gestion\detalle_tutor.html:29
+msgid "Registrar Pago"
+msgstr "Register Payment"
+
+#: .\app\templates\gestion\detalle_tutor.html:37
+msgid "Monto"
+msgstr "Amount"
+
+#: .\app\templates\gestion\detalle_tutor.html:38
+msgid "Método"
+msgstr "Method"
+
+#: .\app\templates\gestion\detalle_tutor.html:39
+msgid "Notas / Cita Asociada"
+msgstr "Notes / Associated Appointment"
+
+#: .\app\templates\gestion\detalle_tutor.html:40
+#: .\app\templates\gestion\lista_solicitudes_datos.html:39
+msgid "Acciones"
+msgstr "Actions"
+
+#: .\app\templates\gestion\detalle_tutor.html:49
+msgid "Abono para cita de"
+msgstr "Payment for appointment with"
+
+#: .\app\templates\gestion\detalle_tutor.html:51
+msgid "Ver Comprobante"
+msgstr "View Receipt"
+
+#: .\app\templates\gestion\detalle_tutor.html:58
+msgid "No hay pagos registrados para este tutor."
+msgstr "No payments registered for this guardian."
+
+#: .\app\templates\gestion\detalle_tutor.html:62
+msgid "Mascotas a su Cuidado"
+msgstr "Pets Under Their Care"
+
+#: .\app\templates\gestion\detalle_tutor.html:72
+msgid "Este tutor no tiene mascotas registradas."
+msgstr "This guardian has no registered pets."
+
+#: .\app\templates\gestion\form.html:131
+msgid "Zona Peligrosa"
+msgstr "Danger Zone"
+
+#: .\app\templates\gestion\form.html:132
+msgid ""
+"Esta acción es irreversible. Se eliminará el paciente y todos sus registros "
+"asociados."
+msgstr ""
+"This action is irreversible. The patient and all their associated records "
+"will be deleted."
+
+#: .\app\templates\gestion\form.html:133
+msgid ""
+"¿Estás seguro de que deseas borrar este paciente? Esta acción no se puede "
+"deshacer."
+msgstr ""
+"Are you sure you want to delete this patient? This action cannot be undone."
+
+#: .\app\templates\gestion\form.html:137
+msgid "Borrar Paciente"
+msgstr "Delete Patient"
+
+#: .\app\templates\gestion\form_editar_perfil.html:53
+msgid "Guardar Cambios"
+msgstr "Save Changes"
+
+#: .\app\templates\gestion\form_enviar_mensaje.html:23
+msgid "Enviar Mensaje"
+msgstr "Send Message"
+
+#: .\app\templates\gestion\gestionar_solicitud_datos.html:12
+#, fuzzy
+#| msgid "Información de Contacto"
+msgid "Información de la Solicitud"
+msgstr "Request Information"
+
+#: .\app\templates\gestion\gestionar_solicitud_datos.html:17
+#, fuzzy
+#| msgid "Folio"
+msgid "Folio:"
+msgstr "File Number:"
+
+#: .\app\templates\gestion\gestionar_solicitud_datos.html:18
+#, fuzzy
+#| msgid "Fecha"
+msgid "Fecha:"
+msgstr "Date:"
+
+#: .\app\templates\gestion\gestionar_solicitud_datos.html:19
+#: .\app\templates\gestion\mis_solicitudes_datos.html:63
+msgid "Tipo:"
+msgstr "Type:"
+
+#: .\app\templates\gestion\gestionar_solicitud_datos.html:22
+msgid "Nombre:"
+msgstr "Name:"
+
+#: .\app\templates\gestion\gestionar_solicitud_datos.html:23
+msgid "RUT:"
+msgstr "ID Number:"
+
+#: .\app\templates\gestion\gestionar_solicitud_datos.html:24
+#, fuzzy
+#| msgid "Email"
+msgid "Email:"
+msgstr "Email:"
+
+#: .\app\templates\gestion\gestionar_solicitud_datos.html:25
+#, fuzzy
+#| msgid "Teléfono"
+msgid "Teléfono:"
+msgstr "Phone:"
+
+#: .\app\templates\gestion\gestionar_solicitud_datos.html:33
+#, fuzzy
+#| msgid "Tipo de Solicitud"
+msgid "Gestionar Solicitud"
+msgstr "Manage Request"
+
+#: .\app\templates\gestion\gestionar_solicitud_datos.html:40
+msgid "Decisión:"
+msgstr "Decision:"
+
+#: .\app\templates\gestion\gestionar_solicitud_datos.html:44
+#, fuzzy
+#| msgid "Aprobada"
+msgid "Aprobar"
+msgstr "Approve"
+
+#: .\app\templates\gestion\gestionar_solicitud_datos.html:49
+#, fuzzy
+#| msgid "Rechazada"
+msgid "Rechazar"
+msgstr "Reject"
+
+#: .\app\templates\gestion\gestionar_solicitud_datos.html:55
+msgid "Resolución / Comentarios:"
+msgstr "Resolution / Comments:"
+
+#: .\app\templates\gestion\gestionar_solicitud_datos.html:57
+msgid ""
+"Ejemplo: Se enviaron los datos personales por correo electrónico o Solicitud "
+"rechazada debido a..."
+msgstr "Example: Personal data sent via email or Request rejected due to..."
+
+#: .\app\templates\gestion\gestionar_solicitud_datos.html:59
+msgid "Explique al tutor la acción tomada y cualquier información relevante."
+msgstr "Explain to the guardian the action taken and any relevant information."
+
+#: .\app\templates\gestion\gestionar_solicitud_datos.html:64
+#: .\app\templates\gestion\solicitar_gestion_datos.html:57
+msgid "Nota:"
+msgstr "Note:"
+
+#: .\app\templates\gestion\gestionar_solicitud_datos.html:64
+msgid ""
+"Al gestionar esta solicitud, el tutor podrá ver su decisión y los "
+"comentarios proporcionados."
+msgstr ""
+"By managing this request, the guardian will be able to see your decision and "
+"the comments provided."
+
+#: .\app\templates\gestion\gestionar_solicitud_datos.html:69
+msgid "Confirmar Gestión"
+msgstr "Confirm Management"
+
+#: .\app\templates\gestion\gestionar_solicitud_datos.html:72
+msgid "Volver"
+msgstr "Back"
+
+#: .\app\templates\gestion\historial_atencion.html:4
+msgid "Historial de Cambios"
+msgstr "Change History"
+
+#: .\app\templates\gestion\historial_atencion.html:7
+msgid "Historial de Cambios de la Atención"
+msgstr "Visit Change History"
+
+#: .\app\templates\gestion\historial_atencion.html:8
+#: .\app\templates\gestion\receta_form.html:9
+msgid "Paciente"
+msgstr "Patient"
+
+#: .\app\templates\gestion\historial_atencion.html:9
+#: .\app\templates\gestion\lista_pacientes.html:34
+msgid "Fecha de Atención"
+msgstr "Visit Date"
+
+#: .\app\templates\gestion\historial_atencion.html:10
+msgid "Volver a la Ficha del Paciente"
+msgstr "Back to Patient Record"
+
+#: .\app\templates\gestion\historial_atencion.html:16
+msgid "Fecha y Hora del Cambio"
+msgstr "Change Date and Time"
+
+#: .\app\templates\gestion\historial_atencion.html:17
+msgid "Tipo de Cambio"
+msgstr "Change Type"
+
+#: .\app\templates\gestion\historial_atencion.html:18
+msgid "Usuario que realizó el cambio"
+msgstr "User who made the change"
+
+#: .\app\templates\gestion\historial_atencion.html:27
+msgid "Creado"
+msgstr "Created"
+
+#: .\app\templates\gestion\historial_atencion.html:29
+msgid "Modificado"
+msgstr "Modified"
+
+#: .\app\templates\gestion\historial_atencion.html:31
+msgid "Borrado"
+msgstr "Deleted"
+
+#: .\app\templates\gestion\historial_atencion.html:38
+msgid "No hay historial de cambios para este registro."
+msgstr "No change history for this record."
+
+#: .\app\templates\gestion\lista_pacientes.html:4
+msgid "Lista de Pacientes"
+msgstr "Patient List"
+
+#: .\app\templates\gestion\lista_pacientes.html:11
+msgid "Pacientes Registrados"
+msgstr "Registered Patients"
+
+#: .\app\templates\gestion\lista_pacientes.html:12
+msgid "Registrar Nuevo Paciente"
+msgstr "Register New Patient"
+
+#: .\app\templates\gestion\lista_pacientes.html:18
+msgid "Filtros de Búsqueda"
+msgstr "Search Filters"
+
+#: .\app\templates\gestion\lista_pacientes.html:22
+msgid "Nombre del Paciente"
+msgstr "Patient Name"
+
+#: .\app\templates\gestion\lista_pacientes.html:23
+msgid "Buscar por nombre"
+msgstr "Search by name"
+
+#: .\app\templates\gestion\lista_pacientes.html:28
+msgid "Diagnóstico"
+msgstr "Diagnosis"
+
+#: .\app\templates\gestion\lista_pacientes.html:29
+msgid "Buscar por diagnóstico"
+msgstr "Search by diagnosis"
+
+#: .\app\templates\gestion\lista_pacientes.html:40
+#: .\app\templates\gestion\lista_pacientes.html:41
+msgid "Buscar"
+msgstr "Search"
+
+#: .\app\templates\gestion\lista_solicitudes_datos.html:16
+msgid "Filtrar por Estado"
+msgstr "Filter by Status"
+
+#: .\app\templates\gestion\lista_solicitudes_datos.html:18
+msgid "Todos"
+msgstr "All"
+
+#: .\app\templates\gestion\lista_solicitudes_datos.html:19
+msgid "Pendientes"
+msgstr "Pending"
+
+#: .\app\templates\gestion\lista_solicitudes_datos.html:20
+msgid "Aprobadas"
+msgstr "Approved"
+
+#: .\app\templates\gestion\lista_solicitudes_datos.html:21
+msgid "Rechazadas"
+msgstr "Rejected"
+
+#: .\app\templates\gestion\lista_solicitudes_datos.html:33
+#: .\app\templates\gestion\mis_solicitudes_datos.html:20
+msgid "Folio"
+msgstr "File Number"
+
+#: .\app\templates\gestion\lista_solicitudes_datos.html:36
+#: .\app\templates\gestion\mis_solicitudes_datos.html:21
+msgid "Tipo de Solicitud"
+msgstr "Request Type"
+
+#: .\app\templates\gestion\lista_solicitudes_datos.html:56
+#: .\app\templates\gestion\mis_solicitudes_datos.html:39
+msgid "Pendiente"
+msgstr "Pending"
+
+#: .\app\templates\gestion\lista_solicitudes_datos.html:58
+#: .\app\templates\gestion\mis_solicitudes_datos.html:41
+msgid "Aprobada"
+msgstr "Approved"
+
+#: .\app\templates\gestion\lista_solicitudes_datos.html:60
+#: .\app\templates\gestion\mis_solicitudes_datos.html:43
+msgid "Rechazada"
+msgstr "Rejected"
+
+#: .\app\templates\gestion\lista_solicitudes_datos.html:66
+msgid "Gestionar"
+msgstr "Manage"
+
+#: .\app\templates\gestion\lista_solicitudes_datos.html:72
+msgid "Ver"
+msgstr "View"
+
+#: .\app\templates\gestion\lista_solicitudes_datos.html:80
+msgid "Detalle Solicitud"
+msgstr ""
+
+#: .\app\templates\gestion\lista_solicitudes_datos.html:86
+msgid "Tipo"
+msgstr ""
+
+#: .\app\templates\gestion\lista_solicitudes_datos.html:88
+msgid "Gestionado por"
+msgstr ""
+
+#: .\app\templates\gestion\lista_solicitudes_datos.html:97
+#: .\app\templates\gestion\mis_solicitudes_datos.html:24
+msgid "Resolución"
+msgstr ""
+
+#: .\app\templates\gestion\lista_solicitudes_datos.html:102
+#: .\app\templates\gestion\mis_solicitudes_datos.html:77
+msgid "Cerrar"
+msgstr ""
+
+#: .\app\templates\gestion\lista_solicitudes_datos.html:116
+msgid "No hay solicitudes de gestión de datos"
+msgstr ""
+
+#: .\app\templates\gestion\lista_solicitudes_datos.html:117
+msgid "con el estado"
+msgstr ""
+
+#: .\app\templates\gestion\lista_tutores.html:4
+msgid "Lista de Tutores"
+msgstr ""
+
+#: .\app\templates\gestion\lista_tutores.html:8
+msgid "Tutores Registrados"
+msgstr ""
+
+#: .\app\templates\gestion\lista_tutores.html:9
+msgid "Registrar Nuevo Tutor"
+msgstr ""
+
+#: .\app\templates\gestion\lista_tutores.html:19
+msgid "No hay tutores registrados."
+msgstr ""
+
+#: .\app\templates\gestion\mensaje_detalle.html:15
+msgid "Volver a la Bandeja"
+msgstr "Back to Inbox"
+
+#: .\app\templates\gestion\mis_pacientes.html:4
+#: .\app\templates\gestion\mis_pacientes.html:9
+msgid "Mis Pacientes"
+msgstr "My Patients"
+
+#: .\app\templates\gestion\mis_pacientes.html:10
+msgid "Editar mi perfil"
+msgstr "Edit my profile"
+
+#: .\app\templates\gestion\mis_pacientes.html:16
+#: .\app\templates\gestion\mis_pacientes.html:38
+#: .\app\templates\gestion\mis_pacientes.html:41
+msgid "Volver al Portal"
+msgstr "Return to Portal"
+
+#: .\app\templates\gestion\mis_pacientes.html:35
+msgid "No tienes pacientes asociados registrados en el sistema."
+msgstr "You have no associated patients registered in the system."
+
+#: .\app\templates\gestion\mis_pacientes.html:40
+msgid ""
+"Error: No se encontró el registro de tutor asociado a tu cuenta. Contacta al "
+"administrador."
+msgstr ""
+"Error: No guardian record associated with your account was found. Contact "
+"the administrator."
+
+#: .\app\templates\gestion\mis_solicitudes_datos.html:11
+#, fuzzy
+#| msgid "Solicitudes"
+msgid "Nueva Solicitud"
+msgstr "New Request"
+
+#: .\app\templates\gestion\mis_solicitudes_datos.html:51
+#, fuzzy
+#| msgid "Detalle de"
+msgid "Ver Detalle"
+msgstr "View Details"
+
+#: .\app\templates\gestion\mis_solicitudes_datos.html:59
+#, fuzzy
+#| msgid "Tipo de Solicitud"
+msgid "Resolución de Solicitud"
+msgstr "Request Resolution"
+
+#: .\app\templates\gestion\mis_solicitudes_datos.html:64
+#, fuzzy
+#| msgid "Estado"
+msgid "Estado:"
+msgstr "Status:"
+
+#: .\app\templates\gestion\mis_solicitudes_datos.html:65
+#, fuzzy
+#| msgid "Gestionar"
+msgid "Gestionado por:"
+msgstr "Managed by:"
+
+#: .\app\templates\gestion\mis_solicitudes_datos.html:73
+msgid "Resolución:"
+msgstr "Resolution:"
+
+#: .\app\templates\gestion\mis_solicitudes_datos.html:83
+msgid "En proceso..."
+msgstr "In progress..."
+
+#: .\app\templates\gestion\mis_solicitudes_datos.html:93
+msgid "No has realizado ninguna solicitud de gestión de datos aún."
+msgstr "You haven't made any data management requests yet."
+
+#: .\app\templates\gestion\mis_solicitudes_datos.html:94
+msgid "Haz clic aquí para crear una"
+msgstr "Click here to create one"
+
+#: .\app\templates\gestion\receta_form.html:10
+msgid "Fecha Atención"
+msgstr "Visit Date"
+
+#: .\app\templates\gestion\receta_form.html:34
+msgid "Guardar Receta"
+msgstr "Save Prescription"
+
+#: .\app\templates\gestion\seleccionar_tipo_atencion.html:4
+#, fuzzy
+#| msgid "Fecha de Atención"
+msgid "Seleccionar Tipo de Atención"
+msgstr "Select Type of Visit"
+
+#: .\app\templates\gestion\seleccionar_tipo_atencion.html:8
+#, fuzzy
+#| msgid "Fecha Atención"
+msgid "Nueva Atención para"
+msgstr "New Visit for"
+
+#: .\app\templates\gestion\seleccionar_tipo_atencion.html:9
+msgid "Por favor, selecciona el tipo de ficha que deseas crear."
+msgstr "Please select the type of record you want to create."
+
+#: .\app\templates\gestion\seleccionar_tipo_atencion.html:12
+msgid "Consulta General"
+msgstr "General Consultation"
+
+#: .\app\templates\gestion\seleccionar_tipo_atencion.html:15
+msgid "Hospitalización"
+msgstr "Hospitalization"
+
+#: .\app\templates\gestion\solicitar_gestion_datos.html:11
+#, fuzzy
+#| msgid "Gestión de datos personales"
+msgid "Información sobre Gestión de Datos Personales"
+msgstr "Information about Personal Data Management"
+
+#: .\app\templates\gestion\solicitar_gestion_datos.html:12
+msgid ""
+"De acuerdo con la Ley de Protección de Datos Personales, usted tiene derecho "
+"a:"
+msgstr "According to the Personal Data Protection Law, you have the right to:"
+
+#: .\app\templates\gestion\solicitar_gestion_datos.html:14
+msgid "Acceso:"
+msgstr "Access:"
+
+#: .\app\templates\gestion\solicitar_gestion_datos.html:14
+msgid "Solicitar una copia de sus datos personales almacenados."
+msgstr "Request a copy of your stored personal data."
+
+#: .\app\templates\gestion\solicitar_gestion_datos.html:15
+#, fuzzy
+#| msgid "Modificado"
+msgid "Modificación:"
+msgstr "Modification:"
+
+#: .\app\templates\gestion\solicitar_gestion_datos.html:15
+msgid "Solicitar la corrección de datos incorrectos o desactualizados."
+msgstr "Request correction of incorrect or outdated data."
+
+#: .\app\templates\gestion\solicitar_gestion_datos.html:16
+#, fuzzy
+#| msgid "Cancelar"
+msgid "Cancelación:"
+msgstr "Cancellation:"
+
+#: .\app\templates\gestion\solicitar_gestion_datos.html:16
+#, fuzzy
+#| msgid "Gestión de datos personales"
+msgid "Solicitar la eliminación de sus datos personales."
+msgstr "Request deletion of your personal data."
+
+#: .\app\templates\gestion\solicitar_gestion_datos.html:17
+msgid "Bloqueo:"
+msgstr "Blocking:"
+
+#: .\app\templates\gestion\solicitar_gestion_datos.html:17
+msgid "Solicitar el bloqueo temporal de sus datos personales."
+msgstr "Request temporary blocking of your personal data."
+
+#: .\app\templates\gestion\solicitar_gestion_datos.html:57
+msgid ""
+"Su solicitud será revisada por el personal administrativo. Recibirá una "
+"notificación cuando sea procesada."
+msgstr ""
+"Your request will be reviewed by administrative staff. You will receive a "
+"notification when it is processed."
+
+#: .\app\templates\gestion\solicitar_gestion_datos.html:62
+#, fuzzy
+#| msgid "Tipo de Solicitud"
+msgid "Enviar Solicitud"
+msgstr "Submit Request"
+
+#: .\app\templates\gestion\solicitar_gestion_datos.html:65
+#, fuzzy
+#| msgid "Solicitudes"
+msgid "Ver Mis Solicitudes"
+msgstr "View My Requests"
+
+#: .\app\templates\portal.html:5
+msgid "Bienvenido a Club Entre Patitas"
+msgstr "Welcome to Club Entre Patitas"
+
+#: .\app\templates\portal.html:10
+msgid "¡Bienvenido a Club Entre Patitas!"
+msgstr "Welcome to Club Entre Patitas!"
+
+#: .\app\templates\portal.html:11
+msgid "Tu plataforma de confianza para el cuidado veterinario"
+msgstr "Your trusted platform for veterinary care"
+
+#: .\app\templates\portal.html:13
+msgid ""
+"Selecciona tu tipo de usuario para acceder a las funcionalidades específicas "
+"del sistema. Nuestro sistema está diseñado para brindar la mejor experiencia "
+"tanto a profesionales veterinarios como a tutores de mascotas."
+msgstr ""
+"Select your user type to access the system's specific functionalities. Our "
+"system is designed to provide the best experience for both veterinary "
+"professionals and pet guardians."
+
+#: .\app\templates\portal.html:22
+msgid "Funcionario de Club Entre Patitas"
+msgstr "Club Entre Patitas Employee"
+
+#: .\app\templates\portal.html:24
+msgid ""
+"Acceso completo al sistema de gestión de fichas médicas, pacientes y "
+"herramientas profesionales."
+msgstr ""
+"Full access to the medical records management system, patients, and "
+"professional tools."
+
+#: .\app\templates\portal.html:27
+msgid "Crear y gestionar fichas médicas"
+msgstr "Create and manage medical records"
+
+#: .\app\templates\portal.html:28
+msgid "Programar citas y controles"
+msgstr "Schedule appointments and checkups"
+
+#: .\app\templates\portal.html:29
+msgid "Generar reportes médicos"
+msgstr "Generate medical reports"
+
+#: .\app\templates\portal.html:30
+msgid "Acceso completo a la base de datos"
+msgstr "Full access to the database"
+
+#: .\app\templates\portal.html:33
+msgid "Soy Funcionario de"
+msgstr "I am an Employee of"
+
+#: .\app\templates\portal.html:34
+msgid "Club Entre Patitas"
+msgstr "Club Entre Patitas"
+
+#: .\app\templates\portal.html:43
+msgid "Tutor de Mascota"
+msgstr "Pet Guardian"
+
+#: .\app\templates\portal.html:45
+msgid ""
+"Accede al historial médico de tu mascota y manténte informado sobre su salud "
+"y tratamientos."
+msgstr ""
+"Access your pet's medical history and stay informed about their health and "
+"treatments."
+
+#: .\app\templates\portal.html:48
+msgid "Ver historial médico de tu mascota"
+msgstr "View your pet's medical history"
+
+#: .\app\templates\portal.html:49
+msgid "Consultar próximas citas"
+msgstr "Check upcoming appointments"
+
+#: .\app\templates\portal.html:50
+msgid "Acceso a recetas y epicrisis"
+msgstr "Access to prescriptions and epicrisis"
+
+#: .\app\templates\portal.html:51
+msgid "Gestión de datos personales"
+msgstr "Personal data management"
+
+#: .\app\templates\portal.html:53
+msgid "Soy Tutor de Mascota"
+msgstr "I am a Pet Guardian"
+
+#: .\venv\Lib\site-packages\django\contrib\messages\apps.py:16
+msgid "Messages"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\contrib\sitemaps\apps.py:8
+msgid "Site Maps"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\contrib\staticfiles\apps.py:9
+msgid "Static Files"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\contrib\syndication\apps.py:7
+msgid "Syndication"
+msgstr ""
+
+#. Translators: String used to replace omitted page numbers in elided page
+#. range generated by paginators, e.g. [1, 2, '…', 5, 6, 7, '…', 9, 10].
+#: .\venv\Lib\site-packages\django\core\paginator.py:30
+msgid "…"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\paginator.py:32
+msgid "That page number is not an integer"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\paginator.py:33
+msgid "That page number is less than 1"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\paginator.py:34
+msgid "That page contains no results"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:22
+msgid "Enter a valid value."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:70
+msgid "Enter a valid domain name."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:153
+#: .\venv\Lib\site-packages\django\forms\fields.py:775
+msgid "Enter a valid URL."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:200
+msgid "Enter a valid integer."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:211
+msgid "Enter a valid email address."
+msgstr ""
+
+#. Translators: "letters" means latin letters: a-z and A-Z.
+#: .\venv\Lib\site-packages\django\core\validators.py:289
+msgid ""
+"Enter a valid “slug” consisting of letters, numbers, underscores or hyphens."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:297
+msgid ""
+"Enter a valid “slug” consisting of Unicode letters, numbers, underscores, or "
+"hyphens."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:309
+#: .\venv\Lib\site-packages\django\core\validators.py:318
+#: .\venv\Lib\site-packages\django\core\validators.py:332
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2220
+#, python-format
+msgid "Enter a valid %(protocol)s address."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:311
+msgid "IPv4"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:320
+#: .\venv\Lib\site-packages\django\utils\ipv6.py:43
+msgid "IPv6"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:334
+msgid "IPv4 or IPv6"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:375
+msgid "Enter only digits separated by commas."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:381
+#, python-format
+msgid "Ensure this value is %(limit_value)s (it is %(show_value)s)."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:416
+#, python-format
+msgid "Ensure this value is less than or equal to %(limit_value)s."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:425
+#, python-format
+msgid "Ensure this value is greater than or equal to %(limit_value)s."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:434
+#, python-format
+msgid "Ensure this value is a multiple of step size %(limit_value)s."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:441
+#, python-format
+msgid ""
+"Ensure this value is a multiple of step size %(limit_value)s, starting from "
+"%(offset)s, e.g. %(offset)s, %(valid_value1)s, %(valid_value2)s, and so on."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:473
+#, python-format
+msgid ""
+"Ensure this value has at least %(limit_value)d character (it has "
+"%(show_value)d)."
+msgid_plural ""
+"Ensure this value has at least %(limit_value)d characters (it has "
+"%(show_value)d)."
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:491
+#, python-format
+msgid ""
+"Ensure this value has at most %(limit_value)d character (it has "
+"%(show_value)d)."
+msgid_plural ""
+"Ensure this value has at most %(limit_value)d characters (it has "
+"%(show_value)d)."
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:514
+#: .\venv\Lib\site-packages\django\forms\fields.py:366
+#: .\venv\Lib\site-packages\django\forms\fields.py:405
+msgid "Enter a number."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:516
+#, python-format
+msgid "Ensure that there are no more than %(max)s digit in total."
+msgid_plural "Ensure that there are no more than %(max)s digits in total."
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:521
+#, python-format
+msgid "Ensure that there are no more than %(max)s decimal place."
+msgid_plural "Ensure that there are no more than %(max)s decimal places."
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:526
+#, python-format
+msgid ""
+"Ensure that there are no more than %(max)s digit before the decimal point."
+msgid_plural ""
+"Ensure that there are no more than %(max)s digits before the decimal point."
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:597
+#, python-format
+msgid ""
+"File extension “%(extension)s” is not allowed. Allowed extensions are: "
+"%(allowed_extensions)s."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:659
+msgid "Null characters are not allowed."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\base.py:1600
+#: .\venv\Lib\site-packages\django\forms\models.py:908
+msgid "and"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\base.py:1602
+#, python-format
+msgid "%(model_name)s with this %(field_labels)s already exists."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\constraints.py:22
+#, python-format
+msgid "Constraint “%(name)s” is violated."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:134
+#, python-format
+msgid "Value %(value)r is not a valid choice."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:135
+msgid "This field cannot be null."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:136
+msgid "This field cannot be blank."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:137
+#, python-format
+msgid "%(model_name)s with this %(field_label)s already exists."
+msgstr ""
+
+#. Translators: The 'lookup_type' is one of 'date', 'year' or
+#. 'month'. Eg: "Title must be unique for pub_date year"
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:141
+#, python-format
+msgid ""
+"%(field_label)s must be unique for %(date_field_label)s %(lookup_type)s."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:180
+#, python-format
+msgid "Field of type: %(field_type)s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1162
+#, python-format
+msgid "“%(value)s” value must be either True or False."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1163
+#, python-format
+msgid "“%(value)s” value must be either True, False, or None."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1165
+msgid "Boolean (Either True or False)"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1215
+#, python-format
+msgid "String (up to %(max_length)s)"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1217
+msgid "String (unlimited)"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1326
+msgid "Comma-separated integers"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1427
+#, python-format
+msgid ""
+"“%(value)s” value has an invalid date format. It must be in YYYY-MM-DD "
+"format."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1431
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1566
+#, python-format
+msgid ""
+"“%(value)s” value has the correct format (YYYY-MM-DD) but it is an invalid "
+"date."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1435
+msgid "Date (without time)"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1562
+#, python-format
+msgid ""
+"“%(value)s” value has an invalid format. It must be in YYYY-MM-DD HH:MM[:ss[."
+"uuuuuu]][TZ] format."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1570
+#, python-format
+msgid ""
+"“%(value)s” value has the correct format (YYYY-MM-DD HH:MM[:ss[.uuuuuu]]"
+"[TZ]) but it is an invalid date/time."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1575
+msgid "Date (with time)"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1702
+#, python-format
+msgid "“%(value)s” value must be a decimal number."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1704
+msgid "Decimal number"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1864
+#, python-format
+msgid ""
+"“%(value)s” value has an invalid format. It must be in [DD] [[HH:]MM:]ss[."
+"uuuuuu] format."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1868
+msgid "Duration"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1920
+msgid "Email address"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1945
+msgid "File path"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2023
+#, python-format
+msgid "“%(value)s” value must be a float."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2025
+msgid "Floating point number"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2065
+#, python-format
+msgid "“%(value)s” value must be an integer."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2067
+msgid "Integer"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2163
+msgid "Big (8 byte) integer"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2180
+msgid "Small integer"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2188
+msgid "IPv4 address"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2219
+msgid "IP address"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2310
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2311
+#, python-format
+msgid "“%(value)s” value must be either None, True or False."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2313
+msgid "Boolean (Either True, False or None)"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2364
+msgid "Positive big integer"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2379
+msgid "Positive integer"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2394
+msgid "Positive small integer"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2410
+#, python-format
+msgid "Slug (up to %(max_length)s)"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2446
+msgid "Text"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2526
+#, python-format
+msgid ""
+"“%(value)s” value has an invalid format. It must be in HH:MM[:ss[.uuuuuu]] "
+"format."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2530
+#, python-format
+msgid ""
+"“%(value)s” value has the correct format (HH:MM[:ss[.uuuuuu]]) but it is an "
+"invalid time."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2534
+msgid "Time"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2642
+msgid "URL"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2666
+msgid "Raw binary data"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2731
+#, python-format
+msgid "“%(value)s” is not a valid UUID."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2733
+msgid "Universally unique identifier"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\files.py:244
+msgid "File"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\files.py:420
+msgid "Image"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\json.py:24
+msgid "A JSON object"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\json.py:26
+msgid "Value must be valid JSON."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\related.py:979
+#, python-format
+msgid "%(model)s instance with %(field)s %(value)r is not a valid choice."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\related.py:982
+msgid "Foreign Key (type determined by related field)"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\related.py:1276
+msgid "One-to-one relationship"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\related.py:1333
+#, python-format
+msgid "%(from)s-%(to)s relationship"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\related.py:1335
+#, python-format
+msgid "%(from)s-%(to)s relationships"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\related.py:1383
+msgid "Many-to-many relationship"
+msgstr ""
+
+#. Translators: If found as last label character, these punctuation
+#. characters will prevent the default label_suffix to be appended to the label
+#: .\venv\Lib\site-packages\django\forms\boundfield.py:185
+msgid ":?.!"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:95
+msgid "This field is required."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:315
+msgid "Enter a whole number."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:486
+#: .\venv\Lib\site-packages\django\forms\fields.py:1267
+msgid "Enter a valid date."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:509
+#: .\venv\Lib\site-packages\django\forms\fields.py:1268
+msgid "Enter a valid time."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:536
+msgid "Enter a valid date/time."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:570
+msgid "Enter a valid duration."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:571
+#, python-brace-format
+msgid "The number of days must be between {min_days} and {max_days}."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:640
+msgid "No file was submitted. Check the encoding type on the form."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:641
+msgid "No file was submitted."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:642
+msgid "The submitted file is empty."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:644
+#, python-format
+msgid "Ensure this filename has at most %(max)d character (it has %(length)d)."
+msgid_plural ""
+"Ensure this filename has at most %(max)d characters (it has %(length)d)."
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:649
+msgid "Please either submit a file or check the clear checkbox, not both."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:717
+msgid ""
+"Upload a valid image. The file you uploaded was either not an image or a "
+"corrupted image."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:889
+#: .\venv\Lib\site-packages\django\forms\fields.py:975
+#: .\venv\Lib\site-packages\django\forms\models.py:1592
+#, python-format
+msgid "Select a valid choice. %(value)s is not one of the available choices."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:977
+#: .\venv\Lib\site-packages\django\forms\fields.py:1096
+#: .\venv\Lib\site-packages\django\forms\models.py:1590
+msgid "Enter a list of values."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:1097
+msgid "Enter a complete value."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:1339
+msgid "Enter a valid UUID."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:1369
+msgid "Enter a valid JSON."
+msgstr ""
+
+#. Translators: This is the default suffix added to form field labels
+#: .\venv\Lib\site-packages\django\forms\forms.py:97
+msgid ":"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\forms.py:239
+#, python-format
+msgid "(Hidden field %(name)s) %(error)s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\formsets.py:61
+#, python-format
+msgid ""
+"ManagementForm data is missing or has been tampered with. Missing fields: "
+"%(field_names)s. You may need to file a bug report if the issue persists."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\formsets.py:65
+#, python-format
+msgid "Please submit at most %(num)d form."
+msgid_plural "Please submit at most %(num)d forms."
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\django\forms\formsets.py:70
+#, python-format
+msgid "Please submit at least %(num)d form."
+msgid_plural "Please submit at least %(num)d forms."
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\django\forms\formsets.py:484
+#: .\venv\Lib\site-packages\django\forms\formsets.py:491
+msgid "Order"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\formsets.py:499
+msgid "Delete"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\models.py:901
+#, python-format
+msgid "Please correct the duplicate data for %(field)s."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\models.py:906
+#, python-format
+msgid "Please correct the duplicate data for %(field)s, which must be unique."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\models.py:913
+#, python-format
+msgid ""
+"Please correct the duplicate data for %(field_name)s which must be unique "
+"for the %(lookup)s in %(date_field)s."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\models.py:922
+msgid "Please correct the duplicate values below."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\models.py:1359
+msgid "The inline value did not match the parent instance."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\models.py:1450
+msgid "Select a valid choice. That choice is not one of the available choices."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\models.py:1594
+#, python-format
+msgid "“%(pk)s” is not a valid value."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\utils.py:229
+#, python-format
+msgid ""
+"%(datetime)s couldn’t be interpreted in time zone %(current_timezone)s; it "
+"may be ambiguous or it may not exist."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\widgets.py:527
+msgid "Clear"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\widgets.py:528
+msgid "Currently"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\widgets.py:529
+msgid "Change"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\widgets.py:866
+msgid "Unknown"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\widgets.py:867
+msgid "Yes"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\widgets.py:868
+msgid "No"
+msgstr ""
+
+#. Translators: Please do not add spaces around commas.
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:873
+msgid "yes,no,maybe"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:903
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:920
+#, python-format
+msgid "%(size)d byte"
+msgid_plural "%(size)d bytes"
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:922
+#, python-format
+msgid "%s KB"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:924
+#, python-format
+msgid "%s MB"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:926
+#, python-format
+msgid "%s GB"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:928
+#, python-format
+msgid "%s TB"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:930
+#, python-format
+msgid "%s PB"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dateformat.py:74
+msgid "p.m."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dateformat.py:75
+msgid "a.m."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dateformat.py:80
+msgid "PM"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dateformat.py:81
+msgid "AM"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dateformat.py:153
+msgid "midnight"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dateformat.py:155
+msgid "noon"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:7
+msgid "Monday"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:8
+msgid "Tuesday"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:9
+msgid "Wednesday"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:10
+msgid "Thursday"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:11
+msgid "Friday"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:12
+msgid "Saturday"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:13
+msgid "Sunday"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:16
+msgid "Mon"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:17
+msgid "Tue"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:18
+msgid "Wed"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:19
+msgid "Thu"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:20
+msgid "Fri"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:21
+msgid "Sat"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:22
+msgid "Sun"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:25
+msgid "January"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:26
+msgid "February"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:27
+msgid "March"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:28
+msgid "April"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:29
+msgid "May"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:30
+msgid "June"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:31
+msgid "July"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:32
+msgid "August"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:33
+msgid "September"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:34
+msgid "October"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:35
+msgid "November"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:36
+msgid "December"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:39
+msgid "jan"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:40
+msgid "feb"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:41
+msgid "mar"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:42
+msgid "apr"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:43
+msgid "may"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:44
+msgid "jun"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:45
+msgid "jul"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:46
+msgid "aug"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:47
+msgid "sep"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:48
+msgid "oct"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:49
+msgid "nov"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:50
+msgid "dec"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:53
+msgctxt "abbrev. month"
+msgid "Jan."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:54
+msgctxt "abbrev. month"
+msgid "Feb."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:55
+msgctxt "abbrev. month"
+msgid "March"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:56
+msgctxt "abbrev. month"
+msgid "April"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:57
+msgctxt "abbrev. month"
+msgid "May"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:58
+msgctxt "abbrev. month"
+msgid "June"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:59
+msgctxt "abbrev. month"
+msgid "July"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:60
+msgctxt "abbrev. month"
+msgid "Aug."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:61
+msgctxt "abbrev. month"
+msgid "Sept."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:62
+msgctxt "abbrev. month"
+msgid "Oct."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:63
+msgctxt "abbrev. month"
+msgid "Nov."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:64
+msgctxt "abbrev. month"
+msgid "Dec."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:67
+msgctxt "alt. month"
+msgid "January"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:68
+msgctxt "alt. month"
+msgid "February"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:69
+msgctxt "alt. month"
+msgid "March"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:70
+msgctxt "alt. month"
+msgid "April"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:71
+msgctxt "alt. month"
+msgid "May"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:72
+msgctxt "alt. month"
+msgid "June"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:73
+msgctxt "alt. month"
+msgid "July"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:74
+msgctxt "alt. month"
+msgid "August"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:75
+msgctxt "alt. month"
+msgid "September"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:76
+msgctxt "alt. month"
+msgid "October"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:77
+msgctxt "alt. month"
+msgid "November"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:78
+msgctxt "alt. month"
+msgid "December"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\ipv6.py:20
+msgid "This is not a valid IPv6 address."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\text.py:76
+#, python-format
+msgctxt "String to return when truncating text"
+msgid "%(truncated_text)s…"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\text.py:287
+msgid "or"
+msgstr ""
+
+#. Translators: This string is used as a separator between list elements
+#: .\venv\Lib\site-packages\django\utils\text.py:306
+#: .\venv\Lib\site-packages\django\utils\timesince.py:135
+msgid ", "
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\timesince.py:8
+#, python-format
+msgid "%(num)d year"
+msgid_plural "%(num)d years"
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\django\utils\timesince.py:9
+#, python-format
+msgid "%(num)d month"
+msgid_plural "%(num)d months"
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\django\utils\timesince.py:10
+#, python-format
+msgid "%(num)d week"
+msgid_plural "%(num)d weeks"
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\django\utils\timesince.py:11
+#, python-format
+msgid "%(num)d day"
+msgid_plural "%(num)d days"
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\django\utils\timesince.py:12
+#, python-format
+msgid "%(num)d hour"
+msgid_plural "%(num)d hours"
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\django\utils\timesince.py:13
+#, python-format
+msgid "%(num)d minute"
+msgid_plural "%(num)d minutes"
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\django\views\csrf.py:29
+msgid "Forbidden"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\csrf.py:30
+msgid "CSRF verification failed. Request aborted."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\csrf.py:34
+msgid ""
+"You are seeing this message because this HTTPS site requires a “Referer "
+"header” to be sent by your web browser, but none was sent. This header is "
+"required for security reasons, to ensure that your browser is not being "
+"hijacked by third parties."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\csrf.py:40
+msgid ""
+"If you have configured your browser to disable “Referer” headers, please re-"
+"enable them, at least for this site, or for HTTPS connections, or for “same-"
+"origin” requests."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\csrf.py:45
+msgid ""
+"If you are using the <meta name=\"referrer\" content=\"no-referrer\"> tag or "
+"including the “Referrer-Policy: no-referrer” header, please remove them. The "
+"CSRF protection requires the “Referer” header to do strict referer checking. "
+"If you’re concerned about privacy, use alternatives like <a "
+"rel=\"noreferrer\" …> for links to third-party sites."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\csrf.py:54
+msgid ""
+"You are seeing this message because this site requires a CSRF cookie when "
+"submitting forms. This cookie is required for security reasons, to ensure "
+"that your browser is not being hijacked by third parties."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\csrf.py:60
+msgid ""
+"If you have configured your browser to disable cookies, please re-enable "
+"them, at least for this site, or for “same-origin” requests."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\csrf.py:66
+msgid "More information is available with DEBUG=True."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:44
+msgid "No year specified"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:64
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:115
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:214
+msgid "Date out of range"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:94
+msgid "No month specified"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:147
+msgid "No day specified"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:194
+msgid "No week specified"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:353
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:384
+#, python-format
+msgid "No %(verbose_name_plural)s available"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:680
+#, python-format
+msgid ""
+"Future %(verbose_name_plural)s not available because %(class_name)s."
+"allow_future is False."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:720
+#, python-format
+msgid "Invalid date string “%(datestr)s” given format “%(format)s”"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\generic\detail.py:56
+#, python-format
+msgid "No %(verbose_name)s found matching the query"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\generic\list.py:70
+msgid "Page is not “last”, nor can it be converted to an int."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\generic\list.py:77
+#, python-format
+msgid "Invalid page (%(page_number)s): %(message)s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\generic\list.py:173
+#, python-format
+msgid "Empty list and “%(class_name)s.allow_empty” is False."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\static.py:49
+msgid "Directory indexes are not allowed here."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\static.py:51
+#, python-format
+msgid "“%(path)s” does not exist"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\static.py:68
+#: .\venv\Lib\site-packages\django\views\templates\directory_index.html:8
+#: .\venv\Lib\site-packages\django\views\templates\directory_index.html:11
+#, python-format
+msgid "Index of %(directory)s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:7
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:204
+msgid "The install worked successfully! Congratulations!"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:206
+#, python-format
+msgid ""
+"View <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\" "
+"target=\"_blank\" rel=\"noopener\">release notes</a> for Django %(version)s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:208
+#, python-format
+msgid ""
+"You are seeing this page because <a href=\"https://docs.djangoproject.com/en/"
+"%(version)s/ref/settings/#debug\" target=\"_blank\" "
+"rel=\"noopener\">DEBUG=True</a> is in your settings file and you have not "
+"configured any URLs."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:217
+msgid "Django Documentation"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:218
+msgid "Topics, references, &amp; how-to’s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:226
+msgid "Tutorial: A Polling App"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:227
+msgid "Get started with Django"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:235
+msgid "Django Community"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:236
+msgid "Connect, get help, or contribute"
+msgstr ""

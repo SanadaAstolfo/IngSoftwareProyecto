@@ -1,4 +1,5 @@
 {% extends 'gestion/base.html' %}
+{% load i18n %}
 
 {% block title %}{{ titulo }}{% endblock %}
 
@@ -48,8 +49,8 @@
             {% endfor %}
             
             <div class="form-actions">
-                <a href="{% url 'portal' %}" class="button secondary">Cancelar</a> {# Asume clase 'button secondary' para cancelar #}
-                <button type="submit" class="button primary">Guardar Cambios</button> {# Asume clase 'button primary' para guardar #}
+                <a href="{% url 'portal' %}" class="button secondary">{% trans "Cancelar" %}</a> {# Asume clase 'button secondary' para cancelar #}
+                <button type="submit" class="button primary">{% trans "Guardar Cambios" %}</button> {# Asume clase 'button primary' para guardar #}
             </div>
         </form>
     </section>

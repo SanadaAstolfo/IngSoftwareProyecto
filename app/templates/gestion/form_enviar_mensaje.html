@@ -1,4 +1,5 @@
 {% extends 'gestion/base.html' %}
+{% load i18n %}
 
 {% block title %}{{ titulo }}{% endblock %}
 
@@ -18,8 +19,8 @@
                 </div>
             {% endfor %}
             <div class="form-actions">
-                <a href="{% url 'bandeja_entrada' %}" class="button secondary">Cancelar</a>
-                <button type="submit" class="button primary">Enviar Mensaje</button>
+                <a href="{% url 'bandeja_entrada' %}" class="button secondary">{% trans "Cancelar" %}</a>
+                <button type="submit" class="button primary">{% trans "Enviar Mensaje" %}</button>
             </div>
         </form>
     </section>       

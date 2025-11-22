@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 <!doctype html>
 <html lang="es">
 <head>
@@ -7,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <link rel="stylesheet" href="{% static 'gestion/css/styles.css' %}">
 
-    <title>Comprobante de Pago #{{ pago.id }}</title>
+    <title>{% trans "Comprobante de Pago" %} #{{ pago.id }}</title>
     <style>
         body {
             background: linear-gradient(135deg, var(--background-color), var(--light-accent));
@@ -711,46 +712,46 @@
     <div class="comprobante-container">
         <div class="header">
             <img src="{% static '/svg/logo.svg' %}" alt="Logo Clínica" style="max-height: 80px;">
-            <h1>Comprobante de Pago</h1>
+            <h1>{% trans "Comprobante de Pago" %}</h1>
         </div>
 
         <div class="detalle">
             <div class="detalle-item">
-                <span>Nº de Comprobante:</span>
+                <span>{% trans "Nº de Comprobante:" %}</span>
                 <strong>{{ pago.id }}</strong>
             </div>
             <div class="detalle-item">
-                <span>Fecha de Emisión:</span>
+                <span>{% trans "Fecha de Emisión:" %}</span>
                 <strong>{{ pago.fecha_pago|date:"d/m/Y H:i" }}</strong>
             </div>
             <div class="detalle-item">
-                <span>Tutor:</span>
+                <span>{% trans "Tutor:" %}</span>
                 <strong>{{ pago.tutor.nombre_completo }}</strong>
             </div>
             <div class="detalle-item">
-                <span>Monto Pagado:</span>
+                <span>{% trans "Monto Pagado:" %}</span>
                 <strong>${{ pago.monto|floatformat:2 }}</strong>
             </div>
             <div class="detalle-item">
-                <span>Método de Pago:</span>
+                <span>{% trans "Método de Pago:" %}</span>
                 <strong>{{ pago.metodo_pago }}</strong>
             </div>
             {% if pago.cita %}
             <div class="detalle-item">
-                <span>Asociado a Cita:</span>
-                <strong>Cita para {{ pago.cita.paciente.nombre }} el {{ pago.cita.fecha_hora|date:"d/m/Y" }}</strong>
+                <span>{% trans "Asociado a Cita:" %}</span>
+                <strong>{% trans "Cita para" %} {{ pago.cita.paciente.nombre }} {% trans "el" %} {{ pago.cita.fecha_hora|date:"d/m/Y" }}</strong>
             </div>
             {% endif %}
             {% if pago.notas %}
             <div class="detalle-item">
-                <span>Notas:</span>
+                <span>{% trans "Notas:" %}</span>
                 <strong>{{ pago.notas }}</strong>
             </div>
             {% endif %}
         </div>
         
         <div class="footer">
-            Gracias por su pago.
+            {% trans "Gracias por su pago." %}
         </div>
     </div>
 </body>

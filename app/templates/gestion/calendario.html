@@ -1,28 +1,29 @@
 {% extends 'gestion/base.html' %}
+{% load i18n %}
 
-{% block title %}Calendario de Citas{% endblock %}
+{% block title %}{% trans "Calendario de Citas" %}{% endblock %}
 
 {% block content %}
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1>{{ titulo }}</h1>
-        <a href="{% url 'crear_cita' %}" class="btn btn-primary">+ Agendar Nueva Cita</a>
+        <a href="{% url 'crear_cita' %}" class="btn btn-primary">+ {% trans "Agendar Nueva Cita" %}</a>
     </div>
 
     <div class="card card-body mb-4">
         <form method="get" action="{% url 'calendario_citas' %}">
             <div class="row align-items-end">
                 <div class="col-md-4">
-                    <label for="fecha" class="form-label">Filtrar por fecha:</label>
+                    <label for="fecha" class="form-label">{% trans "Filtrar por fecha:" %}</label>
                     <input type="date" name="fecha" id="fecha" class="form-control">
                 </div>
                 <div class="col-md-2">
-                    <button type="submit" class="btn btn-secondary w-100">Filtrar</button>
+                    <button type="submit" class="btn btn-secondary w-100">{% trans "Filtrar" %}</button>
                 </div>
                 <div class="col-md-3">
-                    <a href="{% url 'calendario_citas' %}?hoy=true" class="btn btn-info w-100">Ver Citas de Hoy</a>
+                    <a href="{% url 'calendario_citas' %}?hoy=true" class="btn btn-info w-100">{% trans "Ver Citas de Hoy" %}</a>
                 </div>
                 <div class="col-md-3">
-                    <a href="{% url 'calendario_citas' %}" class="btn btn-outline-secondary w-100">Mostrar Todas</a>
+                    <a href="{% url 'calendario_citas' %}" class="btn btn-outline-secondary w-100">{% trans "Mostrar Todas" %}</a>
                 </div>
             </div>
         </form>
@@ -33,29 +34,29 @@
                 <div class="d-flex w-100 justify-content-between">
                     <h5 class="mb-1">{{ cita.paciente.nombre }} - <span class="text-muted">{{ cita.motivo }}</span>
                         {% if cita.es_especialista %}
-                            <span class="badge bg-info">Especialista</span>
+                            <span class="badge bg-info">{% trans "Especialista" %}</span>
                         {% endif %}
                         {% if cita.es_domicilio %}
-                            <span class="badge bg-success">A Domicilio</span>
+                            <span class="badge bg-success">{% trans "A Domicilio" %}</span>
                         {% endif %}
                     </h5>
                     <small>{{ cita.fecha_hora }}</small>
                 </div>
-                <p class="mb-1">Veterinario: {{ cita.veterinario.username|default:"Sin asignar" }}</p>
-                <p class="mb-1">Estado: {{ cita.get_estado_display }}</p>
+                <p class="mb-1">{% trans "Veterinario" %}: {{ cita.veterinario.username|default:"Sin asignar" }}</p>
+                <p class="mb-1">{% trans "Estado" %}: {{ cita.get_estado_display }}</p>
                 <div class="btn-group" role="group">
                     {% if cita.paciente %}
                         <a href="{% url 'seleccionar_tipo_atencion' cita.paciente.id %}" class="btn btn-sm btn-primary">
-                            <i class="bi bi-play-circle"></i> Iniciar Consulta
+                            <i class="bi bi-play-circle"></i> {% trans "Iniciar Consulta" %}
                         </a>
                     {% elif cita.nombre_paciente_temporal %}
                         <a href="{% url 'crear_paciente' %}?nombre={{ cita.nombre_paciente_temporal|urlencode }}&tutor={{ cita.nombre_tutor_temporal|urlencode }}" 
                            class="btn btn-sm btn-warning">
-                            <i class="bi bi-plus-circle"></i> Registrar Paciente e Iniciar
+                            <i class="bi bi-plus-circle"></i> {% trans "Registrar Paciente e Iniciar" %}
                         </a>
                     {% endif %}
                     <a href="{% url 'editar_cita' cita.id %}" class="btn btn-sm btn-secondary">
-                        <i class="bi bi-pencil"></i> Editar
+                        <i class="bi bi-pencil"></i> {% trans "Editar" %}
                     </a>
                     <a href="{% url 'registrar_abono' cita.id %}" class="btn btn-sm btn-success">
                         <i class="bi bi-cash"></i> Registrar Abono

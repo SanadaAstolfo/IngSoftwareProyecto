@@ -1,42 +1,43 @@
 {% extends 'gestion/base.html' %}
 {% load custom_filters %}
+{% load i18n %}
 
-{% block title %}Detalle de {{ tutor.nombre_completo}}{% endblock %}
+{% block title %}{% trans "Detalle de" %} {{ tutor.nombre_completo}}{% endblock %}
 
 {% block content %}
     <h1>{{ tutor.nombre_completo}}</h1>
     <hr>
     <div class="card mb-4">
-        <div class="card-header">Información de Contacto</div>
+        <div class="card-header">{% trans "Información de Contacto" %}</div>
         <div class="card-body">
-            <p><strong>RUT:</strong> {{ tutor.rut|format_rut }}</p>
-            <p><strong>Email:</strong> {{ tutor.email }}</p>
-            <p><strong>Teléfono:</strong> {{ tutor.telefono }}</p>
-            <p><strong>Dirección:</strong> {{ tutor.direccion }}</p>
+            <p><strong>{% trans "RUT" %}:</strong> {{ tutor.rut|format_rut }}</p>
+            <p><strong>{% trans "Email" %}:</strong> {{ tutor.email }}</p>
+            <p><strong>{% trans "Teléfono" %}:</strong> {{ tutor.telefono }}</p>
+            <p><strong>{% trans "Dirección" %}:</strong> {{ tutor.direccion }}</p>
         </div>
     </div>
     {% if tutor.datos_bloqueados %}
         <div class="alert alert-danger">
-            <strong>Atención:</strong> Los datos de este tutor están bloqueados y no pueden ser modificados.
+            <strong>{% trans "Atención" %}:</strong> {% trans "Los datos de este tutor están bloqueados y no pueden ser modificados." %}
         </div>
     {% else %}
-        <a href="{% url 'bloquear_datos_tutor' tutor.id %}" class="btn btn-warning">Bloquear Datos de Tutor</a>
+        <a href="{% url 'bloquear_datos_tutor' tutor.id %}" class="btn btn-warning">{% trans "Bloquear Datos de Tutor" %}</a>
     {% endif %}
     <div class="card mb-4">
         <div class="card-header d-flex justify-content-between align-items-center">
-            Estado de Cuenta
-            <a href="{% url 'registrar_pago_tutor' tutor.id %}" class="btn btn-outline-success btn-sm">+ Registrar Pago</a>
+            {% trans "Estado de Cuenta" %}
+            <a href="{% url 'registrar_pago_tutor' tutor.id %}" class="btn btn-outline-success btn-sm">+ {% trans "Registrar Pago" %}</a>
         </div>
         <div class="card-body">
             {% if tutor.pagos.all %}
                 <table class="table table-sm table-hover">
                     <thead>
                         <tr>
-                            <th>Fecha</th>
-                            <th>Monto</th>
-                            <th>Método</th>
-                            <th>Notas / Cita Asociada</th>
-                            <th>Acciones</th> </tr>
+                            <th>{% trans "Fecha" %}</th>
+                            <th>{% trans "Monto" %}</th>
+                            <th>{% trans "Método" %}</th>
+                            <th>{% trans "Notas / Cita Asociada" %}</th>
+                            <th>{% trans "Acciones" %}</th> </tr>
                         </tr>
                     </thead>
                     <tbody>
@@ -45,30 +46,30 @@
                             <td>{{ pago.fecha_pago|date:"d/m/Y H:i" }}</td>
                             <td>${{ pago.monto }}</td>
                             <td>{{ pago.metodo_pago }}</td>
-                            <td>{% if pago.cita %}Abono para cita de {{pago.cita.paciente.nombre}}{% else %}{{ pago.notas|default:"--" }}{% endif %}</td>
+                            <td>{% if pago.cita %}{% trans "Abono para cita de" %} {{pago.cita.paciente.nombre}}{% else %}{{ pago.notas|default:"--" }}{% endif %}</td>
                             <td>
-                                <a href="{% url 'ver_comprobante' pago.id %}" class="btn btn-sm btn-info" target="_blank">Ver Comprobante</a>
+                                <a href="{% url 'ver_comprobante' pago.id %}" class="btn btn-sm btn-info" target="_blank">{% trans "Ver Comprobante" %}</a>
                             </td>
                         </tr>
                     {% endfor %}
                     </tbody>
                 </table>
             {% else %}
-                <p class="mb-0">No hay pagos registrados para este tutor.</p>
+                <p class="mb-0">{% trans "No hay pagos registrados para este tutor." %}</p>
             {% endif %}
         </div>
     </div>
-    <h3>Mascotas a su Cuidado</h3>
+    <h3>{% trans "Mascotas a su Cuidado" %}</h3>
     <div class="list-group">
         {% for paciente in pacientes %}
             <a href="{% url 'detalle_paciente' paciente.id %}" class="list-group-item list-group-item-action">
                 <div class="d-flex w-100 justify-content-between">
                     <h5 class="mb-1">{{ paciente.nombre }}</h5>
-                    <small>Especie: {{ paciente.especie }}</small>
+                    <small>{% trans "Especie" %}: {{ paciente.especie }}</small>
                 </div>
             </a>
         {% empty %}
-            <div class="alert alert-info">Este tutor no tiene mascotas registradas.</div>
+            <div class="alert alert-info">{% trans "Este tutor no tiene mascotas registradas." %}</div>
         {% endfor %}
     </div>
 {% endblock %}

@@ -1,20 +1,21 @@
 {% extends 'gestion/base.html' %} {# Usa la base de gestión para consistencia #}
+{% load i18n %}
 
-{% block title %}Mis Pacientes{% endblock %}
+{% block title %}{% trans "Mis Pacientes" %}{% endblock %}
 
 {% block content %}
 <main class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h1 class="h3">Mis Pacientes</h1> {# h3 #}
-        <a href="{% url 'editar_mi_perfil' %}" class="btn btn-sm btn-outline-secondary">Editar mi perfil</a>
+        <h1 class="h3">{% trans "Mis Pacientes" %}</h1> {# h3 #}
+        <a href="{% url 'editar_mi_perfil' %}" class="btn btn-sm btn-outline-secondary">{% trans "Editar mi perfil" %}</a>
     </div>
     <hr>
 
     {% if mensaje %}
         <div class="alert alert-warning">{{ mensaje }}</div>
-            <a href="{% url 'portal' %}" class="btn btn-secondary mt-2">Volver al Portal</a>
+            <a href="{% url 'portal' %}" class="btn btn-secondary mt-2">{% trans "Volver al Portal" %}</a>
     {% elif tutor %}
-    <h2 class="h5 mb-3">Tutor: {{ tutor.nombre_completo }}</h2> {# h5 #}
+    <h2 class="h5 mb-3">{% trans "Tutor" %}: {{ tutor.nombre_completo }}</h2> {# h5 #}
     {% if pacientes %}
         <div class="list-group"> {# Usar list-group para mejor estilo #}
             {% for p in pacientes %}
@@ -31,13 +32,13 @@
             {% endfor %}
         </div>
     {% else %}
-        <p class="text-muted">No tienes pacientes asociados registrados en el sistema.</p>
+        <p class="text-muted">{% trans "No tienes pacientes asociados registrados en el sistema." %}</p>
     {% endif %}
         <hr class="mt-4">
-        <a href="{% url 'portal' %}" class="btn btn-secondary">Volver al Portal</a>
+        <a href="{% url 'portal' %}" class="btn btn-secondary">{% trans "Volver al Portal" %}</a>
     {% else %}
-        <div class="alert alert-danger">Error: No se encontró el registro de tutor asociado a tu cuenta. Contacta al administrador.</div>
-        <a href="{% url 'portal' %}" class="btn btn-secondary mt-2">Volver al Portal</a>
+        <div class="alert alert-danger">{% trans "Error: No se encontró el registro de tutor asociado a tu cuenta. Contacta al administrador." %}</div>
+        <a href="{% url 'portal' %}" class="btn btn-secondary mt-2">{% trans "Volver al Portal" %}</a>
     {% endif %}
 
 </main>

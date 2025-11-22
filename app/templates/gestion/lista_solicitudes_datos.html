@@ -1,5 +1,6 @@
 {% extends 'gestion/base.html' %}
 {% load custom_filters %}
+{% load i18n %}
 
 {% block title %}{{ titulo }}{% endblock %}
 
@@ -12,12 +13,12 @@
         <div class="card-body">
             <form method="get" class="row g-3">
                 <div class="col-md-4">
-                    <label class="form-label">Filtrar por Estado:</label>
+                    <label class="form-label">{% trans "Filtrar por Estado" %}:</label>
                     <select name="estado" class="form-select" onchange="this.form.submit()">
-                        <option value="">Todos</option>
-                        <option value="Pendiente" {% if request.GET.estado == 'Pendiente' %}selected{% endif %}>Pendientes</option>
-                        <option value="Aprobada" {% if request.GET.estado == 'Aprobada' %}selected{% endif %}>Aprobadas</option>
-                        <option value="Rechazada" {% if request.GET.estado == 'Rechazada' %}selected{% endif %}>Rechazadas</option>
+                        <option value="">{% trans "Todos" %}</option>
+                        <option value="Pendiente" {% if request.GET.estado == 'Pendiente' %}selected{% endif %}>{% trans "Pendientes" %}</option>
+                        <option value="Aprobada" {% if request.GET.estado == 'Aprobada' %}selected{% endif %}>{% trans "Aprobadas" %}</option>
+                        <option value="Rechazada" {% if request.GET.estado == 'Rechazada' %}selected{% endif %}>{% trans "Rechazadas" %}</option>
                     </select>
                 </div>
             </form>
@@ -29,13 +30,13 @@
             <table class="table table-hover">
                 <thead class="table-dark">
                     <tr>
-                        <th>Folio</th>
-                        <th>Tutor</th>
-                        <th>RUT</th>
-                        <th>Tipo de Solicitud</th>
-                        <th>Fecha</th>
-                        <th>Estado</th>
-                        <th>Acciones</th>
+                        <th>{% trans "Folio" %}</th>
+                        <th>{% trans "Tutor" %}</th>
+                        <th>{% trans "RUT" %}</th>
+                        <th>{% trans "Tipo de Solicitud" %}</th>
+                        <th>{% trans "Fecha" %}</th>
+                        <th>{% trans "Estado" %}</th>
+                        <th>{% trans "Acciones" %}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -52,23 +53,23 @@
                         <td>{{ solicitud.fecha_solicitud|date:"d/m/Y H:i" }}</td>
                         <td>
                             {% if solicitud.estado == 'Pendiente' %}
-                                <span class="badge bg-warning text-dark">⏳ Pendiente</span>
+                                <span class="badge bg-warning text-dark">⌛ {% trans "Pendiente" %}</span>
                             {% elif solicitud.estado == 'Aprobada' %}
-                                <span class="badge bg-success">✅ Aprobada</span>
+                                <span class="badge bg-success">✅ {% trans "Aprobada" %}</span>
                             {% elif solicitud.estado == 'Rechazada' %}
-                                <span class="badge bg-danger">❌ Rechazada</span>
+                                <span class="badge bg-danger">❌ {% trans "Rechazada" %}</span>
                             {% endif %}
                         </td>
                         <td>
                             {% if solicitud.estado == 'Pendiente' %}
                                 <a href="{% url 'gestionar_solicitud_datos' solicitud.id %}" class="btn btn-sm btn-primary">
-                                    <i class="bi bi-gear"></i> Gestionar
+                                    <i class="bi bi-gear"></i> {% trans "Gestionar" %}
                                 </a>
                             {% else %}
                                 <button type="button" class="btn btn-sm btn-info" 
                                         data-bs-toggle="modal" 
                                         data-bs-target="#detalleModal{{ solicitud.id }}">
-                                    <i class="bi bi-eye"></i> Ver
+                                    <i class="bi bi-eye"></i> {% trans "Ver" %}
                                 </button>
                                 
                                 <!-- Modal -->
@@ -76,15 +77,15 @@
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title">Detalle Solicitud #{{ solicitud.id }}</h5>
+                                                <h5 class="modal-title">{% trans "Detalle Solicitud" %} #{{ solicitud.id }}</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <p><strong>Tutor:</strong> {{ solicitud.tutor.nombre_completo }}</p>
-                                                <p><strong>Email:</strong> {{ solicitud.tutor.email }}</p>
-                                                <p><strong>Tipo:</strong> {{ solicitud.get_tipo_solicitud_display }}</p>
-                                                <p><strong>Estado:</strong> {{ solicitud.get_estado_display }}</p>
-                                                <p><strong>Gestionado por:</strong> 
+                                                <p><strong>{% trans "Tutor" %}:</strong> {{ solicitud.tutor.nombre_completo }}</p>
+                                                <p><strong>{% trans "Email" %}:</strong> {{ solicitud.tutor.email }}</p>
+                                                <p><strong>{% trans "Tipo" %}:</strong> {{ solicitud.get_tipo_solicitud_display }}</p>
+                                                <p><strong>{% trans "Estado" %}:</strong> {{ solicitud.get_estado_display }}</p>
+                                                <p><strong>{% trans "Gestionado por" %}:</strong> 
                                                     {% if solicitud.usuario_responsable %}
                                                         {{ solicitud.usuario_responsable.get_full_name|default:solicitud.usuario_responsable.username }}
                                                     {% else %}
@@ -93,12 +94,12 @@
                                                 </p>
                                                 {% if solicitud.resolucion %}
                                                 <hr>
-                                                <p><strong>Resolución:</strong></p>
+                                                <p><strong>{% trans "Resolución" %}:</strong></p>
                                                 <p>{{ solicitud.resolucion|linebreaksbr }}</p>
                                                 {% endif %}
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans "Cerrar" %}</button>
                                             </div>
                                         </div>
                                     </div>
@@ -112,8 +113,9 @@
         </div>
     {% else %}
         <div class="alert alert-info">
-            <i class="bi bi-info-circle"></i> No hay solicitudes de gestión de datos 
-            {% if request.GET.estado %}con el estado "{{ request.GET.estado }}"{% endif %}.
+            <i class="bi bi-info-circle"></i> {% trans "No hay solicitudes de gestión de datos" %}
+            {% if request.GET.estado %}{% trans "con el estado" %} "{{ request.GET.estado }}"{% endif %}.
+        </div>
         </div>
     {% endif %}
 </div>

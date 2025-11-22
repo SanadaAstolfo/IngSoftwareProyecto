@@ -1,4 +1,5 @@
 {% extends 'gestion/base.html' %}
+{% load i18n %}
 
 {% block title %}{{ titulo }}{% endblock %}
 
@@ -7,7 +8,7 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1>📋 {{ titulo }}</h1>
         <a href="{% url 'solicitar_gestion_datos' %}" class="btn btn-primary">
-            <i class="bi bi-plus-circle"></i> Nueva Solicitud
+            <i class="bi bi-plus-circle"></i> {% trans "Nueva Solicitud" %}
         </a>
     </div>
 
@@ -16,11 +17,11 @@
             <table class="table table-hover">
                 <thead class="table-light">
                     <tr>
-                        <th>Folio</th>
-                        <th>Tipo de Solicitud</th>
-                        <th>Fecha</th>
-                        <th>Estado</th>
-                        <th>Resolución</th>
+                        <th>{% trans "Folio" %}</th>
+                        <th>{% trans "Tipo de Solicitud" %}</th>
+                        <th>{% trans "Fecha" %}</th>
+                        <th>{% trans "Estado" %}</th>
+                        <th>{% trans "Resolución" %}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -35,11 +36,11 @@
                         <td>{{ solicitud.fecha_solicitud|date:"d/m/Y H:i" }}</td>
                         <td>
                             {% if solicitud.estado == 'Pendiente' %}
-                                <span class="badge bg-warning text-dark">⏳ Pendiente</span>
+                                <span class="badge bg-warning text-dark">⏳ {% trans "Pendiente" %}</span>
                             {% elif solicitud.estado == 'Aprobada' %}
-                                <span class="badge bg-success">✅ Aprobada</span>
+                                <span class="badge bg-success">✅ {% trans "Aprobada" %}</span>
                             {% elif solicitud.estado == 'Rechazada' %}
-                                <span class="badge bg-danger">❌ Rechazada</span>
+                                <span class="badge bg-danger">❌ {% trans "Rechazada" %}</span>
                             {% endif %}
                         </td>
                         <td>
@@ -47,7 +48,7 @@
                                 <button type="button" class="btn btn-sm btn-info" 
                                         data-bs-toggle="modal" 
                                         data-bs-target="#resolucionModal{{ solicitud.id }}">
-                                    Ver Detalle
+                                    {% trans "Ver Detalle" %}
                                 </button>
                                 
                                 <!-- Modal -->
@@ -55,13 +56,13 @@
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title">Resolución de Solicitud #{{ solicitud.id }}</h5>
+                                                <h5 class="modal-title">{% trans "Resolución de Solicitud" %} #{{ solicitud.id }}</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <p><strong>Tipo:</strong> {{ solicitud.get_tipo_solicitud_display }}</p>
-                                                <p><strong>Estado:</strong> {{ solicitud.get_estado_display }}</p>
-                                                <p><strong>Gestionado por:</strong> 
+                                                <p><strong>{% trans "Tipo:" %}</strong> {{ solicitud.get_tipo_solicitud_display }}</p>
+                                                <p><strong>{% trans "Estado:" %}</strong> {{ solicitud.get_estado_display }}</p>
+                                                <p><strong>{% trans "Gestionado por:" %}</strong> 
                                                     {% if solicitud.usuario_responsable %}
                                                         {{ solicitud.usuario_responsable.get_full_name|default:solicitud.usuario_responsable.username }}
                                                     {% else %}
@@ -69,17 +70,17 @@
                                                     {% endif %}
                                                 </p>
                                                 <hr>
-                                                <p><strong>Resolución:</strong></p>
+                                                <p><strong>{% trans "Resolución:" %}</strong></p>
                                                 <p>{{ solicitud.resolucion|linebreaksbr }}</p>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans "Cerrar" %}</button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             {% else %}
-                                <span class="text-muted">En proceso...</span>
+                                <span class="text-muted">{% trans "En proceso..." %}</span>
                             {% endif %}
                         </td>
                     </tr>
@@ -89,8 +90,8 @@
         </div>
     {% else %}
         <div class="alert alert-info">
-            <i class="bi bi-info-circle"></i> No has realizado ninguna solicitud de gestión de datos aún.
-            <a href="{% url 'solicitar_gestion_datos' %}" class="alert-link">Haz clic aquí para crear una</a>.
+            <i class="bi bi-info-circle"></i> {% trans "No has realizado ninguna solicitud de gestión de datos aún." %}
+            <a href="{% url 'solicitar_gestion_datos' %}" class="alert-link">{% trans "Haz clic aquí para crear una" %}</a>.
         </div>
     {% endif %}
 </div>
