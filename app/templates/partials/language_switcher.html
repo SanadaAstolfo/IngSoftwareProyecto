@@ -14,14 +14,15 @@
 
 <style>
     .language-switcher {
-        position: fixed;
-        top: 2rem;
+        position: absolute;
+        top: 50%;
         right: 2rem;
-        z-index: 1000;
+        transform: translateY(-50%);
+        z-index: 100;
     }
 
     .lang-select {
-        padding: 0.7rem 1.2rem;
+        padding: 0.6rem 1rem;
         border-radius: 0.5rem;
         border: 2px solid #6BB6B8;
         background-color: white;
@@ -30,16 +31,22 @@
         cursor: pointer;
         transition: all 0.3s ease;
         font-size: 1.4rem;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     }
 
     .lang-select:hover {
         background-color: #6BB6B8;
         color: white;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .lang-select:focus {
+        outline: 2px solid #6BB6B8;
+        outline-offset: 2px;
     }
 
     .lang-select option {
-        color: #6BB6B8;
+        color: #333;
         background-color: white;
     }
 </style>

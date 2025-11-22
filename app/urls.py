@@ -6,6 +6,9 @@ urlpatterns = [
     # Login exclusivo para tutores
     path('acceso-tutor/', views.TutorLoginView.as_view(), name='login_tutor'),
     
+    # Activación de cuenta de tutores (Onboarding Digital)
+    path('activar/<uidb64>/<token>/', views.activar_cuenta, name='activar_cuenta'),
+    
     path('pacientes/', views.lista_pacientes, name='lista_pacientes'),
     path('pacientes/nuevo/', views.crear_paciente, name='crear_paciente'),
     path('pacientes/<int:paciente_id>/', views.detalle_paciente, name='detalle_paciente'),

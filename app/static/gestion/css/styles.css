@@ -869,6 +869,29 @@ input[type="date"].form-control {
     display: block;
 }
 
+/* Enlaces dentro de list-group-item */
+.list-group-item a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+    position: relative;
+    z-index: 10;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+.list-group-item a:hover {
+    color: var(--accent-color);
+    text-decoration: underline;
+    transform: translateX(5px);
+}
+
+.list-group-item a:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+}
+
 /* ==========================================================================
    ESTADO VACÍO - Compatible con alert alert-info
    ========================================================================== */
@@ -1504,66 +1527,86 @@ button[type="submit"].btn btn-danger:active::after {
 }
 
 /* Dark mode support */
-@media (prefers-color-scheme: dark) {
-    :root {
-        --card-bg: #2C3E50;
-        --background-color: #34495E;
-        --light-accent: #4A5568;
-        --dark-color: #ECF0F1;
-    }
+/* ==========================================================================
+   TEMA OSCURO - Solo Manual (deshabilitado automático)
+   ========================================================================== */
 
-    body {
-        background: linear-gradient(135deg, var(--background-color), var(--light-accent));
-        color: var(--dark-color);
-    }
+/* Forzar tema claro por defecto (sobrescribe preferencias del navegador) */
+html[data-theme="light"],
+html:not([data-theme]) {
+    --primary-color: #6BB6B8;
+    --secondary-color: #4A9B9D;
+    --accent-color: #F4A261;
+    --warm-orange: #E76F51;
+    --background-color: #FEF7E6;
+    --light-accent: #FFE5B4;
+    --dark-color: #2C3E50;
+    --card-bg: #FFFFFF;
+}
 
-    .card,
-    .list-group-item {
-        background: linear-gradient(135deg, var(--card-bg), var(--light-accent));
-        border-color: rgba(107, 182, 184, 0.5);
-        color: var(--dark-color);
-    }
+/* Tema oscuro cuando el usuario lo selecciona manualmente */
+html[data-theme="dark"] {
+    --primary-color: #6BB6B8;
+    --secondary-color: #4A9B9D;
+    --accent-color: #F4A261;
+    --warm-orange: #E76F51;
+    --card-bg: #2C3E50;
+    --background-color: #34495E;
+    --light-accent: #4A5568;
+    --dark-color: #ECF0F1;
+}
 
-    .card-body {
-        background: transparent;
-    }
+html[data-theme="dark"] body {
+    background: linear-gradient(135deg, var(--background-color), var(--light-accent));
+    color: var(--dark-color);
+}
 
-    .form-control {
-        background: var(--card-bg);
-        color: var(--dark-color);
-        border-color: rgba(107, 182, 184, 0.5);
-    }
+html[data-theme="dark"] .card,
+html[data-theme="dark"] .list-group-item {
+    background: linear-gradient(135deg, var(--card-bg), var(--light-accent));
+    border-color: rgba(107, 182, 184, 0.5);
+    color: var(--dark-color);
+}
 
-    h1,
-    .card-title {
-        color: var(--dark-color);
-    }
+html[data-theme="dark"] .card-body {
+    background: transparent;
+}
 
-    .form-label {
-        color: var(--dark-color);
-    }
+html[data-theme="dark"] .form-control {
+    background: var(--card-bg);
+    color: var(--dark-color);
+    border-color: rgba(107, 182, 184, 0.5);
+}
 
-    .list-group-item h5 {
-        color: var(--dark-color);
-    }
+html[data-theme="dark"] h1,
+html[data-theme="dark"] .card-title {
+    color: var(--dark-color);
+}
 
-    .list-group-item small {
-        color: var(--info-color);
-    }
+html[data-theme="dark"] .form-label {
+    color: var(--dark-color);
+}
 
-    .alert {
-        background: linear-gradient(135deg, rgba(52, 152, 219, 0.2), rgba(52, 152, 219, 0.1));
-        border-color: var(--info-color);
-        color: var(--dark-color);
-    }
+html[data-theme="dark"] .list-group-item h5 {
+    color: var(--dark-color);
+}
 
-    .alert i {
-        color: var(--info-color);
-    }
+html[data-theme="dark"] .list-group-item small {
+    color: var(--info-color);
+}
 
-    .btn-success {
-        background: linear-gradient(135deg, var(--success-color), #1e8449);
-    }
+html[data-theme="dark"] .alert {
+    background: linear-gradient(135deg, rgba(52, 152, 219, 0.2), rgba(52, 152, 219, 0.1));
+    border-color: var(--info-color);
+    color: var(--dark-color);
+}
+
+html[data-theme="dark"] .alert i {
+    color: var(--info-color);
+}
+
+html[data-theme="dark"] .btn-success {
+    background: linear-gradient(135deg, var(--success-color), #1e8449);
 }
 
 /* ==========================================================================

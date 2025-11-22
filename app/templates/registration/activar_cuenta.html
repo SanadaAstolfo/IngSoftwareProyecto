@@ -1,0 +1,344 @@
+{% extends 'gestion/base.html' %}
+{% load static %}
+
+{% block title %}{{ titulo }}{% endblock %}
+
+{% block head %}
+{{ block.super }}
+<style>
+    .activacion-container {
+        min-height: 80vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem 1rem;
+        background: linear-gradient(135deg, #fef3e2 0%, #fff5e6 100%);
+    }
+
+    .activacion-card {
+        background: white;
+        border-radius: 2rem;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        max-width: 500px;
+        width: 100%;
+        animation: slideUp 0.5s ease-out;
+    }
+
+    @keyframes slideUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .activacion-header {
+        background: linear-gradient(135deg, #F4A261, #E76F51);
+        padding: 3rem 2rem;
+        text-align: center;
+        color: white;
+    }
+
+    .activacion-icon {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+        animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+        0%, 100% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-10px);
+        }
+    }
+
+    .activacion-header h1 {
+        font-size: 2rem;
+        margin: 0 0 0.5rem 0;
+        font-weight: 700;
+    }
+
+    .activacion-header p {
+        font-size: 1.1rem;
+        margin: 0;
+        opacity: 0.95;
+    }
+
+    .activacion-body {
+        padding: 3rem 2.5rem;
+    }
+
+    .activacion-form .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .activacion-form label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        color: #2C3E50;
+        font-size: 1rem;
+    }
+
+    .activacion-form .input-group {
+        position: relative;
+    }
+
+    .activacion-form .input-icon {
+        position: absolute;
+        left: 1.2rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #F4A261;
+        font-size: 1.2rem;
+        z-index: 10;
+    }
+
+    .activacion-form .form-control {
+        padding: 1rem 1rem 1rem 3.5rem;
+        border: 2px solid #e0e0e0;
+        border-radius: 1rem;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .activacion-form .form-control:focus {
+        border-color: #F4A261;
+        box-shadow: 0 0 0 0.2rem rgba(244, 162, 97, 0.25);
+        outline: none;
+    }
+
+    .activacion-btn {
+        background: linear-gradient(135deg, #F4A261, #E76F51);
+        color: white;
+        border: none;
+        padding: 1.2rem 2rem;
+        border-radius: 1rem;
+        font-size: 1.1rem;
+        font-weight: 700;
+        width: 100%;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-top: 1rem;
+    }
+
+    .activacion-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(244, 162, 97, 0.4);
+    }
+
+    .activacion-btn:active {
+        transform: translateY(0);
+    }
+
+    .alert {
+        border-radius: 1rem;
+        padding: 1rem 1.2rem;
+        margin-bottom: 1.5rem;
+        border: none;
+    }
+
+    .alert-danger {
+        background-color: #fee;
+        color: #c33;
+    }
+
+    .alert-info {
+        background-color: #e3f2fd;
+        color: #1976d2;
+    }
+
+    .alert-warning {
+        background-color: #fff3cd;
+        color: #856404;
+    }
+
+    .help-text {
+        font-size: 0.9rem;
+        color: #6c757d;
+        margin-top: 0.5rem;
+    }
+
+    .password-requirements {
+        background-color: #f8f9fa;
+        border-left: 4px solid #F4A261;
+        padding: 1rem;
+        margin: 1rem 0;
+        border-radius: 0.5rem;
+    }
+
+    .password-requirements ul {
+        margin: 0.5rem 0 0 0;
+        padding-left: 1.5rem;
+    }
+
+    .password-requirements li {
+        font-size: 0.9rem;
+        margin: 0.3rem 0;
+    }
+
+    .error-container {
+        text-align: center;
+        padding: 2rem;
+    }
+
+    .error-icon {
+        font-size: 5rem;
+        color: #E76F51;
+        margin-bottom: 1rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 576px) {
+        .activacion-card {
+            border-radius: 1.5rem;
+        }
+
+        .activacion-header {
+            padding: 2rem 1.5rem;
+        }
+
+        .activacion-header h1 {
+            font-size: 1.6rem;
+        }
+
+        .activacion-body {
+            padding: 2rem 1.5rem;
+        }
+
+        .activacion-icon {
+            font-size: 3rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="activacion-container">
+    <div class="activacion-card">
+        {% if validlink %}
+            <!-- Header con diseño cálido -->
+            <div class="activacion-header">
+                <div class="activacion-icon">🔐</div>
+                <h1>Crea tu Contraseña</h1>
+                <p>Último paso para activar tu cuenta</p>
+            </div>
+
+            <!-- Cuerpo del formulario -->
+            <div class="activacion-body">
+                <div class="alert alert-info">
+                    <strong>👋 ¡Hola!</strong><br>
+                    Estás a un paso de acceder al portal de tutores. Crea una contraseña segura para tu cuenta.
+                </div>
+
+                <form method="post" class="activacion-form">
+                    {% csrf_token %}
+                    
+                    {% if form.errors %}
+                        <div class="alert alert-danger">
+                            <strong>❌ Error:</strong> Por favor, corrige los errores a continuación.
+                        </div>
+                    {% endif %}
+
+                    <div class="password-requirements">
+                        <strong>📋 Requisitos de la contraseña:</strong>
+                        <ul>
+                            <li>Mínimo 8 caracteres</li>
+                            <li>No puede ser demasiado común</li>
+                            <li>No puede ser completamente numérica</li>
+                            <li>No puede ser similar a tu información personal</li>
+                        </ul>
+                    </div>
+
+                    <!-- Campo Nueva Contraseña -->
+                    <div class="form-group">
+                        <label for="{{ form.new_password1.id_for_label }}">Nueva Contraseña</label>
+                        <div class="input-group">
+                            <i class="fas fa-key input-icon"></i>
+                            {{ form.new_password1 }}
+                        </div>
+                        {% if form.new_password1.errors %}
+                            <div class="alert alert-danger mt-2" style="padding: 0.5rem;">
+                                {{ form.new_password1.errors|striptags }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Campo Confirmar Contraseña -->
+                    <div class="form-group">
+                        <label for="{{ form.new_password2.id_for_label }}">Confirmar Contraseña</label>
+                        <div class="input-group">
+                            <i class="fas fa-lock input-icon"></i>
+                            {{ form.new_password2 }}
+                        </div>
+                        {% if form.new_password2.errors %}
+                            <div class="alert alert-danger mt-2" style="padding: 0.5rem;">
+                                {{ form.new_password2.errors|striptags }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Botón de activación -->
+                    <button type="submit" class="activacion-btn">
+                        <i class="fas fa-check-circle"></i> Activar Mi Cuenta
+                    </button>
+                </form>
+            </div>
+        {% else %}
+            <!-- Error: link inválido o expirado -->
+            <div class="activacion-header">
+                <div class="activacion-icon">❌</div>
+                <h1>Error de Activación</h1>
+                <p>El enlace no es válido</p>
+            </div>
+
+            <div class="activacion-body">
+                <div class="error-container">
+                    <div class="alert alert-warning">
+                        <strong>⚠️ Enlace Inválido o Expirado</strong><br><br>
+                        El enlace de activación que has utilizado ya no es válido. Esto puede ocurrir por las siguientes razones:
+                    </div>
+
+                    <ul style="text-align: left; margin: 1.5rem 0;">
+                        <li>El enlace ha expirado (válido por 24 horas)</li>
+                        <li>Ya has activado tu cuenta anteriormente</li>
+                        <li>El enlace fue modificado o está incompleto</li>
+                    </ul>
+
+                    <div class="alert alert-info">
+                        <strong>💡 ¿Qué puedes hacer?</strong><br><br>
+                        <strong>Si ya activaste tu cuenta:</strong><br>
+                        <a href="{% url 'login_tutor' %}" style="color: #E76F51; font-weight: bold;">Inicia sesión aquí</a>
+                        <br><br>
+                        <strong>Si necesitas un nuevo enlace:</strong><br>
+                        Contacta a la clínica:<br>
+                        📞 +56 9 6123 8866<br>
+                        📧 clubentrepatitas@gmail.com
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const passwordInputs = document.querySelectorAll('input[type="password"]');
+        
+        passwordInputs.forEach(input => {
+            // Agregar clases para que se vea bien
+            input.classList.add('form-control');
+        });
+    });
+</script>
+{% endblock %}

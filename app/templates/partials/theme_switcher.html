@@ -1,0 +1,124 @@
+<button id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema" title="Cambiar tema">
+    <i class="fa-solid fa-sun sun-icon"></i>
+    <i class="fa-solid fa-moon moon-icon"></i>
+</button>
+
+<style>
+    .theme-toggle {
+        position: absolute;
+        top: 50%;
+        right: 14rem;
+        transform: translateY(-50%);
+        z-index: 100;
+        padding: 0.8rem 1rem;
+        border-radius: 0.5rem;
+        border: 2px solid #6BB6B8;
+        background-color: white;
+        color: #6BB6B8;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 1.6rem;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 4.5rem;
+        height: 4rem;
+    }
+
+    .theme-toggle:hover {
+        background-color: #6BB6B8;
+        color: white;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        transform: translateY(-50%) scale(1.05);
+    }
+
+    .theme-toggle:focus {
+        outline: 2px solid #6BB6B8;
+        outline-offset: 2px;
+    }
+
+    .theme-toggle:active {
+        transform: translateY(-50%) scale(0.95);
+    }
+
+    .sun-icon,
+    .moon-icon {
+        transition: all 0.3s ease;
+    }
+
+    /* Modo claro - mostrar luna */
+    .sun-icon {
+        display: none;
+    }
+    
+    .moon-icon {
+        display: block;
+    }
+
+    /* Modo oscuro - mostrar sol */
+    [data-theme="dark"] .sun-icon {
+        display: block;
+    }
+
+    [data-theme="dark"] .moon-icon {
+        display: none;
+    }
+
+    /* Ajustar color del botón en modo oscuro */
+    [data-theme="dark"] .theme-toggle {
+        background-color: var(--card-bg);
+        border-color: #6BB6B8;
+        color: #6BB6B8;
+    }
+
+    [data-theme="dark"] .theme-toggle:hover {
+        background-color: #6BB6B8;
+        color: var(--card-bg);
+    }
+</style>
+
+<script>
+    (function() {
+        // Función para aplicar el tema
+        function applyTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            console.log('Tema aplicado:', theme);
+        }
+
+        // Cargar tema guardado o usar modo claro por defecto
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                console.log('Tema guardado encontrado:', savedTheme);
+                applyTheme(savedTheme);
+            } else {
+                // Siempre iniciar en modo claro (ignorar preferencia del sistema)
+                console.log('Sin tema guardado, usando modo claro por defecto');
+                applyTheme('light');
+            }
+        }
+
+        // Aplicar tema inmediatamente (antes de que se renderice la página)
+        loadTheme();
+
+        // Manejar clic en el botón
+        document.addEventListener('DOMContentLoaded', function() {
+            const themeToggle = document.getElementById('theme-toggle');
+            
+            if (themeToggle) {
+                themeToggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+                    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                    console.log('Cambiando tema de', currentTheme, 'a', newTheme);
+                    applyTheme(newTheme);
+                });
+                console.log('Botón de tema inicializado');
+            } else {
+                console.error('No se encontró el botón theme-toggle');
+            }
+        });
+    })();
+</script>

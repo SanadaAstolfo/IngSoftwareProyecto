@@ -1,12 +1,19 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
-from django.contrib.auth import views as auth_views
+from django.contrib.auth import views as auth_views, login
 from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.models import User, Group
+from django.contrib.auth.forms import SetPasswordForm
+from django.contrib.auth.tokens import default_token_generator
 from django.contrib.admin.models import LogEntry, CHANGE
 from django.contrib.contenttypes.models import ContentType
+from django.contrib.sites.shortcuts import get_current_site
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.mail import send_mail
 from django.http import HttpResponse, HttpResponseForbidden
 from django.template.loader import render_to_string
+from django.utils.encoding import force_bytes, force_str
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 # WeasyPrint se importa dinámicamente donde se necesita
 from datetime import date, datetime
 from django.utils import timezone
@@ -392,7 +399,67 @@ def crear_tutor(request):
     if request.method == 'POST':
         form = TutorForm(request.POST)
         if form.is_valid():
-            form.save()
+            tutor = form.save()
+            
+            # Crear usuario con RUT como username
+            username = tutor.rut
+            try:
+                # Verificar si ya existe un usuario con ese RUT
+                user = User.objects.filter(username=username).first()
+                if not user:
+                    # Crear nuevo usuario inactivo
+                    user = User.objects.create_user(
+                        username=username,
+                        email=tutor.email,
+                        first_name=tutor.nombre_completo.split()[0] if tutor.nombre_completo else '',
+                        last_name=' '.join(tutor.nombre_completo.split()[1:]) if len(tutor.nombre_completo.split()) > 1 else '',
+                        is_active=False
+                    )
+                    user.set_unusable_password()  # Sin contraseña hasta que se active
+                    user.save()
+                    
+                    # Crear perfil asociado
+                    perfil, created = Perfil.objects.get_or_create(
+                        user=user,
+                        defaults={'rut': tutor.rut, 'rol': 'TUTOR'}
+                    )
+                    
+                    # Asignar al grupo 'Tutor'
+                    grupo_tutor, _ = Group.objects.get_or_create(name='Tutor')
+                    user.groups.add(grupo_tutor)
+                    
+                    # Generar token de activación
+                    token = default_token_generator.make_token(user)
+                    uid = urlsafe_base64_encode(force_bytes(user.pk))
+                    
+                    # Construir el link de activación
+                    current_site = get_current_site(request)
+                    protocol = 'https' if request.is_secure() else 'http'
+                    link = f"{protocol}://{current_site.domain}/gestion/activar/{uid}/{token}/"
+                    
+                    # Renderizar el email
+                    email_subject = 'Activa tu cuenta en Club Entre Patitas'
+                    email_body = render_to_string('registration/email_activacion.html', {
+                        'tutor': tutor,
+                        'link': link,
+                        'domain': current_site.domain,
+                    })
+                    
+                    # Enviar correo
+                    send_mail(
+                        subject=email_subject,
+                        message=email_body,
+                        from_email=settings.DEFAULT_FROM_EMAIL,
+                        recipient_list=[tutor.email],
+                        fail_silently=False,
+                    )
+                    
+                    messages.success(request, f'Tutor registrado exitosamente. Se ha enviado un correo de activación a {tutor.email}')
+                else:
+                    messages.warning(request, 'El tutor fue registrado, pero ya existe un usuario con ese RUT.')
+            except Exception as e:
+                messages.error(request, f'Error al enviar el correo de activación: {str(e)}')
+            
             return redirect('lista_tutores')
     else:
         form = TutorForm()
@@ -966,3 +1033,45 @@ def gestionar_solicitud_datos(request, solicitud_id):
         'titulo': f'Gestionar Solicitud #{solicitud.id}'
     }
     return render(request, 'gestion/gestionar_solicitud_datos.html', contexto)
+
+# Vista de activación de cuenta para tutores (Onboarding Digital)
+def activar_cuenta(request, uidb64, token):
+    try:
+        # Decodificar el UID
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+    
+    # Verificar el token
+    if user is not None and default_token_generator.check_token(user, token):
+        if request.method == 'POST':
+            form = SetPasswordForm(user, request.POST)
+            if form.is_valid():
+                # Guardar la nueva contraseña
+                form.save()
+                # Activar el usuario
+                user.is_active = True
+                user.save()
+                
+                # Loguear automáticamente al usuario
+                login(request, user, backend='app.backends.RUTBackend')
+                
+                messages.success(request, '¡Cuenta activada exitosamente! Bienvenido a Club Entre Patitas.')
+                return redirect('mis_pacientes')
+        else:
+            form = SetPasswordForm(user)
+        
+        contexto = {
+            'form': form,
+            'titulo': 'Crea tu Contraseña',
+            'validlink': True,
+        }
+        return render(request, 'registration/activar_cuenta.html', contexto)
+    else:
+        # Token inválido o expirado
+        contexto = {
+            'validlink': False,
+            'titulo': 'Error de Activación'
+        }
+        return render(request, 'registration/activar_cuenta.html', contexto)

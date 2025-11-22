@@ -1,6 +1,7 @@
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
-<html lang="es">
+<html lang="{{ LANGUAGE_CODE }}">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -99,6 +100,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            position: relative;
         }
         .clinic-logo img{
             width: 15rem;
@@ -211,14 +213,15 @@
 </head>
 <body id="top">
     
-    {% include 'partials/language_switcher.html' %}
-    
     <header class="header">
         <div class="clinic-logo">
            <a href="{% url 'portal' %}">
                 <img src="{% static 'svg/logo.svg' %}" alt="Club entre Patitas" class="clinic-logo-img">
            </a>
         </div>
+        
+        {% include 'partials/theme_switcher.html' %}
+        {% include 'partials/language_switcher.html' %}
 
         {% if user.is_authenticated %}
             <nav class="main-menu">

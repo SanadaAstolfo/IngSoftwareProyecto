@@ -261,8 +261,183 @@
         {% endif %}
 
         <div class="mt-4 d-flex gap-2">
-            <button type="submit" class="btn btn-primary btn-lg">💾 Guardar Cambios</button>
+            <button type="submit" class="btn btn-primary btn-lg" id="submit-btn">💾 Guardar Cambios</button>
             <a href="{% url 'detalle_paciente' paciente.id %}" class="btn btn-secondary btn-lg">❌ Cancelar</a>
         </div>
     </form>
+
+    <!-- Toast de notificación -->
+    <div id="autosave-toast" style="position: fixed; top: 100px; right: 20px; z-index: 9999; display: none;">
+        <div class="alert alert-info" style="box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2); border-radius: 1.5rem; min-width: 300px;">
+            <strong>💾 Autoguardado</strong>
+            <p class="mb-0" id="toast-message">Borrador restaurado correctamente</p>
+        </div>
+    </div>
+
+    <script>
+    (function() {
+        'use strict';
+        
+        const STORAGE_KEY = 'atencion_draft_{{ paciente.id }}';
+        const form = document.querySelector('form');
+        const submitBtn = document.getElementById('submit-btn');
+        let autoSaveTimeout;
+
+        // Función para mostrar toast
+        function showToast(message, duration = 3000) {
+            const toast = document.getElementById('autosave-toast');
+            const toastMessage = document.getElementById('toast-message');
+            toastMessage.textContent = message;
+            toast.style.display = 'block';
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transition = 'opacity 0.5s ease';
+                setTimeout(() => {
+                    toast.style.display = 'none';
+                    toast.style.opacity = '1';
+                }, 500);
+            }, duration);
+        }
+
+        // Función para obtener todos los datos del formulario
+        function getFormData() {
+            const formData = {};
+            const formElements = form.elements;
+            
+            for (let i = 0; i < formElements.length; i++) {
+                const element = formElements[i];
+                if (!element.name || element.name === 'csrfmiddlewaretoken') continue;
+                
+                if (element.type === 'checkbox') {
+                    formData[element.name] = element.checked;
+                } else if (element.type === 'radio') {
+                    if (element.checked) {
+                        formData[element.name] = element.value;
+                    }
+                } else if (element.tagName === 'SELECT' && element.multiple) {
+                    formData[element.name] = Array.from(element.selectedOptions).map(opt => opt.value);
+                } else {
+                    formData[element.name] = element.value;
+                }
+            }
+            
+            return formData;
+        }
+
+        // Función para guardar en localStorage
+        function saveFormData() {
+            const formData = getFormData();
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
+                console.log('📝 Borrador guardado automáticamente');
+            } catch (e) {
+                console.error('Error al guardar borrador:', e);
+            }
+        }
+
+        // Función para restaurar datos guardados
+        function restoreFormData() {
+            try {
+                const savedData = localStorage.getItem(STORAGE_KEY);
+                if (!savedData) return false;
+                
+                const formData = JSON.parse(savedData);
+                let restoredCount = 0;
+                
+                for (const [name, value] of Object.entries(formData)) {
+                    const elements = form.elements[name];
+                    if (!elements) continue;
+                    
+                    if (elements.length > 1) {
+                        // Radio buttons
+                        for (let i = 0; i < elements.length; i++) {
+                            if (elements[i].value === value) {
+                                elements[i].checked = true;
+                                restoredCount++;
+                            }
+                        }
+                    } else {
+                        const element = elements;
+                        
+                        if (element.type === 'checkbox') {
+                            element.checked = value;
+                            restoredCount++;
+                        } else if (element.tagName === 'SELECT' && element.multiple) {
+                            Array.from(element.options).forEach(option => {
+                                option.selected = value.includes(option.value);
+                            });
+                            restoredCount++;
+                        } else if (value !== '' && value !== null && value !== undefined) {
+                            element.value = value;
+                            restoredCount++;
+                        }
+                    }
+                }
+                
+                if (restoredCount > 0) {
+                    showToast(`✅ Se restauraron ${restoredCount} campos guardados`, 4000);
+                    return true;
+                }
+            } catch (e) {
+                console.error('Error al restaurar borrador:', e);
+            }
+            return false;
+        }
+
+        // Función para limpiar el borrador
+        function clearDraft() {
+            try {
+                localStorage.removeItem(STORAGE_KEY);
+                console.log('🗑️ Borrador eliminado');
+            } catch (e) {
+                console.error('Error al eliminar borrador:', e);
+            }
+        }
+
+        // Autoguardar con debounce
+        function scheduleAutoSave() {
+            clearTimeout(autoSaveTimeout);
+            autoSaveTimeout = setTimeout(() => {
+                saveFormData();
+            }, 1000); // Guarda 1 segundo después del último cambio
+        }
+
+        // Escuchar cambios en todos los campos
+        form.addEventListener('input', scheduleAutoSave);
+        form.addEventListener('change', scheduleAutoSave);
+
+        // Al enviar el formulario, limpiar el borrador
+        form.addEventListener('submit', function(e) {
+            clearDraft();
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '⏳ Guardando...';
+        });
+
+        // Restaurar datos al cargar la página
+        document.addEventListener('DOMContentLoaded', function() {
+            restoreFormData();
+        });
+
+        // Advertir al usuario si intenta salir con cambios sin guardar
+        let hasUnsavedChanges = false;
+        form.addEventListener('input', function() {
+            hasUnsavedChanges = true;
+        });
+        
+        form.addEventListener('submit', function() {
+            hasUnsavedChanges = false;
+        });
+
+        window.addEventListener('beforeunload', function(e) {
+            if (hasUnsavedChanges) {
+                e.preventDefault();
+                e.returnValue = '';
+                return '';
+            }
+        });
+
+        console.log('🚀 Autoguardado inicializado para paciente {{ paciente.id }}');
+    })();
+    </script>
 {% endblock %}
