@@ -35,24 +35,22 @@
             </div>
         </a>
 
-        <div class="user-card cliente-card">
-            <a href="{% url 'login_tutor' %}" style="text-decoration: none; color: inherit; display: block;">
-                <div class="user-icon">
-                    <i class="fa-solid fa-heart"></i>
-                </div>
-                <h2 class="user-title">{% trans "Tutor de Mascota" %}</h2>
-                <p class="user-description">
-                    {% trans "Accede al historial médico de tu mascota y manténte informado sobre su salud y tratamientos." %}
-                </p>
-                <ul class="user-features">
-                    <li><i class="fa-solid fa-eye"></i> {% trans "Ver historial médico de tu mascota" %}</li>
-                    <li><i class="fa-solid fa-calendar-check"></i> {% trans "Consultar próximas citas" %}</li>
-                    <li><i class="fa-solid fa-file-medical"></i> {% trans "Acceso a recetas y epicrisis" %}</li>
-                    <li><i class="fa-solid fa-user-lock"></i> {% trans "Gestión de datos personales" %}</li>
-                </ul>
-                <div class="select-btn">{% trans "Soy Tutor de Mascota" %}</div>
-            </a>
-        </div>
+        <a href="{% url 'login_tutor' %}" class="user-card cliente-card">
+            <div class="user-icon">
+                <i class="fa-solid fa-heart"></i>
+            </div>
+            <h2 class="user-title">{% trans "Tutor de Mascota" %}</h2>
+            <p class="user-description">
+                {% trans "Accede al historial médico de tu mascota y manténte informado sobre su salud y tratamientos." %}
+            </p>
+            <ul class="user-features">
+                <li><i class="fa-solid fa-eye"></i> {% trans "Ver historial médico de tu mascota" %}</li>
+                <li><i class="fa-solid fa-calendar-check"></i> {% trans "Consultar próximas citas" %}</li>
+                <li><i class="fa-solid fa-file-medical"></i> {% trans "Acceso a recetas y epicrisis" %}</li>
+                <li><i class="fa-solid fa-user-lock"></i> {% trans "Gestión de datos personales" %}</li>
+            </ul>
+            <div class="select-btn">{% trans "Soy Tutor de Mascota" %}</div>
+        </a>
     </section>
 </div>
 {% endblock content %}

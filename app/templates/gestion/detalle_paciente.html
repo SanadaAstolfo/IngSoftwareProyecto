@@ -157,6 +157,7 @@
                 {% endif %}
                 <p><strong>Motivo:</strong> {{ atencion.motivo_consulta }}</p>
                 <p><strong>Anamnesis:</strong> {{ atencion.anamnesis }}</p>
+                
                 {% if atencion.chequeo %}
                     <div class="p-2 bg-light border rounded mt-2">
                         <h6 class="border-bottom pb-1">Detalles del Chequeo Físico</h6>
@@ -164,147 +165,144 @@
                             <li><strong>Temperatura:</strong> {{ atencion.chequeo.temperatura }} °C</li>
                             <li><strong>Peso:</strong> {{ atencion.chequeo.peso }} kg</li>
                             <li><strong>Condición Corporal:</strong> {{ atencion.chequeo.condicion_corporal }}</li>
+                            {% if atencion.chequeo.frecuencia_cardiaca %}
+                            <li><strong>Frecuencia Cardíaca (FC):</strong> {{ atencion.chequeo.frecuencia_cardiaca }}</li>
+                            {% endif %}
+                            {% if atencion.chequeo.frecuencia_respiratoria %}
+                            <li><strong>Frecuencia Respiratoria (FR):</strong> {{ atencion.chequeo.frecuencia_respiratoria }}</li>
+                            {% endif %}
+                            {% if atencion.chequeo.tllc %}
+                            <li><strong>TLLC:</strong> {{ atencion.chequeo.tllc }}</li>
+                            {% endif %}
+                            {% if atencion.chequeo.mucosas %}
+                            <li><strong>Mucosas:</strong> {{ atencion.chequeo.mucosas }}</li>
+                            {% endif %}
                             {% if atencion.chequeo.anotaciones %}
-                            <li><strong>Anotaciones:</strong> {{ atencion.chequeo.anotaciones }}</li>
+                            <li><strong>Hallazgos / Anotaciones:</strong> {{ atencion.chequeo.anotaciones }}</li>
                             {% endif %}
                         </ul>
                     </div>
                 {% endif %}
-                <p><strong>Diagnóstico:</strong>
-                    {% for diag in atencion.diagnosticos.all %}
-                        <span class="badge bg-danger">{{ diag.nombre }}</span>
-                    {% empty %}
-                        Ninguno
-                    {% endfor %}
-                </p>
-                <p><strong>Prediagnósticos:</strong>
-                    {% for prediag in atencion.prediagnosticos.all %}
-                        <span class="badge bg-warning text-dark">{{ prediag.nombre }}</span>
-                    {% empty %}
-                        Ninguno
-                    {% endfor %}
-                </p>
-                <p><strong>Tratamiento:</strong> {{ atencion.tratamiento }}</p>
-                <div class="card-body">
-                    <div class="mt-3">
-                        <h6>Documentos Adjuntos</h6>
-                        {% if atencion.documentos.all %}
-                            <ul class="list-group list-group-flush">
-                            {% for doc in atencion.documentos.all %}
-                                <li class="list-group-item">
-                                    <a href="{{ doc.archivo.url }}" target="_blank">{{ doc.titulo }}</a>
-                                    <small class="text-muted"> (Subido el: {{ doc.fecha_subida }})</small>
-                                </li>
-                            {% endfor %}
-                            </ul>
-                        {% else %}
-                            <p><small>No hay documentos para esta atención.</small></p>
-                        {% endif %}
-                        {% if es_personal_usuario and not atencion.esta_cerrada %}
-                            <a href="{% url 'adjuntar_documento' atencion.id %}" class="btn btn-outline-info btn-sm mt-2">+ Adjuntar Documento</a>
-                        {% endif %}
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div class="mt-3">
-                        <h6>Receta Médica</h6>
-                        {% for atencion in atenciones %}
-                            <div class="list-group list-group-flush">
-                                {% if atencion.recetas.exists %}
-                                    {% if es_personal_usuario and not atencion.esta_cerrada %}
-                                        <a href="{% url 'agregar_receta' atencion.id %}" class="btn btn-outline-info btn-sm mt-2">Editar Receta</a>
-                                    {% endif %}
-                                    {% for receta in atencion.recetas.all %}
-                                        <a href="{% url 'generar_pdf_receta' receta.id %}" target="_blank" class="btn btn-outline-info btn-sm mt-2">
-                                            Ver/Descargar Receta PDF (ID: {{ receta.id }})
-                                        </a>
-                                    {% endfor %}
-                                {% else %}
-                                    {% if es_personal_usuario and not atencion.esta_cerrada %}
-                                        <a href="{% url 'agregar_receta' atencion.id %}" class="btn btn-outline-success btn-sm mt-2">Agregar Receta</a>
-                                    {% endif %}
-                                {% endif %}
-                                </div>
-                            </div>
+                
+                {% if atencion.prediagnostico %}
+                    <p><strong>Prediagnóstico:</strong> {{ atencion.prediagnostico }}</p>
+                {% endif %}
+                
+                {% if atencion.diagnostico %}
+                    <p><strong>Diagnóstico:</strong> {{ atencion.diagnostico }}</p>
+                {% endif %}
+                
+                <div class="mt-3">
+                    <h6>Documentos Adjuntos</h6>
+                    {% if atencion.documentos.all %}
+                        <ul class="list-group list-group-flush">
+                        {% for doc in atencion.documentos.all %}
+                            <li class="list-group-item">
+                                <a href="{{ doc.archivo.url }}" target="_blank">{{ doc.titulo }}</a>
+                                <small class="text-muted"> (Subido el: {{ doc.fecha_subida }})</small>
+                            </li>
                         {% endfor %}
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div class="mt-3">
-                        <h6>Procedimientos, Exámenes y Hospitalizaciones</h6>
-                        {% if atencion.procedimientos.all %}
-                            <ul class="list-group list-group-flush">
-                            {% for procedimiento in atencion.procedimientos.all %}
-                                <li class="list-group-item">
-                                    <strong>{{ procedimiento.get_tipo_display }}:</strong> 
-                                    {% if procedimiento.tipo == 'Cirugía' and procedimiento.tipo_cirugia %}
-                                        <span class="badge bg-secondary">{{ procedimiento.get_tipo_cirugia_display }}</span>
-                                    {% endif %}
-                                    {{ procedimiento.descripcion }} 
-                                    <small class="text-muted">
-                                        (Inicio: {{ procedimiento.fecha_inicio }}
-                                        {% if procedimiento.fecha_fin %}
-                                            - Fin: {{ procedimiento.fecha_fin }}
-                                        {% endif %})
-                                    </small>
-                                </li>
-                            {% endfor %}
-                            </ul>
-                        {% else %}
-                        {% if atencion.notas_hospitalizacion %}
-                            <div class="alert alert-info mt-2">
-                                <strong>Notas de Hospitalización:</strong> {{ atencion.notas_hospitalizacion }}<br>
-                                <strong>Jaula:</strong> {{ atencion.jaula_numero|default:'No especificada' }}
-                                <strong>Fecha de Egreso:</strong> {{atencion.fecha_egreso }}
-                            </div>
-                        {% endif %}
-                            <p><small>No hay procedimientos registrados para esta atención.</small></p>
-                        {% endif %}
-                        {% if es_personal_usuario and not atencion.esta_cerrada %}
-                            <a href="{% url 'crear_procedimiento' atencion.id %}" class="btn btn-outline-primary btn-sm mt-2">+ Añadir Procedimiento</a>
-                        {% endif %}
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div class="mt-3">
-                        <h6>Insumos Utilizados</h6>
-                        {% if atencion.insumos_utilizados.all %}
-                            <table class="table table-sm table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>Insumo</th>
-                                        <th>Cantidad</th>
-                                        <th>Costo Unitario</th>
-                                        <th>Costo Total</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                {% for item in atencion.insumos_utilizados.all %}
-                                    <tr>
-                                        <td>{{ item.insumo.nombre }}</td>
-                                        <td>{{ item.cantidad }}</td>
-                                        <td>${{ item.insumo.costo }}</td>
-                                        <td>${{ item.costo_total }}</td>
-                                    </tr>
-                                {% endfor %}
-                                </tbody>
-                            </table>
-                        {% else %}
-                            <p><small>No se registraron insumos para esta atención.</small></p>
-                        {% endif %}
-                        {% if es_personal_usuario and not atencion.esta_cerrada %}
-                            <a href="{% url 'agregar_insumo' atencion.id %}" class="btn btn-outline-success btn-sm mt-2">+ Agregar Insumo</a>
-                        {% endif %}
-                    </div>
-                </div>
-                <div class="card-body">
-                    {% if user.is_staff and atencion.observaciones_sensibles %}
-                        <div class="alert alert-secondary mt-3">
-                            <h6 class="alert-heading">Observaciones Sensibles (Solo Personal)</h6>
-                            <p class="mb-0">{{ atencion.observaciones_sensibles }}</p>
-                        </div>
+                        </ul>
+                    {% else %}
+                        <p><small>No hay documentos para esta atención.</small></p>
+                    {% endif %}
+                    {% if es_personal_usuario and not atencion.esta_cerrada %}
+                        <a href="{% url 'adjuntar_documento' atencion.id %}" class="btn btn-outline-info btn-sm mt-2">+ Adjuntar Documento</a>
                     {% endif %}
                 </div>
+                
+                <div class="mt-3">
+                    <h6>Receta Médica</h6>
+                    <div class="list-group list-group-flush">
+                        {% if atencion.recetas.exists %}
+                            {% if es_personal_usuario and not atencion.esta_cerrada %}
+                                <a href="{% url 'agregar_receta' atencion.id %}" class="btn btn-outline-info btn-sm mt-2">Editar Receta</a>
+                            {% endif %}
+                            {% for receta in atencion.recetas.all %}
+                                <a href="{% url 'generar_pdf_receta' receta.id %}" target="_blank" class="btn btn-outline-info btn-sm mt-2">
+                                    Ver/Descargar Receta PDF (ID: {{ receta.id }})
+                                </a>
+                            {% endfor %}
+                        {% else %}
+                            {% if es_personal_usuario and not atencion.esta_cerrada %}
+                                <a href="{% url 'agregar_receta' atencion.id %}" class="btn btn-outline-success btn-sm mt-2">Agregar Receta</a>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="mt-3">
+                    <h6>Procedimientos, Exámenes y Hospitalizaciones</h6>
+                    {% if atencion.procedimientos.all %}
+                        <ul class="list-group list-group-flush">
+                        {% for procedimiento in atencion.procedimientos.all %}
+                            <li class="list-group-item">
+                                <strong>{{ procedimiento.get_tipo_display }}:</strong> 
+                                {% if procedimiento.tipo == 'Cirugía' and procedimiento.tipo_cirugia %}
+                                    <span class="badge bg-secondary">{{ procedimiento.get_tipo_cirugia_display }}</span>
+                                {% endif %}
+                                {{ procedimiento.descripcion }} 
+                                <small class="text-muted">
+                                    (Inicio: {{ procedimiento.fecha_inicio }}
+                                    {% if procedimiento.fecha_fin %}
+                                        - Fin: {{ procedimiento.fecha_fin }}
+                                    {% endif %})
+                                </small>
+                            </li>
+                        {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p><small>No hay procedimientos registrados para esta atención.</small></p>
+                    {% endif %}
+                    {% if atencion.notas_hospitalizacion %}
+                        <div class="alert alert-info mt-2">
+                            <strong>Notas de Hospitalización:</strong> {{ atencion.notas_hospitalizacion }}<br>
+                            <strong>Jaula:</strong> {{ atencion.jaula_numero|default:'No especificada' }}<br>
+                            <strong>Fecha de Egreso:</strong> {{ atencion.fecha_egreso }}
+                        </div>
+                    {% endif %}
+                    {% if es_personal_usuario and not atencion.esta_cerrada %}
+                        <a href="{% url 'crear_procedimiento' atencion.id %}" class="btn btn-outline-primary btn-sm mt-2">+ Añadir Procedimiento</a>
+                    {% endif %}
+                </div>
+                
+                <div class="mt-3">
+                    <h6>Insumos Utilizados</h6>
+                    {% if atencion.insumos_utilizados.all %}
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Insumo</th>
+                                    <th>Cantidad</th>
+                                    <th>Costo Unitario</th>
+                                    <th>Costo Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for item in atencion.insumos_utilizados.all %}
+                                <tr>
+                                    <td>{{ item.insumo.nombre }}</td>
+                                    <td>{{ item.cantidad }}</td>
+                                    <td>${{ item.insumo.costo }}</td>
+                                    <td>${{ item.costo_total }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <p><small>No se registraron insumos para esta atención.</small></p>
+                    {% endif %}
+                    {% if es_personal_usuario and not atencion.esta_cerrada %}
+                        <a href="{% url 'agregar_insumo' atencion.id %}" class="btn btn-outline-success btn-sm mt-2">+ Agregar Insumo</a>
+                    {% endif %}
+                </div>
+                
+                {% if user.is_staff and atencion.observaciones_sensibles %}
+                    <div class="alert alert-secondary mt-3">
+                        <h6 class="alert-heading">Observaciones Sensibles (Solo Personal)</h6>
+                        <p class="mb-0">{{ atencion.observaciones_sensibles }}</p>
+                    </div>
+                {% endif %}
             </div>
         </div>
     {% empty %}
