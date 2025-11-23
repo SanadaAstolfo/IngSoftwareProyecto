@@ -1,11 +1,11 @@
 {% extends 'gestion/base.html' %}
 {% load i18n %}
 
-{% block title %}{{ titulo }}{% endblock %}
+{% block title %}{% blocktrans with asunto=mensaje.asunto %}Mensaje: {{ asunto }}{% endblocktrans %}{% endblock %}
 
 {% block content %}
 <main>
-    <h1>{{ titulo }}</h1>
+    <h1>{% blocktrans with asunto=mensaje.asunto %}Mensaje: {{ asunto }}{% endblocktrans %}</h1>
     <hr>
     <p><strong>{% trans "De" %}:</strong> {{ mensaje.remitente.username }}</p>
     <p><strong>{% trans "Fecha" %}:</strong> {{ mensaje.fecha_envio|date:"d-m-Y H:i" }}</p>

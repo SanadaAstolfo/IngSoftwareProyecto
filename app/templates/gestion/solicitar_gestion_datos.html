@@ -1,71 +1,97 @@
 {% extends 'gestion/base.html' %}
 {% load i18n %}
 
-{% block title %}{{ titulo }}{% endblock %}
+{% block title %}{% trans "Solicitar Gestión de Datos" %}{% endblock %}
 
 {% block content %}
-<div class="container" style="max-width: 800px;">
-    <h1 class="mb-4">🔒 {{ titulo }}</h1>
-    
-    <div class="alert alert-info">
-        <h5><i class="bi bi-info-circle"></i> {% trans "Información sobre Gestión de Datos Personales" %}</h5>
-        <p class="mb-2">{% trans "De acuerdo con la Ley de Protección de Datos Personales, usted tiene derecho a:" %}</p>
-        <ul class="mb-0">
-            <li><strong>{% trans "Acceso:" %}</strong> {% trans "Solicitar una copia de sus datos personales almacenados." %}</li>
-            <li><strong>{% trans "Modificación:" %}</strong> {% trans "Solicitar la corrección de datos incorrectos o desactualizados." %}</li>
-            <li><strong>{% trans "Cancelación:" %}</strong> {% trans "Solicitar la eliminación de sus datos personales." %}</li>
-            <li><strong>{% trans "Bloqueo:" %}</strong> {% trans "Solicitar el bloqueo temporal de sus datos personales." %}</li>
-        </ul>
-    </div>
-
-    <div class="card">
-        <div class="card-body">
-            <form method="post">
-                {% csrf_token %}
-                
-                {% if form.non_field_errors %}
-                    <div class="alert alert-danger">
-                        {{ form.non_field_errors }}
+<div class="main-container">
+    <div class="selection-container">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h2 class="mb-0"><i class="fas fa-shield-alt"></i> {% trans "Solicitar Gestión de Datos Personales" %}</h2>
+            </div>
+            <div class="card-body">
+                <!-- Información sobre derechos -->
+                <div class="alert alert-info d-flex align-items-start mb-4">
+                    <i class="fas fa-info-circle fa-2x me-3 mt-1"></i>
+                    <div>
+                        <h5 class="alert-heading"><i class="fas fa-balance-scale"></i> {% trans "Sus Derechos de Protección de Datos" %}</h5>
+                        <p class="mb-2">{% trans "De acuerdo con la Ley de Protección de Datos Personales, usted tiene derecho a:" %}</p>
+                        <ul class="mb-0">
+                            <li><strong><i class="fas fa-eye text-info"></i> {% trans "Acceso:" %}</strong> {% trans "Solicitar una copia de sus datos personales almacenados." %}</li>
+                            <li><strong><i class="fas fa-edit text-warning"></i> {% trans "Modificación:" %}</strong> {% trans "Solicitar la corrección de datos incorrectos o desactualizados." %}</li>
+                            <li><strong><i class="fas fa-trash text-danger"></i> {% trans "Cancelación:" %}</strong> {% trans "Solicitar la eliminación de sus datos personales." %}</li>
+                            <li><strong><i class="fas fa-lock text-secondary"></i> {% trans "Bloqueo:" %}</strong> {% trans "Solicitar el bloqueo temporal de sus datos personales." %}</li>
+                        </ul>
                     </div>
-                {% endif %}
+                </div>
 
-                <div class="mb-4">
-                    <label class="form-label fw-bold">{{ form.tipo_solicitud.label }}</label>
-                    {% if form.tipo_solicitud.help_text %}
-                        <div class="form-text mb-2">{{ form.tipo_solicitud.help_text }}</div>
-                    {% endif %}
+                <form method="post" class="solicitud-form">
+                    {% csrf_token %}
                     
-                    <div class="d-flex flex-column gap-2">
-                        {% for radio in form.tipo_solicitud %}
-                            <div class="form-check">
-                                {{ radio.tag }}
-                                <label class="form-check-label" for="{{ radio.id_for_label }}">
-                                    {{ radio.choice_label }}
-                                </label>
-                            </div>
-                        {% endfor %}
-                    </div>
-                    
-                    {% if form.tipo_solicitud.errors %}
-                        <div class="alert alert-danger mt-2 p-2">
-                            {{ form.tipo_solicitud.errors|striptags }}
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <i class="fas fa-exclamation-triangle"></i> {{ form.non_field_errors }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                         </div>
                     {% endif %}
-                </div>
 
-                <div class="alert alert-warning">
-                    <strong>{% trans "Nota:" %}</strong> {% trans "Su solicitud será revisada por el personal administrativo. Recibirá una notificación cuando sea procesada." %}
-                </div>
+                    <!-- Tipo de Solicitud -->
+                    <div class="mb-4">
+                        <label class="form-label fw-bold text-primary">
+                            <i class="fas fa-clipboard-list"></i> {{ form.tipo_solicitud.label }}
+                        </label>
+                        {% if form.tipo_solicitud.help_text %}
+                            <div class="form-text mb-3">{{ form.tipo_solicitud.help_text }}</div>
+                        {% endif %}
+                        
+                        <div class="solicitud-opciones">
+                            {% for radio in form.tipo_solicitud %}
+                                <div class="solicitud-opcion">
+                                    {{ radio.tag }}
+                                    <label class="solicitud-opcion-label" for="{{ radio.id_for_label }}">
+                                        {% if radio.choice_label == "Acceso" %}
+                                            <i class="fas fa-eye text-info"></i>
+                                        {% elif radio.choice_label == "Modificación" %}
+                                            <i class="fas fa-edit text-warning"></i>
+                                        {% elif radio.choice_label == "Cancelación" %}
+                                            <i class="fas fa-trash text-danger"></i>
+                                        {% elif radio.choice_label == "Bloqueo" %}
+                                            <i class="fas fa-lock text-secondary"></i>
+                                        {% endif %}
+                                        {{ radio.choice_label }}
+                                    </label>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        
+                        {% if form.tipo_solicitud.errors %}
+                            <div class="alert alert-danger mt-2">
+                                <small>{{ form.tipo_solicitud.errors|striptags }}</small>
+                            </div>
+                        {% endif %}
+                    </div>
 
-                <div class="d-flex gap-2">
-                    <button type="submit" class="btn btn-primary">
-                        <i class="bi bi-send"></i> {% trans "Enviar Solicitud" %}
-                    </button>
-                    <a href="{% url 'mis_solicitudes_datos' %}" class="btn btn-secondary">
-                        <i class="bi bi-arrow-left"></i> {% trans "Ver Mis Solicitudes" %}
-                    </a>
-                </div>
-            </form>
+                    <!-- Nota informativa -->
+                    <div class="alert alert-warning d-flex align-items-start">
+                        <i class="fas fa-exclamation-circle fa-2x me-3 mt-1"></i>
+                        <div>
+                            <strong>{% trans "Nota Importante:" %}</strong> 
+                            <p class="mb-0">{% trans "Su solicitud será revisada por el personal administrativo. Recibirá una notificación cuando sea procesada." %}</p>
+                        </div>
+                    </div>
+
+                    <!-- Botones de acción -->
+                    <div class="d-flex gap-3 justify-content-end mt-4">
+                        <a href="{% url 'mis_solicitudes_datos' %}" class="btn btn-secondary">
+                            <i class="fas fa-list"></i> {% trans "Ver Mis Solicitudes" %}
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i> {% trans "Enviar Solicitud" %}
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>

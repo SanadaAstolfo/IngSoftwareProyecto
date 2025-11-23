@@ -47,7 +47,8 @@ class TutorLoginView(auth_views.LoginView):
     template_name = 'registration/login_tutor.html'
     
     def get_success_url(self):
-        return '/tutores/mis-pacientes/'
+        from django.urls import reverse
+        return reverse('mis_pacientes')
 
 @login_required
 @group_required('Administrador', 'Veterinario', 'Veterinario Especialista', 'Secretaria')
@@ -87,10 +88,12 @@ def detalle_paciente(request, paciente_id):
     es_propietario_tutor = False
     if es_tutor(usuario_actual):
         try:
-            tutor_del_usuario = Tutor.objects.get(user=usuario_actual)
+            # Obtener el perfil para conseguir el RUT
+            perfil = usuario_actual.perfil
+            tutor_del_usuario = Tutor.objects.get(rut=perfil.rut)
             if paciente.tutor == tutor_del_usuario:
                 es_propietario_tutor = True
-        except Tutor.DoesNotExist:
+        except (Tutor.DoesNotExist, AttributeError):
              messages.warning(request, "Tu perfil de tutor no está completamente configurado.")
              pass
 
@@ -691,6 +694,29 @@ def ver_comprobante(request, pago_id):
 
 @login_required
 @group_required('Tutor')
+def ver_mi_perfil(request):
+    """
+    Vista para que un Tutor vea su información de perfil (sin editar).
+    """
+    user = request.user
+    
+    # Intentamos obtener el Perfil y el Tutor asociados al usuario logueado
+    try:
+        perfil = user.perfil
+        tutor = Tutor.objects.get(rut=perfil.rut)
+    except (ObjectDoesNotExist, AttributeError, Tutor.DoesNotExist):
+        messages.error(request, "No se encontró tu perfil de tutor. Contacta al administrador.")
+        return redirect('portal')
+
+    contexto = {
+        'user': user,
+        'perfil': perfil,
+        'tutor': tutor,
+    }
+    return render(request, 'gestion/ver_perfil.html', contexto)
+
+@login_required
+@group_required('Tutor')
 def editar_mi_perfil(request):
     """
     Vista para que un Tutor edite su propia información de perfil.
@@ -701,9 +727,9 @@ def editar_mi_perfil(request):
     # Intentamos obtener el Perfil y el Tutor asociados al usuario logueado
     try:
         perfil = user.perfil
-        # Asumiendo que hay una relación OneToOne o ForeignKey desde Tutor a User
-        tutor = Tutor.objects.get(user=user) 
-    except (ObjectDoesNotExist, AttributeError):
+        # Buscar el Tutor por el RUT que está en el Perfil
+        tutor = Tutor.objects.get(rut=perfil.rut) 
+    except (ObjectDoesNotExist, AttributeError, Tutor.DoesNotExist):
         messages.error(request, "No se encontró tu perfil de tutor. Contacta al administrador.")
         return redirect('portal') # O a donde corresponda si falla
 
@@ -719,6 +745,7 @@ def editar_mi_perfil(request):
             # Actualizar datos del Tutor
             tutor.telefono = form.cleaned_data['telefono']
             tutor.direccion = form.cleaned_data['direccion']
+            tutor.email = form.cleaned_data['email']  # Sincronizar email del tutor
             tutor.save()
 
             # Actualizar datos del Perfil
@@ -726,7 +753,7 @@ def editar_mi_perfil(request):
             perfil.save()
 
             messages.success(request, '¡Tu perfil ha sido actualizado exitosamente!')
-            return redirect('editar_mi_perfil') # Redirige a la misma página para ver los cambios
+            return redirect('ver_mi_perfil') # Redirige a la página de visualización después de editar
     else:
         form = MiPerfilForm(user_instance=user, tutor_instance=tutor, perfil_instance=perfil)
 
@@ -838,10 +865,13 @@ def generar_pdf_receta(request, receta_id):
 
     if es_tutor(usuario_actual):
         try:
-            tutor_del_usuario = Tutor.objects.get(user=usuario_actual)
+            # Obtener el perfil para conseguir el RUT
+            perfil = usuario_actual.perfil
+            tutor_del_usuario = Tutor.objects.get(rut=perfil.rut)
             if receta.atencion_medica.ficha_clinica.paciente.tutor == tutor_del_usuario:
                 es_propietario_tutor_receta = True
-        except Tutor.DoesNotExist: pass
+        except (Tutor.DoesNotExist, AttributeError): 
+            pass
 
     if not es_personal_usuario and not es_propietario_tutor_receta:
         messages.error(request, "No tienes permiso para ver esta receta.")
@@ -912,10 +942,13 @@ def generar_pdf_epicrisis(request, atencion_id):
 
     if es_tutor(usuario_actual):
         try:
-            tutor_del_usuario = Tutor.objects.get(user=usuario_actual)
+            # Obtener el perfil para conseguir el RUT
+            perfil = usuario_actual.perfil
+            tutor_del_usuario = Tutor.objects.get(rut=perfil.rut)
             if atencion.ficha_clinica.paciente.tutor == tutor_del_usuario:
                 es_propietario_tutor_epicrisis = True
-        except Tutor.DoesNotExist: pass
+        except (Tutor.DoesNotExist, AttributeError): 
+            pass
 
     if not es_personal_usuario and not es_propietario_tutor_epicrisis:
         messages.error(request, "No tienes permiso para ver esta epicrisis.")

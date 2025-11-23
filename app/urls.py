@@ -40,6 +40,7 @@ urlpatterns = [
     path('citas/<int:cita_id>/cancelar/', views.cancelar_cita, name='cancelar_cita'),
     path('citas/<int:cita_id>/registrar-abono/', views.registrar_abono, name='registrar_abono'),
     path('pagos/<int:pago_id>/comprobante/', views.ver_comprobante, name='ver_comprobante'),
+    path('mi-perfil/', views.ver_mi_perfil, name='ver_mi_perfil'),
     path('mi-perfil/editar/', views.editar_mi_perfil, name='editar_mi_perfil'),
     path('mensajes/', views.bandeja_entrada, name='bandeja_entrada'),
     path('mensajes/enviar/', views.enviar_mensaje, name='enviar_mensaje'),

@@ -2,121 +2,235 @@
 {% load custom_filters %}
 {% load i18n %}
 
-{% block title %}{{ titulo }}{% endblock %}
+{% block title %}{% trans "Solicitudes de Gestión de Datos Personales" %}{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1 class="mb-4">🗂️ {{ titulo }}</h1>
-
-    <!-- Filtros -->
-    <div class="card mb-4">
-        <div class="card-body">
-            <form method="get" class="row g-3">
-                <div class="col-md-4">
-                    <label class="form-label">{% trans "Filtrar por Estado" %}:</label>
-                    <select name="estado" class="form-select" onchange="this.form.submit()">
-                        <option value="">{% trans "Todos" %}</option>
-                        <option value="Pendiente" {% if request.GET.estado == 'Pendiente' %}selected{% endif %}>{% trans "Pendientes" %}</option>
-                        <option value="Aprobada" {% if request.GET.estado == 'Aprobada' %}selected{% endif %}>{% trans "Aprobadas" %}</option>
-                        <option value="Rechazada" {% if request.GET.estado == 'Rechazada' %}selected{% endif %}>{% trans "Rechazadas" %}</option>
-                    </select>
+<div class="main-container">
+    <div class="selection-container">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white d-flex align-items-center">
+                <h2 class="mb-0">{% trans "Solicitudes de Gestión de Datos Personales" %}</h2>
+            </div>
+            <div class="card-body">
+                <!-- Filtros -->
+                <div class="filter-section mb-4">
+                    <form method="get" class="row g-3">
+                        <div class="col-md-4">
+                            <label class="form-label">
+                                <i class="fas fa-filter me-2"></i>{% trans "Filtrar por Estado" %}
+                            </label>
+                            <select name="estado" class="form-select" onchange="this.form.submit()">
+                                <option value="">{% trans "Todos" %}</option>
+                                <option value="Pendiente" {% if request.GET.estado == 'Pendiente' %}selected{% endif %}>{% trans "Pendientes" %}</option>
+                                <option value="Aprobada" {% if request.GET.estado == 'Aprobada' %}selected{% endif %}>{% trans "Aprobadas" %}</option>
+                                <option value="Rechazada" {% if request.GET.estado == 'Rechazada' %}selected{% endif %}>{% trans "Rechazadas" %}</option>
+                            </select>
+                        </div>
+                    </form>
                 </div>
-            </form>
-        </div>
-    </div>
 
-    {% if solicitudes %}
-        <div class="table-responsive">
-            <table class="table table-hover">
-                <thead class="table-dark">
-                    <tr>
-                        <th>{% trans "Folio" %}</th>
-                        <th>{% trans "Tutor" %}</th>
-                        <th>{% trans "RUT" %}</th>
-                        <th>{% trans "Tipo de Solicitud" %}</th>
-                        <th>{% trans "Fecha" %}</th>
-                        <th>{% trans "Estado" %}</th>
-                        <th>{% trans "Acciones" %}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for solicitud in solicitudes %}
-                    <tr>
-                        <td><strong>#{{ solicitud.id }}</strong></td>
-                        <td>{{ solicitud.tutor.nombre_completo }}</td>
-                        <td>{{ solicitud.tutor.rut|format_rut }}</td>
-                        <td>
-                            <span class="badge bg-secondary">
-                                {{ solicitud.get_tipo_solicitud_display }}
-                            </span>
-                        </td>
-                        <td>{{ solicitud.fecha_solicitud|date:"d/m/Y H:i" }}</td>
-                        <td>
-                            {% if solicitud.estado == 'Pendiente' %}
-                                <span class="badge bg-warning text-dark">⌛ {% trans "Pendiente" %}</span>
-                            {% elif solicitud.estado == 'Aprobada' %}
-                                <span class="badge bg-success">✅ {% trans "Aprobada" %}</span>
-                            {% elif solicitud.estado == 'Rechazada' %}
-                                <span class="badge bg-danger">❌ {% trans "Rechazada" %}</span>
-                            {% endif %}
-                        </td>
-                        <td>
-                            {% if solicitud.estado == 'Pendiente' %}
-                                <a href="{% url 'gestionar_solicitud_datos' solicitud.id %}" class="btn btn-sm btn-primary">
-                                    <i class="bi bi-gear"></i> {% trans "Gestionar" %}
-                                </a>
-                            {% else %}
-                                <button type="button" class="btn btn-sm btn-info" 
-                                        data-bs-toggle="modal" 
-                                        data-bs-target="#detalleModal{{ solicitud.id }}">
-                                    <i class="bi bi-eye"></i> {% trans "Ver" %}
-                                </button>
-                                
-                                <!-- Modal -->
-                                <div class="modal fade" id="detalleModal{{ solicitud.id }}" tabindex="-1">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title">{% trans "Detalle Solicitud" %} #{{ solicitud.id }}</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                {% if solicitudes %}
+                <div class="table-responsive">
+                    <table class="table table-hover solicitudes-table">
+                        <thead>
+                            <tr>
+                                <th>{% trans "Folio" %}</th>
+                                <th>{% trans "Tutor" %}</th>
+                                <th>{% trans "RUT" %}</th>
+                                <th>{% trans "Tipo de Solicitud" %}</th>
+                                <th>{% trans "Fecha" %}</th>
+                                <th>{% trans "Estado" %}</th>
+                                <th>{% trans "Acciones" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for solicitud in solicitudes %}
+                            <tr class="solicitud-row">
+                                <td><strong class="text-primary">#{{ solicitud.id }}</strong></td>
+                                <td>{{ solicitud.tutor.nombre_completo }}</td>
+                                <td><code>{{ solicitud.tutor.rut|format_rut }}</code></td>
+                                <td>
+                                    {% if solicitud.tipo_solicitud == 'acceso' %}
+                                        <span class="badge badge-tipo bg-info text-white">
+                                            <i class="fas fa-eye me-1"></i>{{ solicitud.get_tipo_solicitud_display }}
+                                        </span>
+                                    {% elif solicitud.tipo_solicitud == 'modificacion' %}
+                                        <span class="badge badge-tipo bg-primary text-white">
+                                            <i class="fas fa-edit me-1"></i>{{ solicitud.get_tipo_solicitud_display }}
+                                        </span>
+                                    {% elif solicitud.tipo_solicitud == 'cancelacion' %}
+                                        <span class="badge badge-tipo bg-danger text-white">
+                                            <i class="fas fa-trash me-1"></i>{{ solicitud.get_tipo_solicitud_display }}
+                                        </span>
+                                    {% elif solicitud.tipo_solicitud == 'bloqueo' %}
+                                        <span class="badge badge-tipo bg-warning text-dark">
+                                            <i class="fas fa-lock me-1"></i>{{ solicitud.get_tipo_solicitud_display }}
+                                        </span>
+                                    {% else %}
+                                        <span class="badge badge-tipo bg-dark text-white">
+                                            {{ solicitud.get_tipo_solicitud_display }}
+                                        </span>
+                                    {% endif %}
+                                </td>
+                                <td><small>{{ solicitud.fecha_solicitud|date:"d/m/Y H:i" }}</small></td>
+                                <td>
+                                    {% if solicitud.estado == 'Pendiente' %}
+                                        <span class="badge badge-estado bg-warning text-dark">
+                                            <i class="fas fa-clock me-1"></i>{% trans "Pendiente" %}
+                                        </span>
+                                    {% elif solicitud.estado == 'Aprobada' %}
+                                        <span class="badge badge-estado bg-success">
+                                            <i class="fas fa-check-circle me-1"></i>{% trans "Aprobada" %}
+                                        </span>
+                                    {% elif solicitud.estado == 'Rechazada' %}
+                                        <span class="badge badge-estado bg-danger">
+                                            <i class="fas fa-times-circle me-1"></i>{% trans "Rechazada" %}
+                                        </span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if solicitud.estado == 'Pendiente' %}
+                                        <a href="{% url 'gestionar_solicitud_datos' solicitud.id %}" class="btn btn-sm btn-primary action-btn">
+                                            <i class="fas fa-cog me-1"></i>{% trans "Gestionar" %}
+                                        </a>
+                                    {% else %}
+                                        <button type="button" class="btn btn-sm btn-info action-btn btn-toggle-detalle" 
+                                                onclick="toggleDetalle(this, 'detalle{{ solicitud.id }}')">
+                                            <i class="fas fa-eye me-1"></i><span class="btn-text">{% trans "Ver Detalle" %}</span>
+                                        </button>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            
+                            <!-- Fila expandible con detalles -->
+                            {% if solicitud.estado != 'Pendiente' %}
+                            <tr class="detalle-row" id="detalle{{ solicitud.id }}" style="display: none;">
+                                <td colspan="7" class="p-0">
+                                    <div class="detalle-expandido">
+                                        <div class="row g-0">
+                                            <div class="col-md-6 detalle-seccion">
+                                                <h6 class="detalle-titulo">
+                                                    <i class="fas fa-user me-2"></i>{% trans "Información del Tutor" %}
+                                                </h6>
+                                                <table class="table table-sm detalle-tabla">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>{% trans "Nombre completo" %}</td>
+                                                            <td>{{ solicitud.tutor.nombre_completo }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>{% trans "RUT" %}</td>
+                                                            <td><code>{{ solicitud.tutor.rut|format_rut }}</code></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>{% trans "Email" %}</td>
+                                                            <td>{{ solicitud.tutor.email }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>{% trans "Teléfono" %}</td>
+                                                            <td>{{ solicitud.tutor.telefono|default:"-" }}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
                                             </div>
-                                            <div class="modal-body">
-                                                <p><strong>{% trans "Tutor" %}:</strong> {{ solicitud.tutor.nombre_completo }}</p>
-                                                <p><strong>{% trans "Email" %}:</strong> {{ solicitud.tutor.email }}</p>
-                                                <p><strong>{% trans "Tipo" %}:</strong> {{ solicitud.get_tipo_solicitud_display }}</p>
-                                                <p><strong>{% trans "Estado" %}:</strong> {{ solicitud.get_estado_display }}</p>
-                                                <p><strong>{% trans "Gestionado por" %}:</strong> 
-                                                    {% if solicitud.usuario_responsable %}
-                                                        {{ solicitud.usuario_responsable.get_full_name|default:solicitud.usuario_responsable.username }}
-                                                    {% else %}
-                                                        -
-                                                    {% endif %}
-                                                </p>
-                                                {% if solicitud.resolucion %}
-                                                <hr>
-                                                <p><strong>{% trans "Resolución" %}:</strong></p>
-                                                <p>{{ solicitud.resolucion|linebreaksbr }}</p>
-                                                {% endif %}
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans "Cerrar" %}</button>
+                                            
+                                            <div class="col-md-6 detalle-seccion">
+                                                <h6 class="detalle-titulo">
+                                                    <i class="fas fa-clipboard-check me-2"></i>{% trans "Información de la Gestión" %}
+                                                </h6>
+                                                <table class="table table-sm detalle-tabla">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>{% trans "Tipo de solicitud" %}</td>
+                                                            <td>{{ solicitud.get_tipo_solicitud_display }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>{% trans "Fecha de solicitud" %}</td>
+                                                            <td>{{ solicitud.fecha_solicitud|date:"d/m/Y H:i" }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>{% trans "Estado" %}</td>
+                                                            <td>
+                                                                {% if solicitud.estado == 'Aprobada' %}
+                                                                    <span class="badge badge-estado bg-success">
+                                                                        <i class="fas fa-check-circle me-1"></i>{% trans "Aprobada" %}
+                                                                    </span>
+                                                                {% elif solicitud.estado == 'Rechazada' %}
+                                                                    <span class="badge badge-estado bg-danger">
+                                                                        <i class="fas fa-times-circle me-1"></i>{% trans "Rechazada" %}
+                                                                    </span>
+                                                                {% endif %}
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>{% trans "Gestionado por" %}</td>
+                                                            <td>
+                                                                {% if solicitud.usuario_responsable %}
+                                                                    {{ solicitud.usuario_responsable.get_full_name|default:solicitud.usuario_responsable.username }}
+                                                                {% else %}
+                                                                    <em class="text-muted">-</em>
+                                                                {% endif %}
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
+                                        
+                                        {% if solicitud.resolucion %}
+                                        <div class="resolucion-expandida">
+                                            <h6 class="detalle-titulo">
+                                                <i class="fas fa-comment-dots me-2"></i>{% trans "Resolución" %}
+                                            </h6>
+                                            <div class="resolucion-contenido">
+                                                {{ solicitud.resolucion|linebreaksbr }}
+                                            </div>
+                                        </div>
+                                        {% endif %}
                                     </div>
-                                </div>
+                                </td>
+                            </tr>
                             {% endif %}
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="alert alert-info d-flex align-items-center">
+                    <i class="fas fa-info-circle fa-2x me-3"></i>
+                    <div>
+                        <strong>{% trans "No hay solicitudes de gestión de datos" %}</strong>
+                        {% if request.GET.estado %}<br>{% trans "con el estado" %} "{{ request.GET.estado }}"{% endif %}.
+                    </div>
+                </div>
+                {% endif %}
+            </div>
         </div>
-    {% else %}
-        <div class="alert alert-info">
-            <i class="bi bi-info-circle"></i> {% trans "No hay solicitudes de gestión de datos" %}
-            {% if request.GET.estado %}{% trans "con el estado" %} "{{ request.GET.estado }}"{% endif %}.
-        </div>
-        </div>
-    {% endif %}
+    </div>
 </div>
+
+<script>
+function toggleDetalle(button, detalleId) {
+    const detalleRow = document.getElementById(detalleId);
+    
+    if (!detalleRow) {
+        return;
+    }
+    
+    const icon = button.querySelector('i');
+    const textSpan = button.querySelector('.btn-text');
+    
+    if (detalleRow.style.display === 'none' || detalleRow.style.display === '') {
+        // Mostrar detalle
+        detalleRow.style.display = 'table-row';
+        icon.className = 'fas fa-eye-slash me-1';
+        textSpan.textContent = '{% trans "Ocultar Detalle" %}';
+    } else {
+        // Ocultar detalle
+        detalleRow.style.display = 'none';
+        icon.className = 'fas fa-eye me-1';
+        textSpan.textContent = '{% trans "Ver Detalle" %}';
+    }
+}
+</script>
 {% endblock %}

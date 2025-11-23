@@ -1,11 +1,12 @@
 {% extends 'gestion/base.html' %}
+{% load custom_filters %}
 {% load i18n %}
 
-{% block title %}{{ titulo }}{% endblock %}
+{% block title %}{% blocktrans with id=solicitud.id %}Gestionar Solicitud #{{ id }}{% endblocktrans %}{% endblock %}
 
 {% block content %}
 <div class="container" style="max-width: 900px;">
-    <h1 class="mb-4">⚙️ {{ titulo }}</h1>
+    <h1 class="mb-4">⚙️ {% blocktrans with id=solicitud.id %}Gestionar Solicitud #{{ id }}{% endblocktrans %}</h1>
 
     <div class="card mb-4">
         <div class="card-header bg-primary text-white">
@@ -16,7 +17,29 @@
                 <div class="col-md-6">
                     <p><strong>{% trans "Folio:" %}</strong> #{{ solicitud.id }}</p>
                     <p><strong>{% trans "Fecha:" %}</strong> {{ solicitud.fecha_solicitud|date:"d/m/Y H:i" }}</p>
-                    <p><strong>{% trans "Tipo:" %}</strong> <span class="badge bg-secondary">{{ solicitud.get_tipo_solicitud_display }}</span></p>
+                    <p><strong>{% trans "Tipo:" %}</strong> 
+                        {% if solicitud.tipo_solicitud == 'acceso' %}
+                            <span class="badge badge-tipo bg-info text-white">
+                                <i class="fas fa-eye me-1"></i>{{ solicitud.get_tipo_solicitud_display }}
+                            </span>
+                        {% elif solicitud.tipo_solicitud == 'modificacion' %}
+                            <span class="badge badge-tipo bg-primary text-white">
+                                <i class="fas fa-edit me-1"></i>{{ solicitud.get_tipo_solicitud_display }}
+                            </span>
+                        {% elif solicitud.tipo_solicitud == 'cancelacion' %}
+                            <span class="badge badge-tipo bg-danger text-white">
+                                <i class="fas fa-trash me-1"></i>{{ solicitud.get_tipo_solicitud_display }}
+                            </span>
+                        {% elif solicitud.tipo_solicitud == 'bloqueo' %}
+                            <span class="badge badge-tipo bg-warning text-dark">
+                                <i class="fas fa-lock me-1"></i>{{ solicitud.get_tipo_solicitud_display }}
+                            </span>
+                        {% else %}
+                            <span class="badge badge-tipo bg-dark text-white">
+                                {{ solicitud.get_tipo_solicitud_display }}
+                            </span>
+                        {% endif %}
+                    </p>
                 </div>
                 <div class="col-md-6">
                     <p><strong>{% trans "Nombre:" %}</strong> {{ solicitud.tutor.nombre_completo }}</p>

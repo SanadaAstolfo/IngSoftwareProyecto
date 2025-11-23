@@ -77,25 +77,7 @@
 
     <div class="section">
         <h2>Diagnóstico</h2>
-         <p><strong>Diagnósticos:</strong>
-            {% for diag in atencion.diagnosticos.all %}
-                {{ diag.nombre }}{% if not forloop.last %}, {% endif %}
-            {% empty %}
-                No registrados.
-            {% endfor %}
-        </p>
-    </div>
-
-     <div class="section">
-        <h2>Tratamiento e indicaciones</h2>
-        <p><strong>Tratamiento:</strong> {{ atencion.tratamiento|linebreaksbr|default:"No se especificó tratamiento." }}</p>
-         {% if atencion.recetas.exists %}
-             {% for receta in atencion.recetas.all %}
-                 <p><strong>Receta Médica:</strong> {{ receta.prescripcion|linebreaksbr }}</p>
-             {% endfor %}
-         {% else %}
-             <p>Consultar detalles con el veterinario.</p>
-         {% endif %}
+        <p><strong>Diagnóstico:</strong> {{ atencion.diagnostico|default:"No registrado." }}</p>
     </div>
 
     <div class="firma">

@@ -237,10 +237,10 @@
                         {# Menú para Tutores #}
                         <li><a href="{% url 'mis_pacientes' %}">{% trans "Mis Mascotas" %}</a></li>
                         <li><a href="{% url 'mis_solicitudes_datos' %}">{% trans "Solicitudes" %}</a></li>
-                        <li><a href="{% url 'editar_mi_perfil' %}">{% trans "Mi Perfil" %}</a></li>
+                        <li><a href="{% url 'ver_mi_perfil' %}">{% trans "Mi Perfil" %}</a></li>
                     {% endif %}
                 </ul>
-                <span class="user-name">{% trans "Bienvenido" %}, {{ user.username }}</span>     
+                <span class="user-name">{% trans "Bienvenido" %}, {{ user.get_full_name|default:user.username }}</span>     
                 <form action="{% url 'logout' %}" method="post">
                     {% csrf_token %}
                     <button type="submit" class="logout">{% trans "Cerrar Sesión" %}</button>

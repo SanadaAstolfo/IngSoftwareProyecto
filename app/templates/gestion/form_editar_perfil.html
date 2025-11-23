@@ -1,58 +1,148 @@
 {% extends 'gestion/base.html' %}
 {% load i18n %}
 
-{% block title %}{{ titulo }}{% endblock %}
+{% block title %}{% trans "Editar Mi Perfil" %}{% endblock %}
 
 {% block content %}
-<main>
-    <h1>{{ titulo }}</h1>
-    <hr>
-    
-    {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-
-    <section class="form-container">
-        <form method="post">
-            {% csrf_token %}
-            
-            {% for field in form %}
-                <div class="form-field">
-                    {{ field.label_tag }}
-                    
-                    {% if field.name == 'canal_notificacion_preferido' %}
-                        <ul id="{{ field.id_for_label }}">
-                        {% for radio in field %}
-                            <li>
-                                <label for="{{ radio.id_for_label }}">
-                                    {{ radio.tag }}
-                                    {{ radio.choice_label }}
-                                </label>
-                            </li>
-                        {% endfor %}
-                        </ul>
-                    {% else %}
-                        {{ field }}
-                    {% endif %}
-                    
-                    {% if field.help_text %}
-                        <p class="help-text">{{ field.help_text }}</p>
-                    {% endif %}
-                    {% for error in field.errors %}
-                        <p class="error-text">{{ error }}</p>
-                    {% endfor %}
-                </div>
-            {% endfor %}
-            
-            <div class="form-actions">
-                <a href="{% url 'portal' %}" class="button secondary">{% trans "Cancelar" %}</a> {# Asume clase 'button secondary' para cancelar #}
-                <button type="submit" class="button primary">{% trans "Guardar Cambios" %}</button> {# Asume clase 'button primary' para guardar #}
+<div class="main-container">
+    <div class="selection-container">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h2 class="mb-0"><i class="fas fa-user-edit"></i> {% trans "Editar Mi Perfil" %}</h2>
             </div>
-        </form>
-    </section>
-</main>
+            <div class="card-body">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                <form method="post" class="perfil-form">
+                    {% csrf_token %}
+                    
+                    <!-- Información Personal -->
+                    <div class="mb-4">
+                        <h5 class="border-bottom pb-2 mb-3"><i class="fas fa-user"></i> {% trans "Información Personal" %}</h5>
+                        
+                        <div class="form-group mb-3">
+                            <label for="{{ form.first_name.id_for_label }}" class="form-label">
+                                <i class="fas fa-user"></i> {{ form.first_name.label }}
+                            </label>
+                            {{ form.first_name }}
+                            {% if form.first_name.errors %}
+                                <div class="text-danger mt-1">
+                                    {% for error in form.first_name.errors %}
+                                        <small>{{ error }}</small>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="{{ form.last_name.id_for_label }}" class="form-label">
+                                <i class="fas fa-user"></i> {{ form.last_name.label }}
+                            </label>
+                            {{ form.last_name }}
+                            {% if form.last_name.errors %}
+                                <div class="text-danger mt-1">
+                                    {% for error in form.last_name.errors %}
+                                        <small>{{ error }}</small>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="{{ form.email.id_for_label }}" class="form-label">
+                                <i class="fas fa-envelope"></i> {{ form.email.label }}
+                            </label>
+                            {{ form.email }}
+                            {% if form.email.errors %}
+                                <div class="text-danger mt-1">
+                                    {% for error in form.email.errors %}
+                                        <small>{{ error }}</small>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Información de Contacto -->
+                    <div class="mb-4">
+                        <h5 class="border-bottom pb-2 mb-3"><i class="fas fa-address-book"></i> {% trans "Información de Contacto" %}</h5>
+                        
+                        <div class="form-group mb-3">
+                            <label for="{{ form.telefono.id_for_label }}" class="form-label">
+                                <i class="fas fa-phone"></i> {{ form.telefono.label }}
+                            </label>
+                            {{ form.telefono }}
+                            {% if form.telefono.errors %}
+                                <div class="text-danger mt-1">
+                                    {% for error in form.telefono.errors %}
+                                        <small>{{ error }}</small>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="{{ form.direccion.id_for_label }}" class="form-label">
+                                <i class="fas fa-map-marker-alt"></i> {{ form.direccion.label }}
+                            </label>
+                            {{ form.direccion }}
+                            {% if form.direccion.errors %}
+                                <div class="text-danger mt-1">
+                                    {% for error in form.direccion.errors %}
+                                        <small>{{ error }}</small>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Preferencias de Notificación -->
+                    <div class="mb-4">
+                        <h5 class="border-bottom pb-2 mb-3"><i class="fas fa-bell"></i> {% trans "Preferencias de Notificación" %}</h5>
+                        
+                        <div class="form-group mb-3">
+                            <label class="form-label">
+                                <i class="fas fa-comments"></i> {{ form.canal_notificacion_preferido.label }}
+                            </label>
+                            <div class="radio-group">
+                                {% for radio in form.canal_notificacion_preferido %}
+                                    <div class="form-check">
+                                        {{ radio.tag }}
+                                        <label class="form-check-label" for="{{ radio.id_for_label }}">
+                                            {{ radio.choice_label }}
+                                        </label>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            {% if form.canal_notificacion_preferido.errors %}
+                                <div class="text-danger mt-1">
+                                    {% for error in form.canal_notificacion_preferido.errors %}
+                                        <small>{{ error }}</small>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Botones de Acción -->
+                    <div class="form-actions d-flex gap-3 justify-content-end">
+                        <a href="{% url 'ver_mi_perfil' %}" class="btn btn-secondary">
+                            <i class="fas fa-times"></i> {% trans "Cancelar" %}
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> {% trans "Guardar Cambios" %}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

@@ -47,8 +47,8 @@ class AtencionGeneralForm(forms.ModelForm):
             'observaciones_sensibles': forms.Textarea(attrs={'class': 'form-control', 'rows': 4})
         }
         labels = {
-            'prediagnostico': 'Prediagnóstico (Texto)',
-            'diagnostico': 'Diagnóstico (Texto)',
+            'prediagnostico': 'Prediagnóstico',
+            'diagnostico': 'Diagnóstico',
         }
 
 class ChequeoFisicoForm(forms.ModelForm):
@@ -173,7 +173,7 @@ class CustomAuthenticationForm(AuthenticationForm):
             {'class': 'form-control', 'placeholder': 'Ingrese su contraseña'}
         )
 
-class MiPerfilForm(forms.ModelForm):
+class MiPerfilForm(forms.Form):
     # Campos del modelo User (solo lectura o editables)
     first_name = forms.CharField(label="Nombre", max_length=100, required=True)
     last_name = forms.CharField(label="Apellido", max_length=100, required=True)
@@ -189,11 +189,6 @@ class MiPerfilForm(forms.ModelForm):
         choices=Perfil._meta.get_field('canal_notificacion_preferido').choices, # Obtiene las opciones del modelo
         widget=forms.RadioSelect # Muestra como botones de radio
     )
-
-    class Meta:
-        # Aunque usamos campos de varios modelos, NO especificamos un 'model' aquí
-        # porque los guardaremos manualmente en la vista.
-        fields = ['first_name', 'last_name', 'email', 'telefono', 'direccion', 'canal_notificacion_preferido']
 
     def __init__(self, *args, **kwargs):
         # Recibimos las instancias de user, tutor y perfil para llenar el form

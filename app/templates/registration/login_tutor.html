@@ -6,60 +6,40 @@
 {% block head %}
 {{ block.super }}
 <style>
-    /* Estilos específicos para el login de tutores */
-    .login-tutor-container {
-        min-height: 80vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 2rem 1rem;
-        background: linear-gradient(135deg, var(--background-color), var(--light-accent));
-    }
-
-    .login-tutor-card {
-        background: linear-gradient(135deg, var(--card-bg), var(--light-accent));
-        border-radius: 3rem;
-        box-shadow: 0 15px 50px rgba(107, 182, 184, 0.25);
-        overflow: hidden;
-        max-width: 650px;
-        width: 100%;
-        animation: slideUp 0.6s ease-out;
-        border: 3px solid var(--primary-color);
-    }
-
-    @keyframes slideUp {
-        from {
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
+    /* Estilos específicos para el header del login de tutores */
     .login-tutor-header {
         background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-        padding: 4rem 3rem;
+        padding: 3rem 2rem;
         text-align: center;
         color: white;
         position: relative;
         overflow: hidden;
+        border-radius: 1.5rem 1.5rem 0 0;
+        margin: -3rem -2.5rem 2rem -2.5rem;
     }
 
     .login-tutor-header::before {
         content: '🐾';
         position: absolute;
-        font-size: 10rem;
+        font-size: 8rem;
         opacity: 0.1;
-        top: -2rem;
-        right: -2rem;
+        top: -1rem;
+        right: -1rem;
         animation: float 6s ease-in-out infinite;
     }
 
+    @keyframes float {
+        0%, 100% {
+            transform: translateY(0) rotate(0deg);
+        }
+        50% {
+            transform: translateY(-20px) rotate(10deg);
+        }
+    }
+
     .login-tutor-icon {
-        font-size: 5rem;
-        margin-bottom: 1.5rem;
+        font-size: 4rem;
+        margin-bottom: 1rem;
         animation: bounce 2s infinite;
         filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
     }
@@ -74,8 +54,8 @@
     }
 
     .login-tutor-header h1 {
-        font-size: 3rem;
-        margin: 0 0 1rem 0;
+        font-size: 2.8rem;
+        margin: 0 0 0.5rem 0;
         font-weight: 700;
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
     }
@@ -86,168 +66,19 @@
         opacity: 0.95;
     }
 
-    .login-tutor-body {
-        padding: 4rem 4rem;
-    }
-
-    .login-tutor-form .form-group {
-        margin-bottom: 2.5rem;
-    }
-
-    .login-tutor-form label {
-        display: block;
-        margin-bottom: 1rem;
-        font-weight: 600;
-        color: var(--dark-color);
-        font-size: 1.6rem;
-        font-family: 'Poppins', sans-serif;
-    }
-
-    .login-tutor-form .input-group {
-        position: relative;
-    }
-
-    .login-tutor-form .input-icon {
-        position: absolute;
-        left: 1.5rem;
-        top: 50%;
-        transform: translateY(-50%);
-        color: var(--primary-color);
-        font-size: 1.8rem;
-        z-index: 10;
-    }
-
-    .login-tutor-form .form-control {
-        padding: 1.5rem 1.5rem 1.5rem 4.5rem;
-        border: 3px solid rgba(107, 182, 184, 0.3);
-        border-radius: 1.5rem;
-        font-size: 1.6rem;
-        font-family: 'Poppins', sans-serif;
-        font-weight: 500;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        width: 100%;
-        background: var(--card-bg);
-        color: var(--dark-color);
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-    }
-
-    .login-tutor-form .form-control:focus {
-        border-color: var(--primary-color);
-        box-shadow: 0 0 0 4px rgba(107, 182, 184, 0.15), 0 8px 25px rgba(107, 182, 184, 0.2);
-        outline: none;
-        transform: translateY(-2px);
-        background: rgba(254, 247, 230, 0.5);
-    }
-
-    .login-tutor-form .form-control:hover {
-        border-color: var(--secondary-color);
-        transform: translateY(-1px);
-    }
-
-    .login-tutor-btn {
-        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-        color: white;
-        border: none;
-        padding: 1.8rem 3rem;
-        border-radius: 2rem;
-        font-size: 1.6rem;
-        font-weight: 700;
-        width: 100%;
-        cursor: pointer;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        margin-top: 1.5rem;
-        font-family: 'Poppins', sans-serif;
-        box-shadow: 0 8px 25px rgba(107, 182, 184, 0.3);
-        position: relative;
-        overflow: hidden;
-    }
-
-    .login-tutor-btn::before {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 0;
-        height: 0;
-        background: rgba(255, 255, 255, 0.2);
-        border-radius: 50%;
-        transform: translate(-50%, -50%);
-        transition: width 0.6s, height 0.6s;
-    }
-
-    .login-tutor-btn:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 12px 35px rgba(107, 182, 184, 0.4);
-    }
-
-    .login-tutor-btn:active::before {
-        width: 300px;
-        height: 300px;
-    }
-
-    .login-tutor-btn:active {
-        transform: translateY(0);
-    }
-
-    .alert {
-        border-radius: 1.5rem;
-        padding: 1.5rem 2rem;
-        margin-bottom: 2rem;
-        border: none;
-        font-size: 1.5rem;
-    }
-
-    .alert-danger {
-        background-color: #fee;
-        color: #c33;
-    }
-
-    .alert-info {
-        background-color: #e3f2fd;
-        color: #1976d2;
-    }
-
-    .login-tutor-footer {
-        text-align: center;
-        padding-top: 1.5rem;
-        border-top: 1px solid #e0e0e0;
-        margin-top: 1.5rem;
-    }
-
-    .login-tutor-footer p {
-        color: #7f8c8d;
-        font-size: 0.9rem;
-        margin: 0;
-    }
-
-    .login-tutor-footer a {
-        color: #F4A261;
-        text-decoration: none;
-        font-weight: 600;
-    }
-
-    .login-tutor-footer a:hover {
-        text-decoration: underline;
-    }
-
-    /* Responsive */
+    /* Responsive para el header */
     @media (max-width: 576px) {
-        .login-tutor-card {
-            border-radius: 1.5rem;
-        }
-
         .login-tutor-header {
             padding: 2rem 1.5rem;
+            margin: -3rem -2.5rem 1.5rem -2.5rem;
         }
 
         .login-tutor-header h1 {
-            font-size: 1.6rem;
+            font-size: 2rem;
         }
 
-        .login-tutor-body {
-            padding: 2rem 1.5rem;
+        .login-tutor-header p {
+            font-size: 1.3rem;
         }
 
         .login-tutor-icon {
@@ -258,79 +89,45 @@
 {% endblock %}
 
 {% block content %}
-<div class="login-tutor-container">
-    <div class="login-tutor-card">
-        <!-- Header con diseño cálido -->
-        <div class="login-tutor-header">
-            <div class="login-tutor-icon">🐶</div>
-            <h1>¡Bienvenido!</h1>
-            <p>Portal de Tutores</p>
-        </div>
-
-        <!-- Cuerpo del formulario -->
-        <div class="login-tutor-body">
-            {% if form.errors %}
-                <div class="alert alert-danger">
-                    <strong>❌ Error:</strong> Usuario o contraseña incorrectos. Por favor, inténtalo de nuevo.
-                </div>
-            {% endif %}
-
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="alert alert-{{ message.tags }}">
-                        {{ message }}
-                    </div>
-                {% endfor %}
-            {% endif %}
-
-            <form method="post" class="login-tutor-form">
-                {% csrf_token %}
-                
-                <!-- Campo Usuario/RUT -->
-                <div class="form-group">
-                    <label for="{{ form.username.id_for_label }}">Usuario o RUT</label>
-                    <div class="input-group">
-                        <i class="fas fa-id-card input-icon"></i>
-                        <input 
-                            type="text" 
-                            name="{{ form.username.name }}" 
-                            id="{{ form.username.id_for_label }}"
-                            class="form-control" 
-                            placeholder="Ingresa tu usuario o RUT"
-                            required
-                            autofocus
-                        >
-                    </div>
-                </div>
-
-                <!-- Campo Contraseña -->
-                <div class="form-group">
-                    <label for="{{ form.password.id_for_label }}">Contraseña</label>
-                    <div class="input-group">
-                        <i class="fas fa-lock input-icon"></i>
-                        <input 
-                            type="password" 
-                            name="{{ form.password.name }}" 
-                            id="{{ form.password.id_for_label }}"
-                            class="form-control" 
-                            placeholder="Ingresa tu contraseña"
-                            required
-                        >
-                    </div>
-                </div>
-
-                <!-- Botón de ingreso -->
-                <button type="submit" class="login-tutor-btn">
-                    <i class="fas fa-paw"></i> Ingresar
-                </button>
-            </form>
-
-            <!-- Footer -->
-            <div class="login-tutor-footer">
-                <p>¿Problemas para ingresar? <a href="mailto:clubentrepatitas@gmail.com">Contáctanos</a></p>
-            </div>
-        </div>
+<div class="login-form-container">
+    <!-- Header especial para tutores -->
+    <div class="login-tutor-header">
+        <div class="login-tutor-icon">🐶</div>
+        <h1>¡Bienvenido!</h1>
+        <p>Portal de Tutores</p>
     </div>
+
+    {% if form.errors %}
+        <p class="login-error-message">Tu RUT o contraseña no son correctos. Por favor, inténtalo de nuevo.</p>
+    {% endif %}
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <form class="form" method="post">
+        {% csrf_token %}
+
+        <div class="input-group">
+            <label for="{{ form.username.id_for_label }}">Usuario o RUT</label>
+            {{ form.username }}
+        </div>
+
+        <div class="input-group">
+            <label for="{{ form.password.id_for_label }}">Contraseña</label>
+            {{ form.password }}
+        </div>
+
+        <div class="forgot">
+            <a rel="noopener noreferrer" href="{% url 'password_reset' %}">¿Olvidaste tu contraseña?</a>
+        </div>
+
+        <button type="submit" class="sign">Ingresar</button>
+    </form>
 </div>
 
 <script>
@@ -377,7 +174,7 @@
     // Aplicar formato en tiempo real al campo de usuario/RUT
     document.addEventListener('DOMContentLoaded', function() {
         const rutInput = document.getElementById('{{ form.username.id_for_label }}');
-        const form = document.querySelector('.login-tutor-form');
+        const form = document.querySelector('.form');
         
         if (rutInput) {
             // Evento para formatear mientras escribe
@@ -409,17 +206,11 @@
         if (form) {
             form.addEventListener('submit', function(e) {
                 if (rutInput && rutInput.value) {
-                    // Guardar el valor formateado para mostrar
-                    const formattedValue = rutInput.value;
-                    
                     // Limpiar el RUT para el envío
                     rutInput.value = cleanRut(rutInput.value);
-                    
-                    // Opcional: restaurar el formato después del envío si hay error
-                    // (esto se manejará en la recarga de la página)
                 }
             });
         }
     });
 </script>
-{% endblock %}
+{% endblock content %}

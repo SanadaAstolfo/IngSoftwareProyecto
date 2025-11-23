@@ -111,21 +111,8 @@
     </div>
 
     <div class="section">
-        <h2>Diagnósticos</h2>
-        <p><strong>Prediagnósticos:</strong>
-            {% for diag in atencion.prediagnosticos.all %}
-                {{ prediag.nombre }}{% if not forloop.last %}, {% endif %}
-            {% empty %}
-                Ninguno registrado.
-            {% endfor %}
-        </p>
-        <p><strong>Diagnósticos:</strong>
-            {% for diag in atencion.diagnosticos.all %}
-                {{ diag.nombre }}{% if not forloop.last %}, {% endif %}
-            {% empty %}
-                Ninguno registrado.
-            {% endfor %}
-        </p>
+        <h2>Diagnóstico</h2>
+        <p><strong>Diagnóstico:</strong> {{ atencion.diagnostico|linebreaksbr|default:"No se especificó diagnóstico." }}</p>
     </div>
 
     <div class="section">

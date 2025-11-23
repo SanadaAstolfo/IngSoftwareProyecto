@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-22 03:10-0300\n"
+"POT-Creation-Date: 2025-11-23 18:42-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\app\templates\gestion\bandeja_entrada.html:4
+#: .\app\templates\gestion\bandeja_entrada.html:8
+msgid "Bandeja de Mensajes"
+msgstr "Message Inbox"
 
 #: .\app\templates\gestion\bandeja_entrada.html:10
 msgid "Redactar Nuevo Mensaje"
@@ -39,18 +44,16 @@ msgstr "Subject"
 #: .\app\templates\gestion\bandeja_entrada.html:21
 #: .\app\templates\gestion\bandeja_entrada.html:49
 #: .\app\templates\gestion\detalle_tutor.html:36
-#: .\app\templates\gestion\lista_solicitudes_datos.html:37
+#: .\app\templates\gestion\lista_solicitudes_datos.html:41
 #: .\app\templates\gestion\mensaje_detalle.html:11
-#: .\app\templates\gestion\mis_solicitudes_datos.html:22
 msgid "Fecha"
 msgstr "Date"
 
 #: .\app\templates\gestion\bandeja_entrada.html:22
 #: .\app\templates\gestion\calendario.html:46
-#: .\app\templates\gestion\detalle_paciente.html:88
-#: .\app\templates\gestion\lista_solicitudes_datos.html:38
-#: .\app\templates\gestion\lista_solicitudes_datos.html:87
-#: .\app\templates\gestion\mis_solicitudes_datos.html:23
+#: .\app\templates\gestion\detalle_paciente.html:92
+#: .\app\templates\gestion\lista_solicitudes_datos.html:42
+#: .\app\templates\gestion\lista_solicitudes_datos.html:152
 msgid "Estado"
 msgstr "Status"
 
@@ -99,10 +102,14 @@ msgid "Mensajes"
 msgstr "Messages"
 
 #: .\app\templates\gestion\base.html:238
+#: .\app\templates\gestion\mis_pacientes.html:4
+#: .\app\templates\gestion\mis_pacientes.html:11
 msgid "Mis Mascotas"
 msgstr "My Pets"
 
 #: .\app\templates\gestion\base.html:240
+#: .\app\templates\gestion\ver_perfil.html:4
+#: .\app\templates\gestion\ver_perfil.html:11
 msgid "Mi Perfil"
 msgstr "My Profile"
 
@@ -140,14 +147,16 @@ msgid "Sí, Confirmar Borrado"
 msgstr "Yes, Confirm Deletion"
 
 #: .\app\templates\gestion\borrar_paciente.html:18
+#: .\app\templates\gestion\calendario.html:66
 #: .\app\templates\gestion\form.html:121
-#: .\app\templates\gestion\form_editar_perfil.html:52
+#: .\app\templates\gestion\form_editar_perfil.html:137
 #: .\app\templates\gestion\form_enviar_mensaje.html:22
 #: .\app\templates\gestion\receta_form.html:33
 msgid "Cancelar"
 msgstr "Cancel"
 
 #: .\app\templates\gestion\calendario.html:4
+#: .\app\templates\gestion\calendario.html:8
 msgid "Calendario de Citas"
 msgstr "Appointment Calendar"
 
@@ -192,9 +201,21 @@ msgid "Registrar Paciente e Iniciar"
 msgstr "Register Patient and Start"
 
 #: .\app\templates\gestion\calendario.html:59
-#: .\app\templates\gestion\detalle_paciente.html:135
+#: .\app\templates\gestion\detalle_paciente.html:139
 msgid "Editar"
 msgstr "Edit"
+
+#: .\app\templates\gestion\calendario.html:62
+msgid "Registrar Abono"
+msgstr "Register Deposit"
+
+#: .\app\templates\gestion\calendario.html:72
+msgid "Abonos registrados:"
+msgstr "Registered Deposits:"
+
+#: .\app\templates\gestion\calendario.html:83
+msgid "No hay citas que coincidan con el filtro seleccionado."
+msgstr "There are no appointments matching the selected filter."
 
 #: .\app\templates\gestion\comprobante_pago.html:11
 #: .\app\templates\gestion\comprobante_pago.html:715
@@ -308,6 +329,7 @@ msgstr "Patient Data"
 
 #: .\app\templates\gestion\detalle_paciente.html:46
 #: .\app\templates\gestion\detalle_tutor.html:68
+#: .\app\templates\gestion\mis_pacientes.html:31
 msgid "Especie"
 msgstr "Species"
 
@@ -316,97 +338,108 @@ msgid "Raza"
 msgstr "Breed"
 
 #: .\app\templates\gestion\detalle_paciente.html:47
+msgid "Sexo"
+msgstr ""
+
+#: .\app\templates\gestion\detalle_paciente.html:47
+msgid "Estado Reproductivo"
+msgstr ""
+
+#: .\app\templates\gestion\detalle_paciente.html:48
 msgid "Fecha de Nacimiento"
 msgstr "Date of Birth"
 
-#: .\app\templates\gestion\detalle_paciente.html:47
+#: .\app\templates\gestion\detalle_paciente.html:48
 msgid "Edad"
 msgstr "Age"
 
-#: .\app\templates\gestion\detalle_paciente.html:47
+#: .\app\templates\gestion\detalle_paciente.html:48
 msgid "años"
 msgstr "years"
 
-#: .\app\templates\gestion\detalle_paciente.html:48
-#: .\app\templates\gestion\lista_solicitudes_datos.html:34
-#: .\app\templates\gestion\lista_solicitudes_datos.html:84
-#: .\app\templates\gestion\mis_pacientes.html:18
+#: .\app\templates\gestion\detalle_paciente.html:50
+msgid "Microchip/Tatuaje"
+msgstr ""
+
+#: .\app\templates\gestion\detalle_paciente.html:52
+#: .\app\templates\gestion\lista_solicitudes_datos.html:38
+#: .\app\templates\gestion\ver_perfil.html:80
 msgid "Tutor"
 msgstr "Guardian"
 
-#: .\app\templates\gestion\detalle_paciente.html:53
+#: .\app\templates\gestion\detalle_paciente.html:57
 msgid "Antecedentes Médicos Externos"
 msgstr "External Medical Records"
 
-#: .\app\templates\gestion\detalle_paciente.html:55
+#: .\app\templates\gestion\detalle_paciente.html:59
 msgid "Cargar Antecedente"
 msgstr "Upload Record"
 
-#: .\app\templates\gestion\detalle_paciente.html:69
+#: .\app\templates\gestion\detalle_paciente.html:73
 msgid "No se han cargado antecedentes externos para este paciente."
 msgstr "No external records have been uploaded for this patient."
 
-#: .\app\templates\gestion\detalle_paciente.html:75
+#: .\app\templates\gestion\detalle_paciente.html:79
 msgid "Historial de Vacunación"
 msgstr "Vaccination History"
 
-#: .\app\templates\gestion\detalle_paciente.html:77
+#: .\app\templates\gestion\detalle_paciente.html:81
 msgid "Registrar Vacuna"
 msgstr "Register Vaccine"
 
-#: .\app\templates\gestion\detalle_paciente.html:85
+#: .\app\templates\gestion\detalle_paciente.html:89
 msgid "Vacuna"
 msgstr "Vaccine"
 
-#: .\app\templates\gestion\detalle_paciente.html:86
+#: .\app\templates\gestion\detalle_paciente.html:90
 msgid "Fecha Aplicación"
 msgstr "Application Date"
 
-#: .\app\templates\gestion\detalle_paciente.html:87
+#: .\app\templates\gestion\detalle_paciente.html:91
 msgid "Próxima Dosis"
 msgstr "Next Dose"
 
-#: .\app\templates\gestion\detalle_paciente.html:99
+#: .\app\templates\gestion\detalle_paciente.html:103
 msgid "Vigente"
 msgstr "Valid"
 
-#: .\app\templates\gestion\detalle_paciente.html:101
+#: .\app\templates\gestion\detalle_paciente.html:105
 msgid "Vencida"
 msgstr "Expired"
 
-#: .\app\templates\gestion\detalle_paciente.html:109
+#: .\app\templates\gestion\detalle_paciente.html:113
 msgid "No hay vacunas registradas para este paciente."
 msgstr "No vaccines registered for this patient."
 
-#: .\app\templates\gestion\detalle_paciente.html:113
+#: .\app\templates\gestion\detalle_paciente.html:117
 msgid "Historial de Atenciones"
 msgstr "Visit History"
 
-#: .\app\templates\gestion\detalle_paciente.html:118
+#: .\app\templates\gestion\detalle_paciente.html:122
 msgid "Atención del"
 msgstr "Visit from"
 
-#: .\app\templates\gestion\detalle_paciente.html:127
+#: .\app\templates\gestion\detalle_paciente.html:131
 msgid "Ver Ficha PDF"
 msgstr "View PDF Record"
 
-#: .\app\templates\gestion\detalle_paciente.html:129
+#: .\app\templates\gestion\detalle_paciente.html:133
 msgid "Ver Epicrisis PDF"
 msgstr "View Epicrisis PDF"
 
-#: .\app\templates\gestion\detalle_paciente.html:133
+#: .\app\templates\gestion\detalle_paciente.html:137
 msgid "Ficha Cerrada"
 msgstr "Closed Record"
 
-#: .\app\templates\gestion\detalle_paciente.html:137
+#: .\app\templates\gestion\detalle_paciente.html:141
 msgid "Cerrar Atención"
 msgstr "Close Visit"
 
-#: .\app\templates\gestion\detalle_paciente.html:139
+#: .\app\templates\gestion\detalle_paciente.html:143
 msgid "Borrar"
 msgstr "Delete"
 
-#: .\app\templates\gestion\detalle_paciente.html:141
+#: .\app\templates\gestion\detalle_paciente.html:145
 msgid "Historial"
 msgstr "History"
 
@@ -415,24 +448,31 @@ msgid "Detalle de"
 msgstr "Details of"
 
 #: .\app\templates\gestion\detalle_tutor.html:11
+#: .\app\templates\gestion\form_editar_perfil.html:75
+#: .\app\templates\gestion\ver_perfil.html:45
 msgid "Información de Contacto"
 msgstr "Contact Information"
 
 #: .\app\templates\gestion\detalle_tutor.html:13
-#: .\app\templates\gestion\lista_solicitudes_datos.html:35
+#: .\app\templates\gestion\lista_solicitudes_datos.html:39
+#: .\app\templates\gestion\lista_solicitudes_datos.html:122
+#: .\app\templates\gestion\ver_perfil.html:34
 msgid "RUT"
 msgstr "ID Number"
 
 #: .\app\templates\gestion\detalle_tutor.html:14
-#: .\app\templates\gestion\lista_solicitudes_datos.html:85
+#: .\app\templates\gestion\lista_solicitudes_datos.html:126
 msgid "Email"
 msgstr "Email"
 
 #: .\app\templates\gestion\detalle_tutor.html:15
+#: .\app\templates\gestion\lista_solicitudes_datos.html:130
+#: .\app\templates\gestion\ver_perfil.html:47
 msgid "Teléfono"
 msgstr "Phone"
 
 #: .\app\templates\gestion\detalle_tutor.html:16
+#: .\app\templates\gestion\ver_perfil.html:51
 msgid "Dirección"
 msgstr "Address"
 
@@ -469,7 +509,7 @@ msgid "Notas / Cita Asociada"
 msgstr "Notes / Associated Appointment"
 
 #: .\app\templates\gestion\detalle_tutor.html:40
-#: .\app\templates\gestion\lista_solicitudes_datos.html:39
+#: .\app\templates\gestion\lista_solicitudes_datos.html:43
 msgid "Acciones"
 msgstr "Actions"
 
@@ -516,99 +556,125 @@ msgstr ""
 msgid "Borrar Paciente"
 msgstr "Delete Patient"
 
-#: .\app\templates\gestion\form_editar_perfil.html:53
+#: .\app\templates\gestion\form_editar_perfil.html:4
+#: .\app\templates\gestion\form_editar_perfil.html:11
+msgid "Editar Mi Perfil"
+msgstr "Edit My Profile"
+
+#: .\app\templates\gestion\form_editar_perfil.html:28
+#: .\app\templates\gestion\ver_perfil.html:28
+#, fuzzy
+#| msgid "Información de Contacto"
+msgid "Información Personal"
+msgstr "Contact Information"
+
+#: .\app\templates\gestion\form_editar_perfil.html:108
+#: .\app\templates\gestion\ver_perfil.html:58
+msgid "Preferencias de Notificación"
+msgstr ""
+
+#: .\app\templates\gestion\form_editar_perfil.html:140
 msgid "Guardar Cambios"
 msgstr "Save Changes"
+
+#: .\app\templates\gestion\form_enviar_mensaje.html:4
+#: .\app\templates\gestion\form_enviar_mensaje.html:8
+msgid "Enviar Nuevo Mensaje"
+msgstr "Send New Message"
 
 #: .\app\templates\gestion\form_enviar_mensaje.html:23
 msgid "Enviar Mensaje"
 msgstr "Send Message"
 
-#: .\app\templates\gestion\gestionar_solicitud_datos.html:12
+#: .\app\templates\gestion\gestionar_solicitud_datos.html:5
+#: .\app\templates\gestion\gestionar_solicitud_datos.html:9
+#, python-format
+msgid "Gestionar Solicitud #%(id)s"
+msgstr "Manage Request #%(id)s"
+
+#: .\app\templates\gestion\gestionar_solicitud_datos.html:13
 #, fuzzy
 #| msgid "Información de Contacto"
 msgid "Información de la Solicitud"
 msgstr "Request Information"
 
-#: .\app\templates\gestion\gestionar_solicitud_datos.html:17
+#: .\app\templates\gestion\gestionar_solicitud_datos.html:18
 #, fuzzy
 #| msgid "Folio"
 msgid "Folio:"
 msgstr "File Number:"
 
-#: .\app\templates\gestion\gestionar_solicitud_datos.html:18
+#: .\app\templates\gestion\gestionar_solicitud_datos.html:19
 #, fuzzy
 #| msgid "Fecha"
 msgid "Fecha:"
 msgstr "Date:"
 
-#: .\app\templates\gestion\gestionar_solicitud_datos.html:19
-#: .\app\templates\gestion\mis_solicitudes_datos.html:63
+#: .\app\templates\gestion\gestionar_solicitud_datos.html:20
 msgid "Tipo:"
 msgstr "Type:"
 
-#: .\app\templates\gestion\gestionar_solicitud_datos.html:22
+#: .\app\templates\gestion\gestionar_solicitud_datos.html:45
 msgid "Nombre:"
 msgstr "Name:"
 
-#: .\app\templates\gestion\gestionar_solicitud_datos.html:23
+#: .\app\templates\gestion\gestionar_solicitud_datos.html:46
 msgid "RUT:"
 msgstr "ID Number:"
 
-#: .\app\templates\gestion\gestionar_solicitud_datos.html:24
+#: .\app\templates\gestion\gestionar_solicitud_datos.html:47
 #, fuzzy
 #| msgid "Email"
 msgid "Email:"
 msgstr "Email:"
 
-#: .\app\templates\gestion\gestionar_solicitud_datos.html:25
+#: .\app\templates\gestion\gestionar_solicitud_datos.html:48
 #, fuzzy
 #| msgid "Teléfono"
 msgid "Teléfono:"
 msgstr "Phone:"
 
-#: .\app\templates\gestion\gestionar_solicitud_datos.html:33
+#: .\app\templates\gestion\gestionar_solicitud_datos.html:56
 #, fuzzy
 #| msgid "Tipo de Solicitud"
 msgid "Gestionar Solicitud"
 msgstr "Manage Request"
 
-#: .\app\templates\gestion\gestionar_solicitud_datos.html:40
+#: .\app\templates\gestion\gestionar_solicitud_datos.html:63
 msgid "Decisión:"
 msgstr "Decision:"
 
-#: .\app\templates\gestion\gestionar_solicitud_datos.html:44
+#: .\app\templates\gestion\gestionar_solicitud_datos.html:67
 #, fuzzy
 #| msgid "Aprobada"
 msgid "Aprobar"
 msgstr "Approve"
 
-#: .\app\templates\gestion\gestionar_solicitud_datos.html:49
+#: .\app\templates\gestion\gestionar_solicitud_datos.html:72
 #, fuzzy
 #| msgid "Rechazada"
 msgid "Rechazar"
 msgstr "Reject"
 
-#: .\app\templates\gestion\gestionar_solicitud_datos.html:55
+#: .\app\templates\gestion\gestionar_solicitud_datos.html:78
 msgid "Resolución / Comentarios:"
 msgstr "Resolution / Comments:"
 
-#: .\app\templates\gestion\gestionar_solicitud_datos.html:57
+#: .\app\templates\gestion\gestionar_solicitud_datos.html:80
 msgid ""
 "Ejemplo: Se enviaron los datos personales por correo electrónico o Solicitud "
 "rechazada debido a..."
 msgstr "Example: Personal data sent via email or Request rejected due to..."
 
-#: .\app\templates\gestion\gestionar_solicitud_datos.html:59
+#: .\app\templates\gestion\gestionar_solicitud_datos.html:82
 msgid "Explique al tutor la acción tomada y cualquier información relevante."
 msgstr "Explain to the guardian the action taken and any relevant information."
 
-#: .\app\templates\gestion\gestionar_solicitud_datos.html:64
-#: .\app\templates\gestion\solicitar_gestion_datos.html:57
+#: .\app\templates\gestion\gestionar_solicitud_datos.html:87
 msgid "Nota:"
 msgstr "Note:"
 
-#: .\app\templates\gestion\gestionar_solicitud_datos.html:64
+#: .\app\templates\gestion\gestionar_solicitud_datos.html:87
 msgid ""
 "Al gestionar esta solicitud, el tutor podrá ver su decisión y los "
 "comentarios proporcionados."
@@ -616,11 +682,11 @@ msgstr ""
 "By managing this request, the guardian will be able to see your decision and "
 "the comments provided."
 
-#: .\app\templates\gestion\gestionar_solicitud_datos.html:69
+#: .\app\templates\gestion\gestionar_solicitud_datos.html:92
 msgid "Confirmar Gestión"
 msgstr "Confirm Management"
 
-#: .\app\templates\gestion\gestionar_solicitud_datos.html:72
+#: .\app\templates\gestion\gestionar_solicitud_datos.html:95
 msgid "Volver"
 msgstr "Back"
 
@@ -711,181 +777,225 @@ msgstr "Search by diagnosis"
 msgid "Buscar"
 msgstr "Search"
 
-#: .\app\templates\gestion\lista_solicitudes_datos.html:16
+#: .\app\templates\gestion\lista_solicitudes_datos.html:5
+#: .\app\templates\gestion\lista_solicitudes_datos.html:12
+msgid "Solicitudes de Gestión de Datos Personales"
+msgstr "Personal Data Management Requests"
+
+#: .\app\templates\gestion\lista_solicitudes_datos.html:20
 msgid "Filtrar por Estado"
 msgstr "Filter by Status"
 
-#: .\app\templates\gestion\lista_solicitudes_datos.html:18
+#: .\app\templates\gestion\lista_solicitudes_datos.html:23
 msgid "Todos"
 msgstr "All"
 
-#: .\app\templates\gestion\lista_solicitudes_datos.html:19
+#: .\app\templates\gestion\lista_solicitudes_datos.html:24
 msgid "Pendientes"
 msgstr "Pending"
 
-#: .\app\templates\gestion\lista_solicitudes_datos.html:20
+#: .\app\templates\gestion\lista_solicitudes_datos.html:25
 msgid "Aprobadas"
 msgstr "Approved"
 
-#: .\app\templates\gestion\lista_solicitudes_datos.html:21
+#: .\app\templates\gestion\lista_solicitudes_datos.html:26
 msgid "Rechazadas"
 msgstr "Rejected"
 
-#: .\app\templates\gestion\lista_solicitudes_datos.html:33
-#: .\app\templates\gestion\mis_solicitudes_datos.html:20
+#: .\app\templates\gestion\lista_solicitudes_datos.html:37
 msgid "Folio"
 msgstr "File Number"
 
-#: .\app\templates\gestion\lista_solicitudes_datos.html:36
-#: .\app\templates\gestion\mis_solicitudes_datos.html:21
+#: .\app\templates\gestion\lista_solicitudes_datos.html:40
 msgid "Tipo de Solicitud"
 msgstr "Request Type"
 
-#: .\app\templates\gestion\lista_solicitudes_datos.html:56
-#: .\app\templates\gestion\mis_solicitudes_datos.html:39
+#: .\app\templates\gestion\lista_solicitudes_datos.html:79
+#: .\app\templates\gestion\mis_solicitudes_datos.html:42
 msgid "Pendiente"
 msgstr "Pending"
 
-#: .\app\templates\gestion\lista_solicitudes_datos.html:58
-#: .\app\templates\gestion\mis_solicitudes_datos.html:41
+#: .\app\templates\gestion\lista_solicitudes_datos.html:83
+#: .\app\templates\gestion\lista_solicitudes_datos.html:156
+#: .\app\templates\gestion\mis_solicitudes_datos.html:46
 msgid "Aprobada"
 msgstr "Approved"
 
-#: .\app\templates\gestion\lista_solicitudes_datos.html:60
-#: .\app\templates\gestion\mis_solicitudes_datos.html:43
+#: .\app\templates\gestion\lista_solicitudes_datos.html:87
+#: .\app\templates\gestion\lista_solicitudes_datos.html:160
+#: .\app\templates\gestion\mis_solicitudes_datos.html:50
 msgid "Rechazada"
 msgstr "Rejected"
 
-#: .\app\templates\gestion\lista_solicitudes_datos.html:66
+#: .\app\templates\gestion\lista_solicitudes_datos.html:94
 msgid "Gestionar"
 msgstr "Manage"
 
-#: .\app\templates\gestion\lista_solicitudes_datos.html:72
-msgid "Ver"
-msgstr "View"
-
-#: .\app\templates\gestion\lista_solicitudes_datos.html:80
-msgid "Detalle Solicitud"
-msgstr ""
-
-#: .\app\templates\gestion\lista_solicitudes_datos.html:86
-msgid "Tipo"
-msgstr ""
-
-#: .\app\templates\gestion\lista_solicitudes_datos.html:88
-msgid "Gestionado por"
-msgstr ""
-
-#: .\app\templates\gestion\lista_solicitudes_datos.html:97
-#: .\app\templates\gestion\mis_solicitudes_datos.html:24
-msgid "Resolución"
-msgstr ""
-
-#: .\app\templates\gestion\lista_solicitudes_datos.html:102
-#: .\app\templates\gestion\mis_solicitudes_datos.html:77
-msgid "Cerrar"
-msgstr ""
-
-#: .\app\templates\gestion\lista_solicitudes_datos.html:116
-msgid "No hay solicitudes de gestión de datos"
-msgstr ""
-
-#: .\app\templates\gestion\lista_solicitudes_datos.html:117
-msgid "con el estado"
-msgstr ""
-
-#: .\app\templates\gestion\lista_tutores.html:4
-msgid "Lista de Tutores"
-msgstr ""
-
-#: .\app\templates\gestion\lista_tutores.html:8
-msgid "Tutores Registrados"
-msgstr ""
-
-#: .\app\templates\gestion\lista_tutores.html:9
-msgid "Registrar Nuevo Tutor"
-msgstr ""
-
-#: .\app\templates\gestion\lista_tutores.html:19
-msgid "No hay tutores registrados."
-msgstr ""
-
-#: .\app\templates\gestion\mensaje_detalle.html:15
-msgid "Volver a la Bandeja"
-msgstr "Back to Inbox"
-
-#: .\app\templates\gestion\mis_pacientes.html:4
-#: .\app\templates\gestion\mis_pacientes.html:9
-msgid "Mis Pacientes"
-msgstr "My Patients"
-
-#: .\app\templates\gestion\mis_pacientes.html:10
-msgid "Editar mi perfil"
-msgstr "Edit my profile"
-
-#: .\app\templates\gestion\mis_pacientes.html:16
-#: .\app\templates\gestion\mis_pacientes.html:38
-#: .\app\templates\gestion\mis_pacientes.html:41
-msgid "Volver al Portal"
-msgstr "Return to Portal"
-
-#: .\app\templates\gestion\mis_pacientes.html:35
-msgid "No tienes pacientes asociados registrados en el sistema."
-msgstr "You have no associated patients registered in the system."
-
-#: .\app\templates\gestion\mis_pacientes.html:40
-msgid ""
-"Error: No se encontró el registro de tutor asociado a tu cuenta. Contacta al "
-"administrador."
-msgstr ""
-"Error: No guardian record associated with your account was found. Contact "
-"the administrator."
-
-#: .\app\templates\gestion\mis_solicitudes_datos.html:11
-#, fuzzy
-#| msgid "Solicitudes"
-msgid "Nueva Solicitud"
-msgstr "New Request"
-
-#: .\app\templates\gestion\mis_solicitudes_datos.html:51
+#: .\app\templates\gestion\lista_solicitudes_datos.html:99
+#: .\app\templates\gestion\lista_solicitudes_datos.html:232
 #, fuzzy
 #| msgid "Detalle de"
 msgid "Ver Detalle"
 msgstr "View Details"
 
-#: .\app\templates\gestion\mis_solicitudes_datos.html:59
+#: .\app\templates\gestion\lista_solicitudes_datos.html:113
+#, fuzzy
+#| msgid "Información de Contacto"
+msgid "Información del Tutor"
+msgstr "Contact Information"
+
+#: .\app\templates\gestion\lista_solicitudes_datos.html:118
+#: .\app\templates\gestion\ver_perfil.html:30
+msgid "Nombre completo"
+msgstr ""
+
+#: .\app\templates\gestion\lista_solicitudes_datos.html:139
+#, fuzzy
+#| msgid "Información de Contacto"
+msgid "Información de la Gestión"
+msgstr "Request Information"
+
+#: .\app\templates\gestion\lista_solicitudes_datos.html:144
 #, fuzzy
 #| msgid "Tipo de Solicitud"
-msgid "Resolución de Solicitud"
-msgstr "Request Resolution"
+msgid "Tipo de solicitud"
+msgstr "Request Type"
 
-#: .\app\templates\gestion\mis_solicitudes_datos.html:64
+#: .\app\templates\gestion\lista_solicitudes_datos.html:148
 #, fuzzy
-#| msgid "Estado"
-msgid "Estado:"
-msgstr "Status:"
+#| msgid "Tipo de Solicitud"
+msgid "Fecha de solicitud"
+msgstr "Request Type"
 
-#: .\app\templates\gestion\mis_solicitudes_datos.html:65
+#: .\app\templates\gestion\lista_solicitudes_datos.html:166
+msgid "Gestionado por"
+msgstr "Managed by"
+
+#: .\app\templates\gestion\lista_solicitudes_datos.html:183
+#: .\app\templates\gestion\mis_solicitudes_datos.html:68
+msgid "Resolución"
+msgstr "Resolution"
+
+#: .\app\templates\gestion\lista_solicitudes_datos.html:202
+msgid "No hay solicitudes de gestión de datos"
+msgstr "There are no data management requests"
+
+#: .\app\templates\gestion\lista_solicitudes_datos.html:203
+msgid "con el estado"
+msgstr "with status"
+
+#: .\app\templates\gestion\lista_solicitudes_datos.html:227
+msgid "Ocultar Detalle"
+msgstr "Hide Details"
+
+#: .\app\templates\gestion\lista_tutores.html:4
+msgid "Lista de Tutores"
+msgstr "Guardian List"
+
+#: .\app\templates\gestion\lista_tutores.html:8
+msgid "Tutores Registrados"
+msgstr "Registered Guardians"
+
+#: .\app\templates\gestion\lista_tutores.html:9
+msgid "Registrar Nuevo Tutor"
+msgstr "Register New Guardian"
+
+#: .\app\templates\gestion\lista_tutores.html:19
+msgid "No hay tutores registrados."
+msgstr "There are no registered guardians."
+
+#: .\app\templates\gestion\mensaje_detalle.html:4
+#: .\app\templates\gestion\mensaje_detalle.html:8
+#, python-format
+msgid "Mensaje: %(asunto)s"
+msgstr "Message: %(asunto)s"
+
+#: .\app\templates\gestion\mensaje_detalle.html:15
+msgid "Volver a la Bandeja"
+msgstr "Back to Inbox"
+
+#: .\app\templates\gestion\mis_pacientes.html:14
 #, fuzzy
-#| msgid "Gestionar"
-msgid "Gestionado por:"
-msgstr "Managed by:"
+#| msgid "Editar mi perfil"
+msgid "Ver mi perfil"
+msgstr "Edit my profile"
 
-#: .\app\templates\gestion\mis_solicitudes_datos.html:73
-msgid "Resolución:"
-msgstr "Resolution:"
+#: .\app\templates\gestion\mis_pacientes.html:40
+#, fuzzy
+#| msgid "Este tutor no tiene mascotas registradas."
+msgid "No tienes mascotas registradas"
+msgstr "This guardian has no registered pets."
 
-#: .\app\templates\gestion\mis_solicitudes_datos.html:83
-msgid "En proceso..."
+#: .\app\templates\gestion\mis_pacientes.html:41
+msgid ""
+"Aún no tienes pacientes asociados en el sistema. Contacta a la clínica para "
+"registrar a tus mascotas."
+msgstr ""
+
+#: .\app\templates\gestion\mis_pacientes.html:49
+msgid "Error"
+msgstr ""
+
+#: .\app\templates\gestion\mis_pacientes.html:50
+#, fuzzy
+#| msgid ""
+#| "Error: No se encontró el registro de tutor asociado a tu cuenta. Contacta "
+#| "al administrador."
+msgid ""
+"No se encontró el registro de tutor asociado a tu cuenta. Por favor contacta "
+"al administrador."
+msgstr ""
+"Error: No guardian record associated with your account was found. Contact "
+"the administrator."
+
+#: .\app\templates\gestion\mis_solicitudes_datos.html:4
+#, fuzzy
+#| msgid "Solicitudes"
+msgid "Mis Solicitudes"
+msgstr "View My Requests"
+
+#: .\app\templates\gestion\mis_solicitudes_datos.html:11
+msgid "Mis Solicitudes de Gestión de Datos"
+msgstr "My Data Management Requests"
+
+#: .\app\templates\gestion\mis_solicitudes_datos.html:13
+#, fuzzy
+#| msgid "Solicitudes"
+msgid "Nueva Solicitud"
+msgstr "New Request"
+
+#: .\app\templates\gestion\mis_solicitudes_datos.html:57
+#: .\app\templates\gestion\mis_solicitudes_datos.html:126
+msgid "Ver Resolución"
+msgstr "View Resolution"
+
+#: .\app\templates\gestion\mis_solicitudes_datos.html:80
+#, fuzzy
+#| msgid "En proceso..."
+msgid "En proceso"
 msgstr "In progress..."
 
-#: .\app\templates\gestion\mis_solicitudes_datos.html:93
+#: .\app\templates\gestion\mis_solicitudes_datos.html:81
+msgid "Tu solicitud está siendo revisada por nuestro equipo."
+msgstr ""
+
+#: .\app\templates\gestion\mis_solicitudes_datos.html:92
+#, fuzzy
+#| msgid "Solicitudes"
+msgid "No hay solicitudes"
+msgstr "Requests"
+
+#: .\app\templates\gestion\mis_solicitudes_datos.html:94
 msgid "No has realizado ninguna solicitud de gestión de datos aún."
 msgstr "You haven't made any data management requests yet."
 
-#: .\app\templates\gestion\mis_solicitudes_datos.html:94
-msgid "Haz clic aquí para crear una"
-msgstr "Click here to create one"
+#: .\app\templates\gestion\mis_solicitudes_datos.html:97
+msgid "Crear mi primera solicitud"
+msgstr ""
+
+#: .\app\templates\gestion\mis_solicitudes_datos.html:121
+msgid "Ocultar Resolución"
+msgstr "Hide Resolution"
 
 #: .\app\templates\gestion\receta_form.html:10
 msgid "Fecha Atención"
@@ -919,57 +1029,73 @@ msgstr "General Consultation"
 msgid "Hospitalización"
 msgstr "Hospitalization"
 
+#: .\app\templates\gestion\solicitar_gestion_datos.html:4
+#, fuzzy
+#| msgid "Mis Solicitudes de Gestión de Datos"
+msgid "Solicitar Gestión de Datos"
+msgstr "My Data Management Requests"
+
 #: .\app\templates\gestion\solicitar_gestion_datos.html:11
 #, fuzzy
-#| msgid "Gestión de datos personales"
-msgid "Información sobre Gestión de Datos Personales"
-msgstr "Information about Personal Data Management"
+#| msgid "Solicitudes de Gestión de Datos Personales"
+msgid "Solicitar Gestión de Datos Personales"
+msgstr "Personal Data Management Requests"
 
-#: .\app\templates\gestion\solicitar_gestion_datos.html:12
+#: .\app\templates\gestion\solicitar_gestion_datos.html:18
+#, fuzzy
+#| msgid "Mis Solicitudes de Gestión de Datos"
+msgid "Sus Derechos de Protección de Datos"
+msgstr "My Data Management Requests"
+
+#: .\app\templates\gestion\solicitar_gestion_datos.html:19
 msgid ""
 "De acuerdo con la Ley de Protección de Datos Personales, usted tiene derecho "
 "a:"
 msgstr "According to the Personal Data Protection Law, you have the right to:"
 
-#: .\app\templates\gestion\solicitar_gestion_datos.html:14
+#: .\app\templates\gestion\solicitar_gestion_datos.html:21
 msgid "Acceso:"
 msgstr "Access:"
 
-#: .\app\templates\gestion\solicitar_gestion_datos.html:14
+#: .\app\templates\gestion\solicitar_gestion_datos.html:21
 msgid "Solicitar una copia de sus datos personales almacenados."
 msgstr "Request a copy of your stored personal data."
 
-#: .\app\templates\gestion\solicitar_gestion_datos.html:15
+#: .\app\templates\gestion\solicitar_gestion_datos.html:22
 #, fuzzy
 #| msgid "Modificado"
 msgid "Modificación:"
 msgstr "Modification:"
 
-#: .\app\templates\gestion\solicitar_gestion_datos.html:15
+#: .\app\templates\gestion\solicitar_gestion_datos.html:22
 msgid "Solicitar la corrección de datos incorrectos o desactualizados."
 msgstr "Request correction of incorrect or outdated data."
 
-#: .\app\templates\gestion\solicitar_gestion_datos.html:16
+#: .\app\templates\gestion\solicitar_gestion_datos.html:23
 #, fuzzy
 #| msgid "Cancelar"
 msgid "Cancelación:"
 msgstr "Cancellation:"
 
-#: .\app\templates\gestion\solicitar_gestion_datos.html:16
+#: .\app\templates\gestion\solicitar_gestion_datos.html:23
 #, fuzzy
 #| msgid "Gestión de datos personales"
 msgid "Solicitar la eliminación de sus datos personales."
 msgstr "Request deletion of your personal data."
 
-#: .\app\templates\gestion\solicitar_gestion_datos.html:17
+#: .\app\templates\gestion\solicitar_gestion_datos.html:24
 msgid "Bloqueo:"
 msgstr "Blocking:"
 
-#: .\app\templates\gestion\solicitar_gestion_datos.html:17
+#: .\app\templates\gestion\solicitar_gestion_datos.html:24
 msgid "Solicitar el bloqueo temporal de sus datos personales."
 msgstr "Request temporary blocking of your personal data."
 
-#: .\app\templates\gestion\solicitar_gestion_datos.html:57
+#: .\app\templates\gestion\solicitar_gestion_datos.html:79
+msgid "Nota Importante:"
+msgstr ""
+
+#: .\app\templates\gestion\solicitar_gestion_datos.html:80
 msgid ""
 "Su solicitud será revisada por el personal administrativo. Recibirá una "
 "notificación cuando sea procesada."
@@ -977,17 +1103,78 @@ msgstr ""
 "Your request will be reviewed by administrative staff. You will receive a "
 "notification when it is processed."
 
-#: .\app\templates\gestion\solicitar_gestion_datos.html:62
+#: .\app\templates\gestion\solicitar_gestion_datos.html:87
+#, fuzzy
+#| msgid "Solicitudes"
+msgid "Ver Mis Solicitudes"
+msgstr "View My Requests"
+
+#: .\app\templates\gestion\solicitar_gestion_datos.html:90
 #, fuzzy
 #| msgid "Tipo de Solicitud"
 msgid "Enviar Solicitud"
 msgstr "Submit Request"
 
-#: .\app\templates\gestion\solicitar_gestion_datos.html:65
+#: .\app\templates\gestion\ver_perfil.html:13
 #, fuzzy
-#| msgid "Solicitudes"
-msgid "Ver Mis Solicitudes"
-msgstr "View My Requests"
+#| msgid "Editar Mi Perfil"
+msgid "Editar Perfil"
+msgstr "Edit My Profile"
+
+#: .\app\templates\gestion\ver_perfil.html:38
+#: .\app\templates\gestion\ver_perfil.html:63
+msgid "Correo Electrónico"
+msgstr ""
+
+#: .\app\templates\gestion\ver_perfil.html:60
+msgid "Canal preferido"
+msgstr ""
+
+#: .\app\templates\gestion\ver_perfil.html:65
+msgid "WhatsApp"
+msgstr ""
+
+#: .\app\templates\gestion\ver_perfil.html:67
+msgid "No recibir notificaciones"
+msgstr ""
+
+#: .\app\templates\gestion\ver_perfil.html:77
+#, fuzzy
+#| msgid "Información de Contacto"
+msgid "Información del Sistema"
+msgstr "Request Information"
+
+#: .\app\templates\gestion\ver_perfil.html:79
+#, fuzzy
+#| msgid "Estado de Cuenta"
+msgid "Tipo de cuenta"
+msgstr "Account Status"
+
+#: .\app\templates\gestion\ver_perfil.html:83
+#, fuzzy
+#| msgid "Estado de Cuenta"
+msgid "Estado de datos"
+msgstr "Account Status"
+
+#: .\app\templates\gestion\ver_perfil.html:86
+#, fuzzy
+#| msgid "Bloqueo:"
+msgid "Bloqueados"
+msgstr "Blocking:"
+
+#: .\app\templates\gestion\ver_perfil.html:87
+msgid "Tus datos no pueden ser editados por el personal."
+msgstr ""
+
+#: .\app\templates\gestion\ver_perfil.html:89
+msgid "Activos"
+msgstr ""
+
+#: .\app\templates\gestion\ver_perfil.html:97
+#, fuzzy
+#| msgid "Mis Mascotas"
+msgid "Volver a Mis Mascotas"
+msgstr "My Pets"
 
 #: .\app\templates\portal.html:5
 msgid "Bienvenido a Club Entre Patitas"
@@ -1047,11 +1234,11 @@ msgstr "I am an Employee of"
 msgid "Club Entre Patitas"
 msgstr "Club Entre Patitas"
 
-#: .\app\templates\portal.html:43
+#: .\app\templates\portal.html:42
 msgid "Tutor de Mascota"
 msgstr "Pet Guardian"
 
-#: .\app\templates\portal.html:45
+#: .\app\templates\portal.html:44
 msgid ""
 "Accede al historial médico de tu mascota y manténte informado sobre su salud "
 "y tratamientos."
@@ -1059,23 +1246,23 @@ msgstr ""
 "Access your pet's medical history and stay informed about their health and "
 "treatments."
 
-#: .\app\templates\portal.html:48
+#: .\app\templates\portal.html:47
 msgid "Ver historial médico de tu mascota"
 msgstr "View your pet's medical history"
 
-#: .\app\templates\portal.html:49
+#: .\app\templates\portal.html:48
 msgid "Consultar próximas citas"
 msgstr "Check upcoming appointments"
 
-#: .\app\templates\portal.html:50
+#: .\app\templates\portal.html:49
 msgid "Acceso a recetas y epicrisis"
 msgstr "Access to prescriptions and epicrisis"
 
-#: .\app\templates\portal.html:51
+#: .\app\templates\portal.html:50
 msgid "Gestión de datos personales"
 msgstr "Personal data management"
 
-#: .\app\templates\portal.html:53
+#: .\app\templates\portal.html:52
 msgid "Soy Tutor de Mascota"
 msgstr "I am a Pet Guardian"
 
@@ -2302,3 +2489,50 @@ msgstr ""
 #: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:236
 msgid "Connect, get help, or contribute"
 msgstr ""
+
+#~ msgid "Ver"
+#~ msgstr "View"
+
+#~ msgid "Detalle Solicitud"
+#~ msgstr "Request Details"
+
+#~ msgid "Tipo"
+#~ msgstr "Type"
+
+#~ msgid "Cerrar"
+#~ msgstr "Close"
+
+#~ msgid "Mis Pacientes"
+#~ msgstr "My Patients"
+
+#~ msgid "Volver al Portal"
+#~ msgstr "Return to Portal"
+
+#~ msgid "No tienes pacientes asociados registrados en el sistema."
+#~ msgstr "You have no associated patients registered in the system."
+
+#, fuzzy
+#~| msgid "Tipo de Solicitud"
+#~ msgid "Resolución de Solicitud"
+#~ msgstr "Request Resolution"
+
+#, fuzzy
+#~| msgid "Estado"
+#~ msgid "Estado:"
+#~ msgstr "Status:"
+
+#, fuzzy
+#~| msgid "Gestionar"
+#~ msgid "Gestionado por:"
+#~ msgstr "Managed by:"
+
+#~ msgid "Resolución:"
+#~ msgstr "Resolution:"
+
+#~ msgid "Haz clic aquí para crear una"
+#~ msgstr "Click here to create one"
+
+#, fuzzy
+#~| msgid "Gestión de datos personales"
+#~ msgid "Información sobre Gestión de Datos Personales"
+#~ msgstr "Information about Personal Data Management"

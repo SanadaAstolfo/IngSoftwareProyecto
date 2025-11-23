@@ -1,0 +1,103 @@
+{% extends 'gestion/base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Mi Perfil" %}{% endblock %}
+
+{% block content %}
+<div class="main-container">
+    <div class="selection-container">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <h2 class="mb-0"><i class="fas fa-user-circle"></i> {% trans "Mi Perfil" %}</h2>
+                    <a href="{% url 'editar_mi_perfil' %}" class="btn btn-light btn-sm">
+                        <i class="fas fa-edit"></i> {% trans "Editar Perfil" %}
+                    </a>
+                </div>
+                <div class="card-body">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    <!-- Información Personal -->
+                    <div class="mb-4">
+                        <h5 class="border-bottom pb-2 mb-3"><i class="fas fa-user"></i> {% trans "Información Personal" %}</h5>
+                        <div class="perfil-row">
+                            <div class="perfil-label">{% trans "Nombre completo" %}:</div>
+                            <div class="perfil-value fw-bold">{{ user.get_full_name|default:"—" }}</div>
+                        </div>
+                        <div class="perfil-row">
+                            <div class="perfil-label">{% trans "RUT" %}:</div>
+                            <div class="perfil-value">{{ perfil.rut|default:"—" }}</div>
+                        </div>
+                        <div class="perfil-row">
+                            <div class="perfil-label">{% trans "Correo Electrónico" %}:</div>
+                            <div class="perfil-value">{{ user.email|default:"—" }}</div>
+                        </div>
+                    </div>
+
+                    <!-- Información de Contacto -->
+                    <div class="mb-4">
+                        <h5 class="border-bottom pb-2 mb-3"><i class="fas fa-address-book"></i> {% trans "Información de Contacto" %}</h5>
+                        <div class="perfil-row">
+                            <div class="perfil-label">{% trans "Teléfono" %}:</div>
+                            <div class="perfil-value">{{ tutor.telefono|default:"—" }}</div>
+                        </div>
+                        <div class="perfil-row">
+                            <div class="perfil-label">{% trans "Dirección" %}:</div>
+                            <div class="perfil-value">{{ tutor.direccion|default:"—" }}</div>
+                        </div>
+                    </div>
+
+                    <!-- Preferencias -->
+                    <div class="mb-4">
+                        <h5 class="border-bottom pb-2 mb-3"><i class="fas fa-bell"></i> {% trans "Preferencias de Notificación" %}</h5>
+                        <div class="perfil-row">
+                            <div class="perfil-label">{% trans "Canal preferido" %}:</div>
+                            <div class="perfil-value">
+                                {% if perfil.canal_notificacion_preferido == 'EMAIL' %}
+                                    <span class="badge bg-info"><i class="fas fa-envelope"></i> {% trans "Correo Electrónico" %}</span>
+                                {% elif perfil.canal_notificacion_preferido == 'WHATSAPP' %}
+                                    <span class="badge bg-success"><i class="fab fa-whatsapp"></i> {% trans "WhatsApp" %}</span>
+                                {% elif perfil.canal_notificacion_preferido == 'NONE' %}
+                                    <span class="badge bg-secondary"><i class="fas fa-ban"></i> {% trans "No recibir notificaciones" %}</span>
+                                {% else %}
+                                    —
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Información del Sistema -->
+                    <div class="mb-3">
+                        <h5 class="border-bottom pb-2 mb-3"><i class="fas fa-info-circle"></i> {% trans "Información del Sistema" %}</h5>
+                        <div class="perfil-row">
+                            <div class="perfil-label">{% trans "Tipo de cuenta" %}:</div>
+                            <div class="perfil-value"><span class="badge bg-primary">{% trans "Tutor" %}</span></div>
+                        </div>
+                        <div class="perfil-row">
+                            <div class="perfil-label">{% trans "Estado de datos" %}:</div>
+                            <div class="perfil-value">
+                                {% if tutor.datos_bloqueados %}
+                                    <span class="badge bg-danger"><i class="fas fa-lock"></i> {% trans "Bloqueados" %}</span>
+                                    <small class="text-muted d-block mt-1">{% trans "Tus datos no pueden ser editados por el personal." %}</small>
+                                {% else %}
+                                    <span class="badge bg-success"><i class="fas fa-unlock"></i> {% trans "Activos" %}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-center bg-light">
+                    <a href="{% url 'mis_pacientes' %}" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> {% trans "Volver a Mis Mascotas" %}
+                    </a>
+                </div>
+            </div>
+    </div>
+</div>
+{% endblock %}
