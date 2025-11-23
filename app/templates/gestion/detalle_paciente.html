@@ -44,7 +44,11 @@
         <div class="card-header">{% trans "Datos del Paciente" %}</div>
         <div class="card-body">
             <p><strong>{% trans "Especie" %}:</strong> {{ paciente.especie }} | <strong>{% trans "Raza" %}:</strong> {{ paciente.raza }}</p>
+            <p><strong>{% trans "Sexo" %}:</strong> {{ paciente.sexo }} | <strong>{% trans "Estado Reproductivo" %}:</strong> {{ paciente.estado_reproductivo }}</p>
             <p><strong>{% trans "Fecha de Nacimiento" %}:</strong> {{ paciente.fecha_nacimiento }} | <strong>{% trans "Edad" %}:</strong> {{ paciente.edad }} {% trans "años" %}</p>
+            {% if paciente.microchip_tatuaje %}
+            <p><strong>{% trans "Microchip/Tatuaje" %}:</strong> {{ paciente.microchip_tatuaje }}</p>
+            {% endif %}
             <p><strong>{% trans "Tutor" %}:</strong> {{ paciente.tutor.nombre_completo }} ({{ paciente.tutor.email }})</p>
         </div>
     </div>
