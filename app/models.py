@@ -286,13 +286,13 @@ class Cita(models.Model):
         max_length=100, 
         blank=True, 
         null=True,
-        verbose_name="Nombre del Paciente (temporal)"
+        verbose_name="Nombre del Paciente"
     )
     nombre_tutor_temporal = models.CharField(
         max_length=100, 
         blank=True, 
         null=True,
-        verbose_name="Nombre del Tutor (temporal)"
+        verbose_name="Nombre del Tutor"
     )
     sede = models.CharField(
         max_length=30, 

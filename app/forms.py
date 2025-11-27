@@ -135,7 +135,7 @@ class CitaForm(forms.ModelForm):
         }
         help_texts = {
             'es_domicilio': 'Marcar solo si es una visita a domicilio (horario hasta las 19:00 hrs).',
-            'paciente': 'Dejar vacío si es paciente nuevo (usar campos temporales)',
+            'paciente': 'Dejar vacío si es paciente nuevo',
         }
 
     def __init__(self, *args, **kwargs):
