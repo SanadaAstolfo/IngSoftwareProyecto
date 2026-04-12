@@ -4,7 +4,7 @@ from .models import Perfil
 
 class RUTBackend(ModelBackend):
     def normalize_rut(self, rut):
-        """Normaliza el RUT eliminando puntos y guiones"""
+        # Normaliza el RUT eliminando puntos y guiones
         if rut:
             return rut.replace('.', '').replace('-', '').upper()
         return rut

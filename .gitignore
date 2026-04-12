@@ -3,3 +3,4 @@ db.sqlite3
 .env
 **/__pycache__
 .vscode/
+club_entre_patitas_nextjs/
